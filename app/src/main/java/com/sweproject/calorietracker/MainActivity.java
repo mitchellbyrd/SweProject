@@ -36,6 +36,7 @@ public class MainActivity extends AppCompatActivity{
 
 		sTabLayout = (TabLayout) findViewById(R.id.activity_tabs);
 		sTabLayout.setupWithViewPager(sViewPager);
+		// Comment of calendar fragment branch
 	}
 
 	@Override
