@@ -1,44 +1,41 @@
 package com.sweproject.calorietracker;
 
-import android.os.Build;
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.content.ContextCompat;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.Window;
-import android.view.WindowManager;
+import android.view.View;
 
 public class MainActivity extends AppCompatActivity{
 
 	private static FragmentManager sFragmentManager;
+	private static TabLayout sTabLayout;
+	private static ViewPager sViewPager;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 
-		Toolbar toolbar = (Toolbar) findViewById(R.id.activity_toolbar);
-		setSupportActionBar(toolbar);
-
 		sFragmentManager = getSupportFragmentManager();
 
-		Window window = getWindow();
+		Toolbar toolbar = (Toolbar) findViewById(R.id.activity_toolbar);
+		setSupportActionBar(toolbar);
+		// Create the adapter that will return a fragment for each of the three
+		// primary sections of the activity.
+		TabAdapter tabAdapter = new TabAdapter(getSupportFragmentManager());
 
-		if(android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-			window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-			window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-			window.setStatusBarColor(ContextCompat.getColor(this, R.color.colorPrimaryDark));
-		}
+		// Set up the ViewPager with the sections adapter.
+		sViewPager = (ViewPager) findViewById(R.id.activity_viewpager);
+		sViewPager.setAdapter(tabAdapter);
 
-		// If first time opening app
-		if (savedInstanceState == null) {
-			nextFragment(null, new FragmentCalendar(), null, false, false);
-		}
-		// else will show the last visible fragment (Android destroys activity during rotation)
+		sTabLayout = (TabLayout) findViewById(R.id.activity_tabs);
+		sTabLayout.setupWithViewPager(sViewPager);
 	}
 
 	@Override
@@ -74,6 +71,9 @@ public class MainActivity extends AppCompatActivity{
 	 */
 	public static void nextFragment(Fragment fromFrag, Fragment toFrag, Bundle bun, boolean add, boolean clear){
 
+		sTabLayout.setVisibility(View.GONE);
+		sViewPager.setVisibility(View.GONE);
+
 		if (bun != null){
 			toFrag.setArguments(bun);
 		}
@@ -95,8 +95,10 @@ public class MainActivity extends AppCompatActivity{
 
 	@Override
 	public void onBackPressed() {
-		if (getSupportFragmentManager().getBackStackEntryCount() != 0) {
+		if (getSupportFragmentManager().getBackStackEntryCount() == 1) {
 			getSupportFragmentManager().popBackStack();
+			sTabLayout.setVisibility(View.VISIBLE);
+			sViewPager.setVisibility(View.VISIBLE);
 		} else {
 			super.onBackPressed();
 		}
