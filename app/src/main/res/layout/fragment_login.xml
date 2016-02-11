@@ -42,4 +42,15 @@
         android:layout_above="@+id/fragment_login_passwordField"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="75dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="New? Register Here!"
+        android:id="@+id/fragement_login_registerText"
+        android:layout_below="@+id/fragment_login_passwordField"
+        android:layout_centerHorizontal="true"
+        android:background="#fefefe"
+        android:textColor="#59b4ff" />
 </RelativeLayout>
