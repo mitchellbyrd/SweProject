@@ -31,11 +31,34 @@ public class MainActivity extends AppCompatActivity{
 		TabAdapter tabAdapter = new TabAdapter(getSupportFragmentManager());
 
 		// Set up the ViewPager with the sections adapter.
+		boolean isNewUser = this.isNewUser("");
+		if(isNewUser)
+		{
+			//login
+
+		}
+
+		SetUpMainActivity(tabAdapter);
+
+	}
+
+	private void SetUpMainActivity(TabAdapter tabAdapter) {
 		sViewPager = (ViewPager) findViewById(R.id.activity_viewpager);
 		sViewPager.setAdapter(tabAdapter);
 
 		sTabLayout = (TabLayout) findViewById(R.id.activity_tabs);
 		sTabLayout.setupWithViewPager(sViewPager);
+	}
+
+	public void Submit(View view)
+	{
+		LoginFragment loginFragment = new LoginFragment();
+		loginFragment.onSubmit(view);
+	}
+
+	public boolean isNewUser(String username)
+	{
+		return true;
 	}
 
 	@Override
