@@ -16,11 +16,11 @@ public class TabAdapter extends FragmentPagerAdapter {
 	public Fragment getItem(int position) {
 		// getItem is called to instantiate the fragment for the given page.
 		switch (position){
-			case 0:
-				return new FragmentCalendar();
 			case 1:
 				return new TabFragment();
 			case 2:
+				return new TabFragment();
+			case 3:
 				return new TabFragment();
 			default:
 				return new TabFragment();
@@ -37,7 +37,7 @@ public class TabAdapter extends FragmentPagerAdapter {
 	public CharSequence getPageTitle(int position) {
 		switch (position) {
 			case 0:
-				return "CALENDAR";
+				return "SECTION 1";
 			case 1:
 				return "SECTION 2";
 			case 2:
