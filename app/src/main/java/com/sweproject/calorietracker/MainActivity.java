@@ -10,12 +10,14 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.database.sqlite.SQLiteDatabase;
 
 public class MainActivity extends AppCompatActivity{
 
 	private static FragmentManager sFragmentManager;
 	private static TabLayout sTabLayout;
 	private static ViewPager sViewPager;
+	protected SQLiteDatabase sqLiteDatabase;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
