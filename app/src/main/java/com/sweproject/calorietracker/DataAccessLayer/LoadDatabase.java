@@ -13,6 +13,7 @@ public abstract class LoadDatabase implements ILoadDatabase
     protected static final String DATABASE_NAME = "CalorieCounter.db";
     protected static final String FOODS_TABLE_NAME = "Foods";
     protected SQLiteDatabase db;
+    private Connection connection;
 
     LoadDatabase()
     {
@@ -36,7 +37,7 @@ public abstract class LoadDatabase implements ILoadDatabase
 
     private void CreateDb()
     {
-        Connection connection = null;
+        connection = null;
         try
         {
             Class.forName("org.sqlite.JDBC");
