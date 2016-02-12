@@ -10,8 +10,10 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
 
-public class MainActivity extends AppCompatActivity{
+public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
 	private static FragmentManager sFragmentManager;
 	private static TabLayout sTabLayout;
@@ -23,6 +25,11 @@ public class MainActivity extends AppCompatActivity{
 		setContentView(R.layout.activity_main);
 
 		sFragmentManager = getSupportFragmentManager();
+
+
+		Button btn = (Button) findViewById(R.id.fragment_login_submitBtn);
+
+		btn.setOnClickListener(this);
 
 		Toolbar toolbar = (Toolbar) findViewById(R.id.activity_toolbar);
 		setSupportActionBar(toolbar);
@@ -52,8 +59,19 @@ public class MainActivity extends AppCompatActivity{
 
 	public void Submit(View view)
 	{
+
 		LoginFragment loginFragment = new LoginFragment();
-		loginFragment.onSubmit(view);
+		Bundle lilBundle = new Bundle();
+		TextView userName = (TextView)findViewById(R.id.fragment_login_userNameField);
+		TextView password = (TextView)findViewById(R.id.fragment_login_passwordField);
+		lilBundle.putString("userName", userName.getText().toString());
+		nextFragment(null, loginFragment, lilBundle, true, false);
+	}
+
+	public void Register(View view)
+	{
+		RegistrationFragment regFragment = new RegistrationFragment();
+		regFragment.Register(view);
 	}
 
 	public boolean isNewUser(String username)
@@ -124,6 +142,16 @@ public class MainActivity extends AppCompatActivity{
 			sViewPager.setVisibility(View.VISIBLE);
 		} else {
 			super.onBackPressed();
+		}
+	}
+
+	@Override
+	public void onClick(View v) {
+
+		switch (v.getId()){
+			case R.id.fragment_login_submitBtn:
+
+				break;
 		}
 	}
 }
