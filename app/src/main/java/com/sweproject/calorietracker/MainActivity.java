@@ -5,10 +5,12 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 
@@ -27,18 +29,27 @@ public class MainActivity extends AppCompatActivity{
 		sFragmentManager = getSupportFragmentManager();
 
 		Window window = getWindow();
+		// Set up the ViewPager with the sections adapter.
+		boolean isNewUser = this.isNewUser("");
+		if(isNewUser)
+		{
+			//login
 
-		if(android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-			window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-			window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-			window.setStatusBarColor(ContextCompat.getColor(this, R.color.colorPrimaryDark));
 		}
 
-		// If first time opening app
-		if (savedInstanceState == null) {
-			nextFragment(null, new FragmentCalendar(), null, false, false);
-		}
-		// else will show the last visible fragment (Android destroys activity during rotation)
+
+	}
+
+
+	public void Submit(View view)
+	{
+		LoginFragment loginFragment = new LoginFragment();
+		loginFragment.onSubmit(view);
+	}
+
+	public boolean isNewUser(String username)
+	{
+		return true;
 	}
 
 	@Override
