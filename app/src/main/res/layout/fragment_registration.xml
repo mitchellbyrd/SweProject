@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:text="Name"
+        android:ems="10"
+        android:id="@+id/editText"
+        android:layout_marginTop="73dp"
+        android:width="200dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignStart="@+id/editText2"/>
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/editText2"
+        android:text="Calories"
+        android:width="200dp"
+        android:layout_below="@+id/editText"
+        android:layout_alignStart="@+id/fragment_registration_proteinInput"
+        android:layout_marginTop="47dp"/>
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/fragment_registration_proteinInput"
+        android:text="Protein"
+        android:width="200dp"
+        android:layout_centerVertical="true"
+        android:layout_alignStart="@+id/fragment_registration_carbsInput"
+        android:layout_marginTop="47dp"
+        android:layout_alignParentTop="false"
+        android:layout_below="@+id/editText2"/>
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/fragment_registration_carbsInput"
+        android:text="Carbs"
+        android:layout_marginStart="40dp"
+        android:width="200dp"
+        android:layout_below="@+id/fragment_registration_proteinInput"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="52dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="g"
+        android:id="@+id/fragment_registration_gramLabel"
+        android:layout_alignBottom="@+id/fragment_registration_carbsInput"
+        android:layout_toEndOf="@+id/fragment_registration_carbsInput"
+        android:textColor="#030303"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="g"
+        android:id="@+id/fragment_registration_proteinGramLabel"
+        android:layout_alignBottom="@+id/fragment_registration_proteinInput"
+        android:layout_toEndOf="@+id/fragment_registration_proteinInput"
+        android:textColor="#020202"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Please enter your daily nutritional goals!"
+        android:id="@+id/textView"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:textColor="#010101"
+        android:layout_marginTop="30dp"/>
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Submit"
+        android:id="@+id/fragment_registration_submitBtn"
+        android:layout_marginTop="36dp"
+        android:width="100dp"
+        android:layout_below="@+id/fragment_registration_carbsInput"
+        android:layout_alignStart="@+id/fragment_registration_carbsInput"
+        android:background="#7afe5f"
+        android:height="50dp"
+        android:onClick="Register"/>
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Cancel"
+        android:id="@+id/fragment_registration_cancelBtn"
+        android:layout_alignTop="@+id/fragment_registration_submitBtn"
+        android:layout_alignEnd="@+id/textView"
+        android:width="100dp"
+        android:height="50dp"
+        android:background="#fe4b4b"/>
+</RelativeLayout>
