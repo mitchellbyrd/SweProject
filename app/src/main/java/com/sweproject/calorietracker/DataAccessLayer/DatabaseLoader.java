@@ -1,54 +1,73 @@
 package com.sweproject.calorietracker.DataAccessLayer;
 
+import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.util.ArrayList;
+
+import android.database.sqlite.SQLiteOpenHelper;
+
 
 /**
  * Created by mbyrd_000 on 2/9/2016.
  */
-public abstract class LoadDatabase implements ILoadDatabase
+public class DatabaseLoader extends SQLiteOpenHelper implements IDatabaseLoader
 {
     protected static final String DATABASE_NAME = "CalorieCounter.db";
-    protected static final String FOODS_TABLE_NAME = "Foods";
     protected SQLiteDatabase db;
-    private Connection connection;
 
-    LoadDatabase()
+    public DatabaseLoader(Context context)
     {
-
+        super(context, DATABASE_NAME, null, 1);
     }
 
-    public void OnInstallation()
+    @Override
+    public void onCreate(SQLiteDatabase sqLiteDatabase)
     {
-        CreateDb();
+        db = sqLiteDatabase;
         CreateTables();
+    }
+
+    @Override
+    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion)
+    {
+        DropTableIfExists("ServingSize_Day");
+        DropTableIfExists("Days");
+        DropTableIfExists("Users");
+        DropTableIfExists("ServingSizes");
+        DropTableIfExists("Foods");
+
+        onCreate(db);
     }
 
     private void CreateTables()
     {
         CreateFoodsTable();
-        CreateServingSizeDayTable();
+        CreateServingSizesTable();
         CreateUsersTable();
         CreateDaysTable();
         CreateServingSizeDayTable();
     }
 
+
     private void CreateDb()
     {
-        connection = null;
-        try
-        {
-            Class.forName("org.sqlite.JDBC");
-            connection = DriverManager.getConnection("jdbc:sqlite:CalorieCounter.db");
+        DropTableIfExists("Foods");
+
+        try {
+            db.execSQL("create table Foods (\n" +
+                    "  Id integer primary key\n" +
+                    ", Name text\n" +
+                    ", LastConsumed text\n" +
+                    ", Usda integer);");
         }
-        catch(Exception e)
-        {
-            System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+        catch(Exception e) {
+            System.out.println(e.getClass().getName() + ": " + e.getMessage());
             System.exit(-1);
         }
-        System.out.println("Successfully Created CalorieCounter.db");
     }
 
     private void CreateFoodsTable()
@@ -71,7 +90,7 @@ public abstract class LoadDatabase implements ILoadDatabase
         System.out.println("Created Foods Table");
     };
 
-    private void createServingSizesTable()
+    private void CreateServingSizesTable()
     {
         DropTableIfExists("ServingSizes");
 
@@ -184,5 +203,32 @@ public abstract class LoadDatabase implements ILoadDatabase
             System.exit(0);
         }
         System.out.println("Successfully dropped " + tableName + " table");
+    }
+
+    private void SelectTester()
+    {
+        ArrayList<String> arrayList = new ArrayList<String>();
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("select Id from Foods;", null);
+        cursor.moveToFirst();
+        while(cursor.isAfterLast() == false) {
+            arrayList.add(cursor.getString(cursor.getColumnIndex("Id")));
+            cursor.moveToNext();
+        }
+
+        db = this.getWritableDatabase();
+        db.execSQL("insert into Foods (Id, Name, LastConsumed, Usda) values (1, 'food', 'now', 2015);");
+
+        db = this.getReadableDatabase();
+        cursor = db.query("Foods", new String[] {"Id", "Name", "LastConsumed", "Usda"}, null,null,null,null,null );
+        cursor.moveToFirst();
+        while(cursor.isAfterLast() == false) {
+            arrayList.add(cursor.getString(cursor.getColumnIndex("Id")));
+            arrayList.add(cursor.getString(cursor.getColumnIndex("Name")));
+            arrayList.add(cursor.getString(cursor.getColumnIndex("LastConsumed")));
+            int i = (cursor.getInt(cursor.getColumnIndex("Usda")));
+            cursor.moveToNext();
+        }
     }
 }
