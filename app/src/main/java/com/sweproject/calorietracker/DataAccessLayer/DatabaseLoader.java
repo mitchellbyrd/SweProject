@@ -19,11 +19,19 @@ public class DatabaseLoader extends SQLiteOpenHelper implements IDatabaseLoader
     protected static final String DATABASE_NAME = "CalorieCounter.db";
     protected SQLiteDatabase db;
 
+    /**
+     * Constructor, gives the class the Context of the application
+     * @param context
+     */
     public DatabaseLoader(Context context)
     {
         super(context, DATABASE_NAME, null, 1);
     }
 
+    /**
+     * Creates the Database
+     * @param sqLiteDatabase
+     */
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase)
     {
@@ -43,6 +51,9 @@ public class DatabaseLoader extends SQLiteOpenHelper implements IDatabaseLoader
         onCreate(db);
     }
 
+    /**
+     * Creates tables in the order they should be created
+     */
     private void CreateTables()
     {
         CreateFoodsTable();
@@ -50,24 +61,6 @@ public class DatabaseLoader extends SQLiteOpenHelper implements IDatabaseLoader
         CreateUsersTable();
         CreateDaysTable();
         CreateServingSizeDayTable();
-    }
-
-
-    private void CreateDb()
-    {
-        DropTableIfExists("Foods");
-
-        try {
-            db.execSQL("create table Foods (\n" +
-                    "  Id integer primary key\n" +
-                    ", Name text\n" +
-                    ", LastConsumed text\n" +
-                    ", Usda integer);");
-        }
-        catch(Exception e) {
-            System.out.println(e.getClass().getName() + ": " + e.getMessage());
-            System.exit(-1);
-        }
     }
 
     private void CreateFoodsTable()
@@ -205,7 +198,8 @@ public class DatabaseLoader extends SQLiteOpenHelper implements IDatabaseLoader
         System.out.println("Successfully dropped " + tableName + " table");
     }
 
-    private void SelectTester()
+    /*
+    public void SelectTester()
     {
         ArrayList<String> arrayList = new ArrayList<String>();
 
@@ -231,4 +225,5 @@ public class DatabaseLoader extends SQLiteOpenHelper implements IDatabaseLoader
             cursor.moveToNext();
         }
     }
+    */
 }
