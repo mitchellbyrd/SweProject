@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent">
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"  android:layout_width="match_parent" android:layout_height="match_parent">
+<LinearLayout  android:layout_width="match_parent" android:layout_height="match_parent">
+<RelativeLayout
+    android:layout_width="match_parent" android:layout_height="594dp">
 
     <EditText
         android:layout_width="wrap_content"
@@ -20,9 +23,9 @@
         android:id="@+id/editText2"
         android:text="Calories"
         android:width="200dp"
-        android:layout_below="@+id/editText"
+        android:layout_below="@+id/textView"
         android:layout_alignStart="@+id/fragment_registration_proteinInput"
-        android:layout_marginTop="47dp" />
+        android:layout_marginTop="190dp" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -32,20 +35,19 @@
         android:width="200dp"
         android:layout_centerVertical="true"
         android:layout_alignStart="@+id/fragment_registration_carbsInput"
-        android:layout_marginTop="47dp"
+        android:layout_marginTop="300dp"
         android:layout_alignParentTop="false"
-        android:layout_below="@+id/editText2" />
+        android:layout_alignTop="@+id/textView" />
 
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/fragment_registration_carbsInput"
         android:text="Carbs"
-        android:layout_marginStart="40dp"
         android:width="200dp"
-        android:layout_below="@+id/fragment_registration_proteinInput"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="52dp" />
+        android:layout_above="@+id/fragment_registration_submitBtn"
+        android:layout_alignStart="@+id/textView"
+        android:layout_marginBottom="84dp" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -84,13 +86,12 @@
         android:layout_height="wrap_content"
         android:text="Submit"
         android:id="@+id/fragment_registration_submitBtn"
-        android:layout_marginTop="36dp"
         android:width="100dp"
-        android:layout_below="@+id/fragment_registration_carbsInput"
-        android:layout_alignStart="@+id/fragment_registration_carbsInput"
         android:background="#7afe5f"
         android:height="50dp"
-        android:onClick="Register"/>
+        android:onClick="Register"
+        android:layout_alignParentBottom="true"
+        android:layout_alignStart="@+id/fragment_registration_carbsInput" />
 
     <Button
         style="?android:attr/buttonStyleSmall"
@@ -103,4 +104,17 @@
         android:width="100dp"
         android:height="50dp"
         android:background="#fe4b4b" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="numberPassword"
+        android:ems="10"
+        android:id="@+id/fragment_registration_passwordInput"
+        android:layout_below="@+id/editText"
+        android:layout_alignStart="@+id/editText2"
+        android:layout_marginTop="49dp"
+        android:text="Password" />
 </RelativeLayout>
+    </LinearLayout>
+</ScrollView>
