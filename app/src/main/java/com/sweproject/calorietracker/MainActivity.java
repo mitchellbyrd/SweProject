@@ -13,8 +13,6 @@ import android.view.MenuItem;
 import android.view.Window;
 import android.view.WindowManager;
 
-import com.sweproject.calorietracker.DataAccessLayer.DatabaseLoader;
-
 public class MainActivity extends AppCompatActivity{
 
 	private static FragmentManager sFragmentManager;
