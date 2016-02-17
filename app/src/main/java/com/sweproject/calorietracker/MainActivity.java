@@ -1,82 +1,49 @@
 package com.sweproject.calorietracker;
 
+import android.database.sqlite.SQLiteDatabase;
+import android.os.Build;
 import android.os.Bundle;
-import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.view.ViewPager;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
-import android.widget.TextView;
+import android.view.Window;
+import android.view.WindowManager;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener{
+import com.sweproject.calorietracker.DataAccessLayer.DatabaseLoader;
+
+public class MainActivity extends AppCompatActivity{
 
 	private static FragmentManager sFragmentManager;
-	private static TabLayout sTabLayout;
-	private static ViewPager sViewPager;
+	protected SQLiteDatabase sqLiteDatabase;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 
-		sFragmentManager = getSupportFragmentManager();
-
-
-		Button btn = (Button) findViewById(R.id.fragment_login_submitBtn);
-
-		btn.setOnClickListener(this);
-
 		Toolbar toolbar = (Toolbar) findViewById(R.id.activity_toolbar);
 		setSupportActionBar(toolbar);
-		// Create the adapter that will return a fragment for each of the three
-		// primary sections of the activity.
-		TabAdapter tabAdapter = new TabAdapter(getSupportFragmentManager());
 
-		// Set up the ViewPager with the sections adapter.
-		boolean isNewUser = this.isNewUser("");
-		if(isNewUser)
-		{
-			//login
+		sFragmentManager = getSupportFragmentManager();
 
+		Window window = getWindow();
+
+		// On devices with Android Lolipop, change the color of the status bar to the colorPrimaryDark
+		if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+			window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+			window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+			window.setStatusBarColor(ContextCompat.getColor(this, R.color.colorPrimaryDark));
 		}
 
-		SetUpMainActivity(tabAdapter);
-
-	}
-
-	private void SetUpMainActivity(TabAdapter tabAdapter) {
-		sViewPager = (ViewPager) findViewById(R.id.activity_viewpager);
-		sViewPager.setAdapter(tabAdapter);
-
-		sTabLayout = (TabLayout) findViewById(R.id.activity_tabs);
-		sTabLayout.setupWithViewPager(sViewPager);
-	}
-
-	public void Submit(View view)
-	{
-
-		LoginFragment loginFragment = new LoginFragment();
-		Bundle lilBundle = new Bundle();
-		TextView userName = (TextView)findViewById(R.id.fragment_login_userNameField);
-		TextView password = (TextView)findViewById(R.id.fragment_login_passwordField);
-		lilBundle.putString("userName", userName.getText().toString());
-		nextFragment(null, loginFragment, lilBundle, true, false);
-	}
-
-	public void Register(View view)
-	{
-		RegistrationFragment regFragment = new RegistrationFragment();
-		regFragment.Register(view);
-	}
-
-	public boolean isNewUser(String username)
-	{
-		return true;
+		// If first time opening app
+		if (savedInstanceState == null) {
+			nextFragment(null, new LoginFragment(), null, false, false);
+		}
+		// else will show the last visible fragment (Android destroys activity during rotation)
 	}
 
 	@Override
@@ -112,9 +79,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 	 */
 	public static void nextFragment(Fragment fromFrag, Fragment toFrag, Bundle bun, boolean add, boolean clear){
 
-		sTabLayout.setVisibility(View.GONE);
-		sViewPager.setVisibility(View.GONE);
-
 		if (bun != null){
 			toFrag.setArguments(bun);
 		}
@@ -136,22 +100,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 	@Override
 	public void onBackPressed() {
-		if (getSupportFragmentManager().getBackStackEntryCount() == 1) {
+		if (getSupportFragmentManager().getBackStackEntryCount() != 0) {
 			getSupportFragmentManager().popBackStack();
-			sTabLayout.setVisibility(View.VISIBLE);
-			sViewPager.setVisibility(View.VISIBLE);
 		} else {
 			super.onBackPressed();
-		}
-	}
-
-	@Override
-	public void onClick(View v) {
-
-		switch (v.getId()){
-			case R.id.fragment_login_submitBtn:
-
-				break;
 		}
 	}
 }
