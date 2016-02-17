@@ -9,6 +9,11 @@ import android.widget.Button;
 
 public class RegistrationFragment extends Fragment implements View.OnClickListener {
 
+	private String userName;
+	private int dailyCalorieGoal;
+	private int dailyProteinGoal;
+	private int dailyCarbGoal;
+	
 	@Override
 	public void onActivityCreated(Bundle savedInstance) {
 		super.onActivityCreated(savedInstance);
@@ -29,5 +34,10 @@ public class RegistrationFragment extends Fragment implements View.OnClickListen
 				MainActivity.nextFragment(this, new FragmentCalendar(), null, false, false);
 				break;
 		}
+	}
+
+	public void Register(View view)
+	{
+		//register user
 	}
 }
