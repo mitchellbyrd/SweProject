@@ -1,107 +1,159 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
 
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="textPersonName"
-        android:text="Name"
-        android:ems="10"
-        android:id="@+id/editText"
-        android:layout_marginTop="73dp"
-        android:width="200dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignStart="@+id/editText2"/>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/editText2"
-        android:text="Calories"
-        android:width="200dp"
-        android:layout_below="@+id/editText"
-        android:layout_alignStart="@+id/fragment_registration_proteinInput"
-        android:layout_marginTop="47dp"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/fragment_registration_proteinInput"
-        android:text="Protein"
-        android:width="200dp"
-        android:layout_centerVertical="true"
-        android:layout_alignStart="@+id/fragment_registration_carbsInput"
-        android:layout_marginTop="47dp"
-        android:layout_alignParentTop="false"
-        android:layout_below="@+id/editText2"/>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="641dp">
 
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/fragment_registration_carbsInput"
-        android:text="Carbs"
-        android:layout_marginStart="40dp"
-        android:width="200dp"
-        android:layout_below="@+id/fragment_registration_proteinInput"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="52dp"/>
+            <EditText
+                android:id="@+id/editText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_alignStart="@+id/editText2"
+                android:layout_marginTop="73dp"
+                android:width="200dp"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:text="Name"
+                android:layout_alignEnd="@+id/fragment_registration_proteinGramLabel" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="g"
-        android:id="@+id/fragment_registration_gramLabel"
-        android:layout_alignBottom="@+id/fragment_registration_carbsInput"
-        android:layout_toEndOf="@+id/fragment_registration_carbsInput"
-        android:textColor="#030303"/>
+            <EditText
+                android:id="@+id/editText2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:width="200dp"
+                android:text="Calories"
+                android:layout_below="@+id/fragment_registration_passwordInput"
+                android:layout_alignStart="@+id/fragment_registration_proteinInput"
+                android:layout_marginTop="30dp"
+                android:layout_alignEnd="@+id/fragment_registration_proteinGramLabel" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="g"
-        android:id="@+id/fragment_registration_proteinGramLabel"
-        android:layout_alignBottom="@+id/fragment_registration_proteinInput"
-        android:layout_toEndOf="@+id/fragment_registration_proteinInput"
-        android:textColor="#020202"/>
+            <EditText
+                android:id="@+id/fragment_registration_proteinInput"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:width="200dp"
+                android:text="Protein"
+                android:layout_below="@+id/editText2"
+                android:layout_alignStart="@+id/fragment_registration_carbsInput"
+                android:layout_marginTop="30dp" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Please enter your daily nutritional goals!"
-        android:id="@+id/textView"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:textColor="#010101"
-        android:layout_marginTop="30dp"/>
+            <EditText
+                android:id="@+id/fragment_registration_carbsInput"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:width="200dp"
+                android:text="Carbs"
+                android:layout_below="@+id/fragment_registration_proteinGramLabel"
+                android:layout_alignStart="@+id/textView"
+                android:layout_marginTop="30dp" />
 
-    <Button
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Submit"
-        android:id="@+id/fragment_registration_submitBtn"
-        android:layout_marginTop="36dp"
-        android:width="100dp"
-        android:layout_below="@+id/fragment_registration_carbsInput"
-        android:layout_alignStart="@+id/fragment_registration_carbsInput"
-        android:background="#7afe5f"
-        android:height="50dp"
-        android:onClick="Register"/>
+            <TextView
+                android:id="@+id/fragment_registration_gramLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/fragment_registration_carbsInput"
+                android:layout_toEndOf="@+id/fragment_registration_carbsInput"
+                android:text="g"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="#030303"/>
 
-    <Button
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Cancel"
-        android:id="@+id/fragment_registration_cancelBtn"
-        android:layout_alignTop="@+id/fragment_registration_submitBtn"
-        android:layout_alignEnd="@+id/textView"
-        android:width="100dp"
-        android:height="50dp"
-        android:background="#fe4b4b"/>
-</RelativeLayout>
+            <TextView
+                android:id="@+id/fragment_registration_proteinGramLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/fragment_registration_proteinInput"
+                android:layout_toEndOf="@+id/fragment_registration_proteinInput"
+                android:text="g"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="#020202"/>
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="30dp"
+                android:text="Please enter your daily nutritional goals!"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="#010101"/>
+
+            <Button
+                android:id="@+id/fragment_registration_submitBtn"
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:width="100dp"
+                android:height="50dp"
+                android:background="#7afe5f"
+                android:text="Submit"
+                android:layout_alignParentBottom="true"
+                android:layout_alignStart="@+id/fragment_registration_carbsInput" />
+
+            <Button
+                android:id="@+id/fragment_registration_cancelBtn"
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignEnd="@+id/textView"
+                android:layout_alignTop="@+id/fragment_registration_submitBtn"
+                android:width="100dp"
+                android:height="50dp"
+                android:background="#fe4b4b"
+                android:text="Cancel"/>
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="textPersonName"
+                android:text="User Name"
+                android:ems="10"
+                android:id="@+id/fragment_registration_userNameInput"
+                android:layout_marginTop="30dp"
+                android:layout_below="@+id/editText"
+                android:layout_alignStart="@+id/editText"
+                android:layout_alignEnd="@+id/fragment_registration_proteinGramLabel" />
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="textPassword"
+                android:ems="10"
+                android:id="@+id/fragment_registration_passwordInput"
+                android:text="Password"
+                android:layout_below="@+id/fragment_registration_userNameInput"
+                android:layout_alignStart="@+id/fragment_registration_userNameInput"
+                android:layout_marginTop="30dp" />
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/fragment_registration_fatsInput"
+                android:layout_below="@+id/fragment_registration_gramLabel"
+                android:layout_alignStart="@+id/fragment_registration_carbsInput"
+                android:layout_marginTop="30dp"
+                android:layout_toStartOf="@+id/fragment_registration_gramLabel"
+                android:text="Fats" />
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="g"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="#020202"
+                android:layout_alignBottom="@+id/fragment_registration_fatsInput"
+                android:layout_toEndOf="@+id/fragment_registration_fatsInput" />
+
+        </RelativeLayout>
+    </LinearLayout>
+</ScrollView>
