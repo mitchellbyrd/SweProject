@@ -10,7 +10,7 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="594dp">
+            android:layout_height="641dp">
 
             <EditText
                 android:id="@+id/editText"
@@ -22,40 +22,39 @@
                 android:width="200dp"
                 android:ems="10"
                 android:inputType="textPersonName"
-                android:text="Name"/>
+                android:text="Name"
+                android:layout_alignEnd="@+id/fragment_registration_proteinGramLabel" />
 
             <EditText
                 android:id="@+id/editText2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignStart="@+id/fragment_registration_proteinInput"
-                android:layout_below="@+id/editText"
-                android:layout_marginTop="47dp"
                 android:width="200dp"
-                android:text="Calories"/>
+                android:text="Calories"
+                android:layout_below="@+id/fragment_registration_passwordInput"
+                android:layout_alignStart="@+id/fragment_registration_proteinInput"
+                android:layout_marginTop="30dp"
+                android:layout_alignEnd="@+id/fragment_registration_proteinGramLabel" />
 
             <EditText
                 android:id="@+id/fragment_registration_proteinInput"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentTop="false"
-                android:layout_alignStart="@+id/fragment_registration_carbsInput"
-                android:layout_below="@+id/editText2"
-                android:layout_centerVertical="true"
-                android:layout_marginTop="47dp"
                 android:width="200dp"
-                android:text="Protein"/>
+                android:text="Protein"
+                android:layout_below="@+id/editText2"
+                android:layout_alignStart="@+id/fragment_registration_carbsInput"
+                android:layout_marginTop="30dp" />
 
             <EditText
                 android:id="@+id/fragment_registration_carbsInput"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_below="@+id/fragment_registration_proteinInput"
-                android:layout_marginStart="40dp"
-                android:layout_marginTop="52dp"
                 android:width="200dp"
-                android:text="Carbs"/>
+                android:text="Carbs"
+                android:layout_below="@+id/fragment_registration_proteinGramLabel"
+                android:layout_alignStart="@+id/textView"
+                android:layout_marginTop="30dp" />
 
             <TextView
                 android:id="@+id/fragment_registration_gramLabel"
@@ -93,13 +92,12 @@
                 style="?android:attr/buttonStyleSmall"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignStart="@+id/fragment_registration_carbsInput"
-                android:layout_below="@+id/fragment_registration_carbsInput"
-                android:layout_marginTop="36dp"
                 android:width="100dp"
                 android:height="50dp"
                 android:background="#7afe5f"
-                android:text="Submit"/>
+                android:text="Submit"
+                android:layout_alignParentBottom="true"
+                android:layout_alignStart="@+id/fragment_registration_carbsInput" />
 
             <Button
                 android:id="@+id/fragment_registration_cancelBtn"
@@ -112,6 +110,49 @@
                 android:height="50dp"
                 android:background="#fe4b4b"
                 android:text="Cancel"/>
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="textPersonName"
+                android:text="User Name"
+                android:ems="10"
+                android:id="@+id/fragment_registration_userNameInput"
+                android:layout_marginTop="30dp"
+                android:layout_below="@+id/editText"
+                android:layout_alignStart="@+id/editText"
+                android:layout_alignEnd="@+id/fragment_registration_proteinGramLabel" />
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="textPassword"
+                android:ems="10"
+                android:id="@+id/fragment_registration_passwordInput"
+                android:text="Password"
+                android:layout_below="@+id/fragment_registration_userNameInput"
+                android:layout_alignStart="@+id/fragment_registration_userNameInput"
+                android:layout_marginTop="30dp" />
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/fragment_registration_fatsInput"
+                android:layout_below="@+id/fragment_registration_gramLabel"
+                android:layout_alignStart="@+id/fragment_registration_carbsInput"
+                android:layout_marginTop="30dp"
+                android:layout_toStartOf="@+id/fragment_registration_gramLabel"
+                android:text="Fats" />
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="g"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="#020202"
+                android:layout_alignBottom="@+id/fragment_registration_fatsInput"
+                android:layout_toEndOf="@+id/fragment_registration_fatsInput" />
 
         </RelativeLayout>
     </LinearLayout>
