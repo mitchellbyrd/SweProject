@@ -1,6 +1,8 @@
 package com.sweproject.calorietracker;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,7 +13,7 @@ import android.widget.TextView;
 /**
  * Created by Marcus on 2/15/2016.
  */
-public class FragmentDay extends Fragment {
+public class FragmentDay extends Fragment implements View.OnClickListener {
 
 	@Override
 	public void onActivityCreated(Bundle savedInstance) {
@@ -34,6 +36,9 @@ public class FragmentDay extends Fragment {
 		TextView title = (TextView) getActivity().findViewById(R.id.fragment_calendar_day_textview_title);
 		title.setText(date);
 
+		FloatingActionButton fab = (FloatingActionButton) getActivity().findViewById(R.id.fragment_calendar_fab);
+		fab.setOnClickListener(this);
+
 		ListView foodList = (ListView) getActivity().findViewById(R.id.fragment_calendar_day_listview);
 		foodList.setAdapter(new AdapterDayFood(getActivity()));
 	}
@@ -42,6 +47,7 @@ public class FragmentDay extends Fragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		return inflater.inflate(R.layout.fragment_calendar_day, container, false);
 	}
+
 
 	private String getMonth(int month) {
 		switch (month) {
@@ -71,6 +77,15 @@ public class FragmentDay extends Fragment {
 				return "December";
 			default:
 				return "Invalid Month";
+		}
+	}
+
+	@Override
+	public void onClick(View view) {
+		switch (view.getId()) {
+			case R.id.fragment_calendar_fab:
+				MainActivity.nextFragment(this, new FragmentFood(), null, true, false);
+				break;
 		}
 	}
 }
