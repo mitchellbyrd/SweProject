@@ -15,20 +15,22 @@ import android.widget.TextView;
  */
 public class FragmentDay extends Fragment implements View.OnClickListener {
 
+	private Bundle mBundle;
+
 	@Override
 	public void onActivityCreated(Bundle savedInstance) {
 		super.onActivityCreated(savedInstance);
 
-		Bundle bundle = getArguments();
+		mBundle = getArguments();
 
 		int day = 0;
 		int month = 0;
 		int year = 0;
 
-		if (bundle != null) {
-			day = bundle.getInt(FragmentCalendar.DAY, -1);
-			month = bundle.getInt(FragmentCalendar.MONTH, -1);
-			year = bundle.getInt(FragmentCalendar.YEAR, -1);
+		if (mBundle != null) {
+			day = mBundle.getInt(FragmentCalendar.DAY, -1);
+			month = mBundle.getInt(FragmentCalendar.MONTH, -1);
+			year = mBundle.getInt(FragmentCalendar.YEAR, -1);
 		}
 
 		String date = getMonth(month) + " " + day + ", " + year;
@@ -47,7 +49,6 @@ public class FragmentDay extends Fragment implements View.OnClickListener {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		return inflater.inflate(R.layout.fragment_calendar_day, container, false);
 	}
-
 
 	private String getMonth(int month) {
 		switch (month) {
@@ -84,7 +85,7 @@ public class FragmentDay extends Fragment implements View.OnClickListener {
 	public void onClick(View view) {
 		switch (view.getId()) {
 			case R.id.fragment_calendar_fab:
-				MainActivity.nextFragment(this, new FragmentFood(), null, true, false);
+				MainActivity.nextFragment(this, new FragmentFood(), mBundle, false, false);
 				break;
 		}
 	}

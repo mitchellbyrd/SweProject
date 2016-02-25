@@ -103,13 +103,24 @@
         android:id="@+id/fragment_food_spinner_serving"
         android:layout_alignTop="@+id/fragment_food_label_serving"
         android:layout_alignStart="@+id/fragment_food_value_fats"
-        android:spinnerMode="dropdown"/>
+        android:spinnerMode="dropdown"
+        android:layout_above="@+id/fragment_food_label_serving_type"/>
 
     <Spinner
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/fragment_food_spinner_serving_type"
+        android:spinnerMode="dropdown"
         android:layout_alignTop="@+id/fragment_food_label_serving_type"
         android:layout_alignStart="@+id/fragment_food_spinner_serving"
-        android:spinnerMode="dropdown"/>
+        android:layout_alignBottom="@+id/fragment_food_label_serving_type"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Create"
+        android:id="@+id/fragment_food_btn_submit"
+        android:layout_below="@+id/fragment_food_spinner_serving_type"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="72dp"/>
 </RelativeLayout>
