@@ -12,10 +12,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.FrameLayout;
 
 public class MainActivity extends AppCompatActivity{
 
 	private static FragmentManager sFragmentManager;
+	private static FrameLayout mContainer;
 	protected SQLiteDatabase sqLiteDatabase;
 
 	@Override
@@ -27,6 +29,8 @@ public class MainActivity extends AppCompatActivity{
 		setSupportActionBar(toolbar);
 
 		sFragmentManager = getSupportFragmentManager();
+
+		mContainer = (FrameLayout) findViewById(R.id.activity_container);
 
 		Window window = getWindow();
 
@@ -82,7 +86,8 @@ public class MainActivity extends AppCompatActivity{
 		}
 		if (clear){
 			// Clears the back stack, leaving the first fragment added to be displayed
-			sFragmentManager.popBackStack(sFragmentManager.getBackStackEntryAt(0).getId(), 0);
+			mContainer.removeAllViews();
+			sFragmentManager.popBackStack(sFragmentManager.getBackStackEntryAt(0).getId(), FragmentManager.POP_BACK_STACK_INCLUSIVE);
 		}
 		if (add){
 			sFragmentManager.beginTransaction()
