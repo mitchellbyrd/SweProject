@@ -2,7 +2,6 @@ package com.sweproject.calorietracker;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,6 +40,6 @@ public class FragmentFood extends Fragment implements View.OnClickListener {
 	@Override
 	public void onClick(View view) {
 		// GetArguments returns the date back to the Day fragment
-		MainActivity.nextFragment(this, new FragmentDay(), getArguments(), false, false);
+		MainActivity.nextFragment(this, new FragmentDay(), getArguments(), true, true);
 	}
 }

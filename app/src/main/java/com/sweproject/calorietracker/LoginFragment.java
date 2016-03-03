@@ -47,7 +47,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
 	public void onClick(View view) {
 		switch (view.getId()) {
 			case R.id.fragment_login_submitBtn:
-				MainActivity.nextFragment(this, new FragmentCalendar(), null, true, false);
+				MainActivity.nextFragment(this, new FragmentCalendar(), null, false, false);
 				break;
 		}
 	}

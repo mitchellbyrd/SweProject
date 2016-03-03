@@ -1,6 +1,5 @@
 package com.sweproject.calorietracker;
 
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
@@ -85,7 +84,7 @@ public class FragmentDay extends Fragment implements View.OnClickListener {
 	public void onClick(View view) {
 		switch (view.getId()) {
 			case R.id.fragment_calendar_fab:
-				MainActivity.nextFragment(this, new FragmentFood(), mBundle, false, false);
+				MainActivity.nextFragment(this, new FragmentFood(), mBundle, true, false);
 				break;
 		}
 	}

@@ -45,7 +45,7 @@ public class FragmentCalendar extends Fragment implements CalendarView.OnDateCha
 			bun.putInt(MONTH, month);
 			bun.putInt(DAY, dayOfMonth);
 
-			MainActivity.nextFragment(this, new FragmentDay(), bun, false, false);
+			MainActivity.nextFragment(this, new FragmentDay(), bun, true, false);
 		}
 	}
 }
