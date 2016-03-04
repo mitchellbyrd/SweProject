@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
-
+import android.widget.TextView;
 
 /**
  * Created by Marcus on 2/18/2016.
@@ -19,6 +19,9 @@ public class FragmentFood extends Fragment implements View.OnClickListener {
 	public void onActivityCreated(Bundle savedInstance) {
 		super.onActivityCreated(savedInstance);
 
+		Bundle bun = getArguments();
+
+		TextView title = (TextView) getActivity().findViewById(R.id.fragmet_food_title);
 		Spinner dropDown = (Spinner) getActivity().findViewById(R.id.fragment_food_spinner_serving);
 		Spinner dropDown2 = (Spinner) getActivity().findViewById(R.id.fragment_food_spinner_serving_type);
 		Button submit = (Button) getActivity().findViewById(R.id.fragment_food_btn_submit);
@@ -26,6 +29,7 @@ public class FragmentFood extends Fragment implements View.OnClickListener {
 		String[] type = {"Grams", "Ounce"};
 		String[] size = {"1", "2", "3", "4", "5"};
 
+		title.setText(MainActivity.foodList.get(bun.getInt("Index")));
 		dropDown.setAdapter(new ArrayAdapter<>(getActivity(), R.layout.support_simple_spinner_dropdown_item, size));
 		dropDown2.setAdapter(new ArrayAdapter<>(getActivity(), R.layout.support_simple_spinner_dropdown_item, type));
 		submit.setOnClickListener(this);

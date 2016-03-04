@@ -45,6 +45,14 @@ public class MainActivity extends AppCompatActivity{
 		foodList.add("Niel");
 		foodList.add("Asbol");
 		foodList.add("Polstim");
+		foodList.add("Salt");
+		foodList.add("Pepper");
+		foodList.add("Cheese");
+		foodList.add("Cake");
+		foodList.add("Muffin");
+		foodList.add("Fires");
+		foodList.add("Lop");
+		foodList.add("Spam");
 
 		Window window = getWindow();
 
