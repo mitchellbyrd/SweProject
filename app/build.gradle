@@ -27,4 +27,6 @@ dependencies {
     compile files('libs/jdbc-api-1.4.jar')
     compile files('lib/jdbc-api-1.4.jar')
     compile files('libs/sqlite-jdbc-3.8.11.2.jar')
+    compile 'com.microsoft.azure:azure-mobile-android:3.0'
+    compile 'com.google.android.gms:play-services-appindexing:8.1.0'
 }
