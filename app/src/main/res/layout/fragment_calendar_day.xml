@@ -109,6 +109,7 @@
         android:id="@+id/fragment_calendar_day_listview"
         android:layout_below="@+id/fragment_calendar_day_progressbar_fats"
         android:layout_centerHorizontal="true"
+        android:focusable="true"
         android:layout_marginTop="35dp"
         android:layout_marginEnd="15dp"
         android:layout_marginStart="15dp"
@@ -123,6 +124,5 @@
         android:layout_marginBottom="10dp"
         android:layout_marginEnd="10dp"
         android:src="@drawable/ic_add_white_24dp"/>
-        //android:src="@drawable/ic_add_white_24dp"/>
 
 </RelativeLayout>
