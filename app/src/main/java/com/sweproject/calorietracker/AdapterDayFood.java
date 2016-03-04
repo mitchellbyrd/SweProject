@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 /**
@@ -13,14 +14,16 @@ import android.widget.TextView;
 public class AdapterDayFood extends BaseAdapter {
 
 	private Context mContext;
+	private DeleteFoodListener mListener;
 
-	public AdapterDayFood(Context context) {
+	public AdapterDayFood(Context context, DeleteFoodListener deleteFoodListener) {
 		mContext = context;
+		mListener = deleteFoodListener;
 	}
 
 	@Override
 	public int getCount() {
-		return 8;
+		return MainActivity.foodList.size();
 	}
 
 	@Override
@@ -39,11 +42,12 @@ public class AdapterDayFood extends BaseAdapter {
 		View row = ((LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE))
 				.inflate(R.layout.calendar_day_single_row, parent, false);
 
-		TextView title = (TextView) row.findViewById(R.id.single_row_title);
-		TextView calorie = (TextView) row.findViewById(R.id.single_row_calorie);
+		((TextView) row.findViewById(R.id.single_row_title)).setText("Food item " + MainActivity.foodList.get(count));
+		((TextView) row.findViewById(R.id.single_row_calorie)).setText("" + MainActivity.foodList.get(count));
 
-		title.setText("Food item " + count);
-		calorie.setText("" + count);
+		ImageView icon = (ImageView) row.findViewById(R.id.single_row_ic);
+		icon.setTag(count);
+		icon.setOnClickListener(mListener);
 
 		return row;
 	}

@@ -14,11 +14,14 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
 
+import java.util.ArrayList;
+
 public class MainActivity extends AppCompatActivity{
 
 	private static FragmentManager sFragmentManager;
 	private static FrameLayout mContainer;
 	protected SQLiteDatabase sqLiteDatabase;
+	public static ArrayList<String> foodList = new ArrayList<>();
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +34,17 @@ public class MainActivity extends AppCompatActivity{
 		sFragmentManager = getSupportFragmentManager();
 
 		mContainer = (FrameLayout) findViewById(R.id.activity_container);
+
+		foodList.add("Monely");
+		foodList.add("Sumer");
+		foodList.add("Werst");
+		foodList.add("Lioner");
+		foodList.add("Jacker");
+		foodList.add("Pie");
+		foodList.add("Queen");
+		foodList.add("Niel");
+		foodList.add("Asbol");
+		foodList.add("Polstim");
 
 		Window window = getWindow();
 

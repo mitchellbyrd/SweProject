@@ -15,6 +15,7 @@ import android.widget.TextView;
 public class FragmentDay extends Fragment implements View.OnClickListener {
 
 	private Bundle mBundle;
+	public static ListView foodList;
 
 	@Override
 	public void onActivityCreated(Bundle savedInstance) {
@@ -40,8 +41,8 @@ public class FragmentDay extends Fragment implements View.OnClickListener {
 		FloatingActionButton fab = (FloatingActionButton) getActivity().findViewById(R.id.fragment_calendar_fab);
 		fab.setOnClickListener(this);
 
-		ListView foodList = (ListView) getActivity().findViewById(R.id.fragment_calendar_day_listview);
-		foodList.setAdapter(new AdapterDayFood(getActivity()));
+		foodList = (ListView) getActivity().findViewById(R.id.fragment_calendar_day_listview);
+		foodList.setAdapter(new AdapterDayFood(getActivity(), new DeleteFoodListener()));
 	}
 
 	@Override
