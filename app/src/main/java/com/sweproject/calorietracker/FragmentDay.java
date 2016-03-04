@@ -6,28 +6,32 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
 /**
  * Created by Marcus on 2/15/2016.
  */
-public class FragmentDay extends Fragment implements View.OnClickListener {
+public class FragmentDay extends Fragment implements View.OnClickListener, AdapterView.OnItemClickListener {
 
-	private Bundle mBundle;
+	private static Bundle mBundle;
 	public static ListView foodList;
 
 	@Override
 	public void onActivityCreated(Bundle savedInstance) {
 		super.onActivityCreated(savedInstance);
 
-		mBundle = getArguments();
-
-		int day = 0;
-		int month = 0;
-		int year = 0;
+		int day;
+		int month;
+		int year;
 
 		if (mBundle != null) {
+			day = mBundle.getInt(FragmentCalendar.DAY, -1);
+			month = mBundle.getInt(FragmentCalendar.MONTH, -1);
+			year = mBundle.getInt(FragmentCalendar.YEAR, -1);
+		} else {
+			mBundle = getArguments();
 			day = mBundle.getInt(FragmentCalendar.DAY, -1);
 			month = mBundle.getInt(FragmentCalendar.MONTH, -1);
 			year = mBundle.getInt(FragmentCalendar.YEAR, -1);
@@ -43,6 +47,7 @@ public class FragmentDay extends Fragment implements View.OnClickListener {
 
 		foodList = (ListView) getActivity().findViewById(R.id.fragment_calendar_day_listview);
 		foodList.setAdapter(new AdapterDayFood(getActivity(), new DeleteFoodListener()));
+		foodList.setOnItemClickListener(this);
 	}
 
 	@Override
@@ -85,8 +90,15 @@ public class FragmentDay extends Fragment implements View.OnClickListener {
 	public void onClick(View view) {
 		switch (view.getId()) {
 			case R.id.fragment_calendar_fab:
-				MainActivity.nextFragment(this, new FragmentFood(), mBundle, true, false);
+				MainActivity.nextFragment(this, new FragmentFoodSearch(), null, true, false);
 				break;
 		}
+	}
+
+	@Override
+	public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+		Bundle bun = new Bundle();
+		bun.putInt("Index", i);
+		MainActivity.nextFragment(this, new FragmentFood(), bun, true, false);
 	}
 }
