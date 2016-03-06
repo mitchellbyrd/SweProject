@@ -1,5 +1,6 @@
 package com.sweproject.calorietracker;
 
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
@@ -15,8 +16,10 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.microsoft.windowsazure.mobileservices.MobileServiceClient;
+import com.microsoft.windowsazure.mobileservices.MobileServiceList;
 
 import java.net.MalformedURLException;
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -25,6 +28,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 	private EditText mNumber;
 	private EditText mServingType;
 	private EditText mServingSize;
+	private ArrayList<Foodies> listings;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -34,13 +38,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 		Toolbar toolbar = (Toolbar) findViewById(R.id.activity_toolbar);
 		setSupportActionBar(toolbar);
 
-		Button btn = (Button) findViewById(R.id.activity_btn);
-		btn.setOnClickListener(this);
+		Button saveBtn = (Button) findViewById(R.id.activity_save_btn);
+		saveBtn.setOnClickListener(this);
+		Button loadBtn = (Button) findViewById(R.id.activity_load_btn);
+		loadBtn.setOnClickListener(this);
 
 		mName = (EditText) findViewById(R.id.activity_name);
 		mNumber = (EditText) findViewById(R.id.activity_number);
 		mServingType = (EditText) findViewById(R.id.activity_serving_type);
 		mServingSize = (EditText) findViewById(R.id.activity_serving_size);
+
+		listings = new ArrayList<>();
 
 		Window window = getWindow();
 
@@ -83,14 +91,55 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 	@Override
 	public void onClick(View view) {
 
-		Foodies item = new Foodies();
-		item.Name = mName.getText().toString();
-		item.Number = mNumber.getText().toString();
-		item.ServingType = mServingType.getText().toString();
-		item.ServingSize = mServingSize.getText().toString();
+		switch (view.getId()) {
+			case R.id.activity_save_btn:
+				Foodies item = new Foodies();
+				item.Name = mName.getText().toString();
+				item.Number = mNumber.getText().toString();
+				item.ServingType = mServingType.getText().toString();
+				item.ServingSize = mServingSize.getText().toString();
 
-		mClient.getTable(Foodies.class).insert(item);
+				mClient.getTable(Foodies.class).insert(item);
+				Toast.makeText(this, "Added to DB", Toast.LENGTH_SHORT).show();
+				break;
+			case R.id.activity_load_btn:
+				new AsyncTask<Void, Void, Void>() {
 
-		Toast.makeText(this, "Data added to DB", Toast.LENGTH_SHORT).show();
+					@Override
+					protected Void doInBackground(Void... params) {
+						try {
+							final MobileServiceList<Foodies> result = mClient.getTable(Foodies.class).execute().get();
+							runOnUiThread(new Runnable() {
+
+								@Override
+								public void run() {
+									for (Foodies item : result) {
+										listings.add(item);
+									}
+								}
+							});
+						} catch (Exception exception) {
+							exception.printStackTrace();
+						}
+						return null;
+					}
+
+					@Override
+					protected void onPostExecute(Void aVoid) {
+						mName.setText(listings.get(0).Name);
+						mNumber.setText(listings.get(0).Number);
+						mServingType.setText(listings.get(0).ServingType);
+						mServingSize.setText(listings.get(0).ServingSize);
+
+						Toast.makeText(MainActivity.this, "Loaded to DB", Toast.LENGTH_SHORT).show();
+					}
+				}.execute();
+				break;
+		}
+
+
+
+
+
 	}
 }

@@ -68,9 +68,17 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Save to DB"
-        android:id="@+id/activity_btn"
+        android:id="@+id/activity_save_btn"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Load First"
+        android:id="@+id/activity_load_btn"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"/>
 
 
 </RelativeLayout>
