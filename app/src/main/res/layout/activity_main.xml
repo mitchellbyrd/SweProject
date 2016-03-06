@@ -28,11 +28,49 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <FrameLayout
-        android:id="@+id/activity_container"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/activity_appbar">
-    </FrameLayout>
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/activity_name"
+        android:layout_below="@+id/activity_appbar"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:hint="Name"/>
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/activity_number"
+        android:layout_below="@+id/activity_name"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:hint="Random num"/>
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/activity_serving_type"
+        android:layout_below="@+id/activity_number"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:hint="serving type"/>
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/activity_serving_size"
+        android:layout_below="@+id/activity_serving_type"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:hint="serving size"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Save to DB"
+        android:id="@+id/activity_btn"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"/>
+
 
 </RelativeLayout>

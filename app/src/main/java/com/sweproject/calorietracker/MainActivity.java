@@ -1,27 +1,30 @@
 package com.sweproject.calorietracker;
 
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.FrameLayout;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
 
-import java.util.ArrayList;
+import com.microsoft.windowsazure.mobileservices.MobileServiceClient;
 
-public class MainActivity extends AppCompatActivity{
+import java.net.MalformedURLException;
 
-	private static FragmentManager sFragmentManager;
-	private static FrameLayout mContainer;
-	protected SQLiteDatabase sqLiteDatabase;
-	public static ArrayList<String> foodList = new ArrayList<>();
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+
+	private MobileServiceClient mClient;
+	private EditText mName;
+	private EditText mNumber;
+	private EditText mServingType;
+	private EditText mServingSize;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -31,28 +34,13 @@ public class MainActivity extends AppCompatActivity{
 		Toolbar toolbar = (Toolbar) findViewById(R.id.activity_toolbar);
 		setSupportActionBar(toolbar);
 
-		sFragmentManager = getSupportFragmentManager();
+		Button btn = (Button) findViewById(R.id.activity_btn);
+		btn.setOnClickListener(this);
 
-		mContainer = (FrameLayout) findViewById(R.id.activity_container);
-
-		foodList.add("Monely");
-		foodList.add("Sumer");
-		foodList.add("Werst");
-		foodList.add("Lioner");
-		foodList.add("Jacker");
-		foodList.add("Pie");
-		foodList.add("Queen");
-		foodList.add("Niel");
-		foodList.add("Asbol");
-		foodList.add("Polstim");
-		foodList.add("Salt");
-		foodList.add("Pepper");
-		foodList.add("Cheese");
-		foodList.add("Cake");
-		foodList.add("Muffin");
-		foodList.add("Fires");
-		foodList.add("Lop");
-		foodList.add("Spam");
+		mName = (EditText) findViewById(R.id.activity_name);
+		mNumber = (EditText) findViewById(R.id.activity_number);
+		mServingType = (EditText) findViewById(R.id.activity_serving_type);
+		mServingSize = (EditText) findViewById(R.id.activity_serving_size);
 
 		Window window = getWindow();
 
@@ -63,11 +51,11 @@ public class MainActivity extends AppCompatActivity{
 			window.setStatusBarColor(ContextCompat.getColor(this, R.color.colorPrimaryDark));
 		}
 
-		// If first time opening app
-		if (savedInstanceState == null) {
-			nextFragment(null, new LoginFragment(), null, false, false);
+		try {
+			mClient = new MobileServiceClient("https://ksucaloriecounter.azurewebsites.net", this);
+		} catch (MalformedURLException e) {
+			e.printStackTrace();
 		}
-		// else will show the last visible fragment (Android destroys activity during rotation)
 	}
 
 	@Override
@@ -92,43 +80,17 @@ public class MainActivity extends AppCompatActivity{
 		return super.onOptionsItemSelected(item);
 	}
 
-
-	/** Commits replacement transactions with fragments.
-	 *
-	 * @param fromFrag Fragment that should be replaced. Pass null transition should be sliding left to right instead of up and down
-	 * @param toFrag Instance of the fragment that should be called next.
-	 * @param bun Data that should be set to the fragment or null if none.
-	 * @param add True if fragment should be added to the backstack.
-	 * @param clear True if system should clear backstack then add fragment
-	 */
-	public static void nextFragment(Fragment fromFrag, Fragment toFrag, Bundle bun, boolean add, boolean clear){
-
-		if (bun != null){
-			toFrag.setArguments(bun);
-		}
-		if (clear){
-			// Clears the back stack, leaving the first fragment added to be displayed
-			mContainer.removeAllViews();
-			sFragmentManager.popBackStack(sFragmentManager.getBackStackEntryAt(0).getId(), FragmentManager.POP_BACK_STACK_INCLUSIVE);
-		}
-		if (add){
-			sFragmentManager.beginTransaction()
-					.replace(R.id.activity_container, toFrag)
-					.addToBackStack(null)
-					.commit();
-		} else {
-			sFragmentManager.beginTransaction()
-					.replace(R.id.activity_container, toFrag)
-					.commit();
-		}
-	}
-
 	@Override
-	public void onBackPressed() {
-		if (getSupportFragmentManager().getBackStackEntryCount() != 0) {
-			getSupportFragmentManager().popBackStack();
-		} else {
-			super.onBackPressed();
-		}
+	public void onClick(View view) {
+
+		Foodies item = new Foodies();
+		item.Name = mName.getText().toString();
+		item.Number = mNumber.getText().toString();
+		item.ServingType = mServingType.getText().toString();
+		item.ServingSize = mServingSize.getText().toString();
+
+		mClient.getTable(Foodies.class).insert(item);
+
+		Toast.makeText(this, "Data added to DB", Toast.LENGTH_SHORT).show();
 	}
 }
