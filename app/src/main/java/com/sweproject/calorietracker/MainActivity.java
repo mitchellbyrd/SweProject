@@ -25,10 +25,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 	private MobileServiceClient mClient;
 	private EditText mName;
-	private EditText mNumber;
-	private EditText mServingType;
-	private EditText mServingSize;
-	private ArrayList<Foodies> listings;
+	private ArrayList<Foods_Test> listings;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -44,9 +41,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 		loadBtn.setOnClickListener(this);
 
 		mName = (EditText) findViewById(R.id.activity_name);
-		mNumber = (EditText) findViewById(R.id.activity_number);
-		mServingType = (EditText) findViewById(R.id.activity_serving_type);
-		mServingSize = (EditText) findViewById(R.id.activity_serving_size);
 
 		listings = new ArrayList<>();
 
@@ -93,27 +87,26 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 		switch (view.getId()) {
 			case R.id.activity_save_btn:
-				Foodies item = new Foodies();
+				Foods_Test item = new Foods_Test();
 				item.Name = mName.getText().toString();
-				item.Number = mNumber.getText().toString();
-				item.ServingType = mServingType.getText().toString();
-				item.ServingSize = mServingSize.getText().toString();
+				//item.Number =  mNumber.getText().toString();
 
-				mClient.getTable(Foodies.class).insert(item);
+				mClient.getTable(Foods_Test.class).insert(item);
 				Toast.makeText(this, "Added to DB", Toast.LENGTH_SHORT).show();
 				break;
 			case R.id.activity_load_btn:
+				Toast.makeText(MainActivity.this, "Loading", Toast.LENGTH_SHORT).show();
 				new AsyncTask<Void, Void, Void>() {
 
 					@Override
 					protected Void doInBackground(Void... params) {
 						try {
-							final MobileServiceList<Foodies> result = mClient.getTable(Foodies.class).execute().get();
+							final MobileServiceList<Foods_Test> result = mClient.getTable(Foods_Test.class).execute().get();
 							runOnUiThread(new Runnable() {
 
 								@Override
 								public void run() {
-									for (Foodies item : result) {
+									for (Foods_Test item : result) {
 										listings.add(item);
 									}
 								}
@@ -126,20 +119,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 					@Override
 					protected void onPostExecute(Void aVoid) {
-						mName.setText(listings.get(0).Name);
-						mNumber.setText(listings.get(0).Number);
-						mServingType.setText(listings.get(0).ServingType);
-						mServingSize.setText(listings.get(0).ServingSize);
+						if (listings.size() != 0) {
+							// This grabs the first item in the db. change the 0 to grab another item
+							mName.setText(listings.get(0).Name);
 
-						Toast.makeText(MainActivity.this, "Loaded to DB", Toast.LENGTH_SHORT).show();
+							Toast.makeText(MainActivity.this, "Loaded to DB ID: " + listings.get(0).Id, Toast.LENGTH_SHORT).show();
+						} else {
+							Toast.makeText(MainActivity.this, "No data found in DB", Toast.LENGTH_SHORT).show();
+						}
 					}
 				}.execute();
 				break;
 		}
-
-
-
-
-
 	}
 }
