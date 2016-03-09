@@ -18,7 +18,6 @@ public class FragmentFood extends Fragment implements View.OnClickListener {
 	@Override
 	public void onActivityCreated(Bundle savedInstance) {
 		super.onActivityCreated(savedInstance);
-
 		Bundle bun = getArguments();
 
 		TextView title = (TextView) getActivity().findViewById(R.id.fragmet_food_title);
