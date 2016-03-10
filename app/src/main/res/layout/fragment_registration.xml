@@ -13,11 +13,11 @@
             android:layout_height="641dp">
 
             <EditText
-                android:id="@+id/editText"
+                android:id="@+id/fragment_registration_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
-                android:layout_alignStart="@+id/editText2"
+                android:layout_alignStart="@+id/fragment_registration_caloriesInput"
                 android:layout_marginTop="73dp"
                 android:width="200dp"
                 android:ems="10"
@@ -26,7 +26,7 @@
                 android:layout_alignEnd="@+id/fragment_registration_proteinGramLabel" />
 
             <EditText
-                android:id="@+id/editText2"
+                android:id="@+id/fragment_registration_caloriesInput"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:width="200dp"
@@ -42,7 +42,7 @@
                 android:layout_height="wrap_content"
                 android:width="200dp"
                 android:text="Protein"
-                android:layout_below="@+id/editText2"
+                android:layout_below="@+id/fragment_registration_caloriesInput"
                 android:layout_alignStart="@+id/fragment_registration_carbsInput"
                 android:layout_marginTop="30dp" />
 
@@ -119,8 +119,8 @@
                 android:ems="10"
                 android:id="@+id/fragment_registration_userNameInput"
                 android:layout_marginTop="30dp"
-                android:layout_below="@+id/editText"
-                android:layout_alignStart="@+id/editText"
+                android:layout_below="@+id/fragment_registration_name"
+                android:layout_alignStart="@+id/fragment_registration_name"
                 android:layout_alignEnd="@+id/fragment_registration_proteinGramLabel" />
 
             <EditText

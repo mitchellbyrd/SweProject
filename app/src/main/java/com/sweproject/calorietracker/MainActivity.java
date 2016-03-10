@@ -14,6 +14,9 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
 
+import com.microsoft.windowsazure.mobileservices.MobileServiceClient;
+
+import java.net.MalformedURLException;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity{
@@ -22,10 +25,19 @@ public class MainActivity extends AppCompatActivity{
 	private static FrameLayout mContainer;
 	protected SQLiteDatabase sqLiteDatabase;
 	public static ArrayList<String> foodList = new ArrayList<>();
+	public static MobileServiceClient mClient;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		try {
+			mClient = new MobileServiceClient(
+                    "https://ksucaloriecounter.azurewebsites.net",
+                    this
+            );
+		} catch (MalformedURLException e) {
+			e.printStackTrace();
+		}
 		setContentView(R.layout.activity_main);
 
 		Toolbar toolbar = (Toolbar) findViewById(R.id.activity_toolbar);

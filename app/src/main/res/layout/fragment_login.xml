@@ -53,5 +53,6 @@
         android:layout_below="@+id/fragment_login_passwordField"
         android:layout_centerHorizontal="true"
         android:background="#fefefe"
-        android:textColor="#59b4ff" />
+        android:textColor="#59b4ff"
+        android:clickable="true" />
 </RelativeLayout>

@@ -49,6 +49,9 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
 			case R.id.fragment_login_submitBtn:
 				MainActivity.nextFragment(this, new FragmentCalendar(), null, false, false);
 				break;
+			case R.id.fragement_login_registerText:
+				MainActivity.nextFragment(this, new RegistrationFragment(), null, false, false);
+				break;
 		}
 	}
 }
