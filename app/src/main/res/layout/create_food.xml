@@ -16,7 +16,6 @@
         android:layout_marginTop="23dp"/>
 
     <EditText
-        android:background="@drawable/retangle_style"
         android:layout_width="135dp"
         android:layout_height="21dp"
         android:id="@+id/editText3"
@@ -65,7 +64,6 @@
         android:layout_alignStart="@+id/textView7"/>
 
     <EditText
-        android:background="@drawable/retangle_style"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/editText4"
@@ -75,7 +73,6 @@
         android:layout_alignStart="@+id/editText3"/>
 
     <EditText
-        android:background="@drawable/retangle_style"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/editText5"
@@ -84,7 +81,6 @@
         android:layout_toStartOf="@+id/scrollView"/>
 
     <EditText
-        android:background="@drawable/retangle_style"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/editText6"
@@ -92,7 +88,6 @@
         android:layout_toEndOf="@+id/textView6"/>
 
     <EditText
-        android:background="@drawable/retangle_style"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/editText7"
@@ -142,7 +137,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/imageButton"
-        android:src="@drawable/abc_btn_check_to_on_mtrl_015"
         android:layout_alignParentBottom="true"
         android:layout_toStartOf="@+id/spinner2"
         android:layout_marginBottom="32dp"/>

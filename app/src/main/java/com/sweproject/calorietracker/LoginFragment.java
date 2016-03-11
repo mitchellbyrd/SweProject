@@ -25,11 +25,9 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
 		submitBtn.setOnClickListener(this);
 
 		if (isNewUser) {
-			RegistrationFragment regFragment = new RegistrationFragment();
-			MainActivity.nextFragment(this, regFragment, null, false, false);
+			MainActivity.nextFragment(this, new RegistrationFragment(), null, false, false);
 		} else {
-			FragmentCalendar calendarFragment = new FragmentCalendar();
-			MainActivity.nextFragment(this, calendarFragment, null, false, false);
+			MainActivity.nextFragment(this, new FragmentCalendar(), null, false, false);
 		}
 	}
 
