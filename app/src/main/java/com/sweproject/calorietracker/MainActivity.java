@@ -15,6 +15,7 @@ import android.view.WindowManager;
 import android.widget.FrameLayout;
 
 import com.microsoft.windowsazure.mobileservices.MobileServiceClient;
+import com.sweproject.calorietracker.DataObjects.Users;
 
 import java.net.MalformedURLException;
 import java.util.ArrayList;
@@ -26,6 +27,7 @@ public class MainActivity extends AppCompatActivity{
 	protected SQLiteDatabase sqLiteDatabase;
 	public static ArrayList<String> foodList = new ArrayList<>();
 	public static MobileServiceClient mClient;
+	public static Users CurrentUser;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {

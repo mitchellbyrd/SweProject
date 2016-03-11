@@ -1,3 +1,4 @@
+/**
 package com.sweproject.calorietracker;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,6 +21,7 @@ import android.view.ViewGroup;
 /**
  * Created by jedwa145 on 2/23/2016.
  */
+/**
 public class CreateFood extends Fragment {
 
 
@@ -49,3 +51,4 @@ public class CreateFood extends Fragment {
 			return root;
 		}
 	}
+**/
