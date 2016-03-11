@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 	private MobileServiceClient mClient;
 	private EditText mName;
-	private ArrayList<Foods_Test> listings;
+	private ArrayList<Foods> listings;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -87,11 +87,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 		switch (view.getId()) {
 			case R.id.activity_save_btn:
-				Foods_Test item = new Foods_Test();
+				Foods item = new Foods();
 				item.Name = mName.getText().toString();
 				//item.Number =  mNumber.getText().toString();
 
-				mClient.getTable(Foods_Test.class).insert(item);
+				mClient.getTable(Foods.class).insert(item);
 				Toast.makeText(this, "Added to DB", Toast.LENGTH_SHORT).show();
 				break;
 			case R.id.activity_load_btn:
@@ -101,12 +101,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 					@Override
 					protected Void doInBackground(Void... params) {
 						try {
-							final MobileServiceList<Foods_Test> result = mClient.getTable(Foods_Test.class).execute().get();
+							final MobileServiceList<Foods> result = mClient.getTable(Foods.class).execute().get();
 							runOnUiThread(new Runnable() {
 
 								@Override
 								public void run() {
-									for (Foods_Test item : result) {
+									for (Foods item : result) {
 										listings.add(item);
 									}
 								}
