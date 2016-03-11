@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 	private MobileServiceClient mClient;
 	private EditText mName;
-	private ArrayList<Foods> listings;
+	private ArrayList<Users> listings;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -87,11 +87,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 		switch (view.getId()) {
 			case R.id.activity_save_btn:
-				Foods item = new Foods();
-				item.Name = mName.getText().toString();
+				Users item = new Users();
+				item.NameFirst = mName.getText().toString();
 				//item.Number =  mNumber.getText().toString();
 
-				mClient.getTable(Foods.class).insert(item);
+				mClient.getTable(Users.class).insert(item);
 				Toast.makeText(this, "Added to DB", Toast.LENGTH_SHORT).show();
 				break;
 			case R.id.activity_load_btn:
@@ -101,12 +101,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 					@Override
 					protected Void doInBackground(Void... params) {
 						try {
-							final MobileServiceList<Foods> result = mClient.getTable(Foods.class).execute().get();
+							final MobileServiceList<Users> result = mClient.getTable(Users.class).execute().get();
 							runOnUiThread(new Runnable() {
 
 								@Override
 								public void run() {
-									for (Foods item : result) {
+									for (Users item : result) {
 										listings.add(item);
 									}
 								}
@@ -121,7 +121,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 					protected void onPostExecute(Void aVoid) {
 						if (listings.size() != 0) {
 							// This grabs the first item in the db. change the 0 to grab another item
-							mName.setText(listings.get(0).Name);
+							mName.setText(listings.get(0).NameFirst);
 
 							Toast.makeText(MainActivity.this, "Loaded to DB ID: " + listings.get(0).Id, Toast.LENGTH_SHORT).show();
 						} else {
