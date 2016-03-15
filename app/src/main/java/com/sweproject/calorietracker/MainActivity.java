@@ -23,6 +23,7 @@ public class MainActivity extends AppCompatActivity{
 	protected SQLiteDatabase sqLiteDatabase;
 	public static ArrayList<String> foodList = new ArrayList<>();
 
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -34,6 +35,10 @@ public class MainActivity extends AppCompatActivity{
 		sFragmentManager = getSupportFragmentManager();
 
 		mContainer = (FrameLayout) findViewById(R.id.activity_container);
+
+
+
+
 
 		foodList.add("Monely");
 		foodList.add("Sumer");
