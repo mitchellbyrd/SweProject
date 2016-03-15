@@ -54,42 +54,19 @@ public class RegistrationFragment extends Fragment implements View.OnClickListen
 	}
 
 	public void Register(View view) {
-		final Users newUser = new Users();
+		Users newUser = new Users();
 		TextView name = (TextView) getActivity().findViewById(R.id.fragment_registration_name);
 		TextView password = (TextView) getActivity().findViewById(R.id.fragment_registration_passwordInput);
 		String[] nameArray = name.getText().toString().split(" ");
 		if (nameArray.length < 1) {
 			newUser.NameFirst = nameArray[0];
-			newUser.NameLast = nameArray[1];
 		} else {
 			newUser.NameFirst = nameArray[0];
 		}
 
-		newUser.Password = password.getText().toString();
 
 		try {
-
-						newUser.BirthDate = "01/22/1992";
-						newUser.EmailAddress = "doneal2014@gmail.com";
-						newUser.PreferedCalorieLimit = 100;
-						newUser.PreferedCarbLimit = 100;
-						newUser.PreferedFatLimit = 100;
-						newUser.PreferedProteinLimit = 100;
-						newUser.Weight = 100;
-						newUser.NameLast = "";
-						//userTable.insert(newUser);
-
-            new AsyncTask<Void, Void, Void>() {
-
-                @Override
-                protected Void doInBackground(Void... params) {
-                    try {
-                        userTable.insert(newUser);
-                    } catch (Exception exception) {
-                    }
-                    return null;
-                }
-            }.execute();
+			userTable.insert(newUser);
 
 		}
 		catch(Exception e) {
