@@ -8,4 +8,13 @@ import java.util.Date;
 public class Users {
     public String Id;
     public String NameFirst;
+    public String NameLast;
+    public String EmailAddress;
+    public String Password;
+    public String BirthDate;
+    public int Weight;
+    public int PreferedCalorieLimit;
+    public int PreferedFatLimit;
+    public int PreferedCarbLimit;
+    public int PreferedProteinLimit;
 }
