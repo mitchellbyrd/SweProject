@@ -27,7 +27,7 @@ public class FragmentCalendar extends Fragment implements CalendarView.OnDateCha
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		View root = inflater.inflate(R.layout.fragment_calendar, container, false);
 
-		//mCalendarView = (CalendarView) root.findViewById(R.id.fragment_calendar_calendar);
+		mCalendarView = (CalendarView) root.findViewById(R.id.fragment_calendar_calendar);
 		mCalendarView.setOnDateChangeListener(this);
 		mSelectedDate = mCalendarView.getDate();
 
