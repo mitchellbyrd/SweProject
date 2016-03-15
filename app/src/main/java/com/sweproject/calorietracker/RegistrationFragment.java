@@ -48,7 +48,7 @@ public class RegistrationFragment extends Fragment implements View.OnClickListen
 		switch (view.getId()) {
 			case R.id.fragment_registration_submitBtn:
 				Register(view);
-				MainActivity.nextFragment(this, new FragmentCalendar(), null, false, false);
+				MainActivity.nextFragment(this, new FragmentCalendar(), null, true, true);
 				break;
 		}
 	}
@@ -77,7 +77,19 @@ public class RegistrationFragment extends Fragment implements View.OnClickListen
 						newUser.PreferedProteinLimit = 100;
 						newUser.Weight = 100;
 						newUser.NameLast = "";
-						userTable.insert(newUser);
+						//userTable.insert(newUser);
+
+            new AsyncTask<Void, Void, Void>() {
+
+                @Override
+                protected Void doInBackground(Void... params) {
+                    try {
+                        userTable.insert(newUser);
+                    } catch (Exception exception) {
+                    }
+                    return null;
+                }
+            }.execute();
 
 		}
 		catch(Exception e) {
