@@ -19,41 +19,41 @@
                 android:width="200dp"
                 android:ems="10"
                 android:inputType="textPersonName"
-                android:text="Name"
                 android:layout_below="@+id/textView"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="30dp" />
+                android:layout_marginTop="30dp"
+                android:hint="Name" />
 
             <EditText
                 android:id="@+id/fragment_registration_caloriesInput"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:width="200dp"
-                android:text="Calories"
                 android:layout_alignEnd="@+id/fragment_registration_name"
                 android:layout_marginTop="30dp"
-                android:layout_below="@+id/fragment_registration_proteinInput" />
+                android:layout_below="@+id/fragment_registration_proteinInput"
+                android:hint="Calories" />
 
             <EditText
                 android:id="@+id/fragment_registration_proteinInput"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:width="200dp"
-                android:text="Protein"
                 android:layout_centerVertical="true"
                 android:layout_alignStart="@+id/fragment_registration_caloriesInput"
                 android:layout_marginTop="30dp"
-                android:layout_below="@+id/fragment_registration_passwordInput" />
+                android:layout_below="@+id/fragment_registration_passwordInput"
+                android:hint="Protein" />
 
             <EditText
                 android:id="@+id/fragment_registration_carbsInput"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:width="200dp"
-                android:text="Carbs"
                 android:layout_below="@+id/fragment_registration_caloriesInput"
                 android:layout_alignStart="@+id/fragment_registration_proteinInput"
-                android:layout_marginTop="30dp" />
+                android:layout_marginTop="30dp"
+                android:hint="Carbs" />
 
             <TextView
                 android:id="@+id/fragment_registration_gramLabel"
@@ -114,13 +114,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:inputType="textPersonName"
-                android:text="User Name"
                 android:ems="10"
                 android:id="@+id/fragment_registration_userNameInput"
                 android:layout_marginTop="30dp"
                 android:layout_below="@+id/fragment_registration_name"
                 android:layout_alignStart="@+id/fragment_registration_name"
-                android:layout_alignEnd="@+id/fragment_registration_proteinGramLabel" />
+                android:layout_alignEnd="@+id/fragment_registration_proteinGramLabel"
+                android:hint="User Name" />
 
             <EditText
                 android:layout_width="wrap_content"
@@ -128,10 +128,10 @@
                 android:inputType="textPassword"
                 android:ems="10"
                 android:id="@+id/fragment_registration_passwordInput"
-                android:text="Password"
                 android:layout_below="@+id/fragment_registration_userNameInput"
                 android:layout_alignStart="@+id/fragment_registration_userNameInput"
-                android:layout_marginTop="30dp" />
+                android:layout_marginTop="30dp"
+                android:hint="Password" />
 
             <EditText
                 android:layout_width="wrap_content"
@@ -141,7 +141,7 @@
                 android:layout_alignStart="@+id/fragment_registration_carbsInput"
                 android:layout_marginTop="30dp"
                 android:layout_toStartOf="@+id/fragment_registration_gramLabel"
-                android:text="Fats" />
+                android:hint="Fats" />
 
             <TextView
                 android:id="@+id/textView2"
