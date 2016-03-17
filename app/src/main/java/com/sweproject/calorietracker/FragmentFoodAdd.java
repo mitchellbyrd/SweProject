@@ -13,7 +13,7 @@ import android.widget.TextView;
 /**
  * Created by Marcus on 2/18/2016.
  */
-public class FragmentFood extends Fragment implements View.OnClickListener {
+public class FragmentFoodAdd extends Fragment implements View.OnClickListener {
 
 	@Override
 	public void onActivityCreated(Bundle savedInstance) {
@@ -37,7 +37,7 @@ public class FragmentFood extends Fragment implements View.OnClickListener {
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		return inflater.inflate(R.layout.fragment_food, container, false);
+		return inflater.inflate(R.layout.fragment_food_add, container, false);
 	}
 
 	@Override

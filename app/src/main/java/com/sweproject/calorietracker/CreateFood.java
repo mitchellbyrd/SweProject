@@ -1,7 +1,6 @@
-/**
+
 package com.sweproject.calorietracker;
-import java.util.ArrayList;
-import java.util.List;
+
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
@@ -21,9 +20,10 @@ import android.view.ViewGroup;
 /**
  * Created by jedwa145 on 2/23/2016.
  */
-/**
+
 public class CreateFood extends Fragment {
 
+	DatabaseHelperClass foodDb;
 
 	@Override
 	public void onActivityCreated(Bundle savedInstance) {
@@ -32,8 +32,8 @@ public class CreateFood extends Fragment {
 		Bundle bun = getArguments();
 
 
-		Spinner dropDown = (Spinner) getActivity().findViewById(R.id.spinner);
-		Spinner dropDown2 = (Spinner) getActivity().findViewById(R.id.spinner2);
+		Spinner dropDown = (Spinner) getActivity().findViewById(R.id.fragment_food_spinner_serving);
+		Spinner dropDown2 = (Spinner) getActivity().findViewById(R.id.fragment_food_spinner_serving_type);
 
 
 		String[] type = {"Grams", "Ounce"};
@@ -44,11 +44,16 @@ public class CreateFood extends Fragment {
 		dropDown2.setAdapter(new ArrayAdapter<>(getActivity(), R.layout.support_simple_spinner_dropdown_item, type));
 
 	}
-		@Override
-		public View onCreateView (LayoutInflater inflater, ViewGroup container, Bundle
-		savedInstanceState){
-			View root = inflater.inflate(R.layout.create_food, container, false);
-			return root;
-		}
+
+	@Override
+	public void onAttach(Activity activity) {
+		super.onAttach(activity);
+		foodDb = new DatabaseHelperClass(activity);
 	}
-**/
+
+	@Override
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+		View root = inflater.inflate(R.layout.create_food, container, false);
+		return root;
+	}
+}

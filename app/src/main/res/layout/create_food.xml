@@ -144,7 +144,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/imageButton"
-        android:src="@drawable/abc_btn_check_to_on_mtrl_015"
+
         android:layout_alignParentBottom="true"
         android:layout_toStartOf="@+id/spinner2"
         android:layout_marginBottom="32dp"/>
