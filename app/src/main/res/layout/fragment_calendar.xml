@@ -4,51 +4,58 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Hello Username"
-        android:id="@+id/textView14"
+        android:id="@+id/fragment_calendar_title"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Today&apos;s Calories"
-        android:id="@+id/textView15"
-        android:layout_marginTop="29dp"
-        android:layout_below="@+id/textView14"
-        android:layout_centerHorizontal="true" />
+        android:id="@+id/fragment_calendar_subtitle"
+        android:layout_below="@+id/fragment_calendar_title"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"/>
 
     <ProgressBar
         style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="wrap_content"
         android:layout_height="30dp"
-        android:id="@+id/progressBar"
+        android:id="@+id/fragment_calendar_progress"
         android:progress="40"
-        android:layout_above="@+id/calendarView"
-        android:layout_alignStart="@+id/calendarView"
-        android:layout_alignEnd="@+id/calendarView" />
+        android:indeterminate="false"
+        android:layout_below="@+id/fragment_calendar_calorie"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"/>
 
     <CalendarView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/calendarView"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true" />
+        android:id="@+id/fragment_calendar_calendar"
+        android:layout_below="@+id/fragment_calendar_progress"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="10dp"
+        android:layout_alignParentBottom="true"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="1700/2000"
-        android:layout_marginTop="29dp"
-        android:id="@+id/textView16"
-        android:layout_below="@+id/textView15"
-        android:layout_centerHorizontal="true" />
+        android:id="@+id/fragment_calendar_calorie"
+        android:layout_below="@+id/fragment_calendar_subtitle"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="5dp"/>
 
 </RelativeLayout>

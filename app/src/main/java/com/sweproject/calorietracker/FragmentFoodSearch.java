@@ -44,6 +44,6 @@ public class FragmentFoodSearch extends Fragment implements View.OnClickListener
 	public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 		Bundle bun = new Bundle();
 		bun.putInt("Index", i);
-		MainActivity.nextFragment(this, new FragmentFood(), bun, true, false);
+		MainActivity.nextFragment(this, new FragmentFoodAdd(), bun, true, false);
 	}
 }

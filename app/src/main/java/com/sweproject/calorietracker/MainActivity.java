@@ -1,6 +1,5 @@
 package com.sweproject.calorietracker;
 
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -20,8 +19,9 @@ public class MainActivity extends AppCompatActivity{
 
 	private static FragmentManager sFragmentManager;
 	private static FrameLayout mContainer;
-	protected SQLiteDatabase sqLiteDatabase;
+	//protected SQLiteDatabase sqLiteDatabase;
 	public static ArrayList<String> foodList = new ArrayList<>();
+
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
