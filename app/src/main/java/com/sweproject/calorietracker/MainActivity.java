@@ -78,9 +78,8 @@ public class MainActivity extends AppCompatActivity{
 		}
 
 		// If first time opening app
-		if (savedInstanceState == null) {
-			nextFragment(null, new LoginFragment(), null, false, false);
-		}
+		nextFragment(null, new LoginFragment(), null, false, false);
+
 		// else will show the last visible fragment (Android destroys activity during rotation)
 	}
 

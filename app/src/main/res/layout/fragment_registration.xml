@@ -10,7 +10,7 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="641dp">
+            android:layout_height="700dp">
 
             <EditText
                 android:id="@+id/fragment_registration_name"
@@ -19,7 +19,6 @@
                 android:width="200dp"
                 android:ems="10"
                 android:inputType="textPersonName"
-                android:layout_below="@+id/textView"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="30dp"
                 android:hint="Name" />
@@ -31,8 +30,9 @@
                 android:width="200dp"
                 android:layout_alignEnd="@+id/fragment_registration_name"
                 android:layout_marginTop="30dp"
-                android:layout_below="@+id/fragment_registration_proteinInput"
-                android:hint="Calories" />
+                android:layout_below="@+id/fragment_registration_weight"
+                android:hint="Calories"
+                android:numeric="integer" />
 
             <EditText
                 android:id="@+id/fragment_registration_proteinInput"
@@ -53,7 +53,8 @@
                 android:layout_below="@+id/fragment_registration_caloriesInput"
                 android:layout_alignStart="@+id/fragment_registration_proteinInput"
                 android:layout_marginTop="30dp"
-                android:hint="Carbs" />
+                android:hint="Carbs"
+                android:numeric="integer" />
 
             <TextView
                 android:id="@+id/fragment_registration_gramLabel"
@@ -75,17 +76,6 @@
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textColor="#020202"/>
 
-            <TextView
-                android:id="@+id/textView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="30dp"
-                android:text="Please enter your daily nutritional goals!"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="#010101"/>
-
             <Button
                 android:id="@+id/fragment_registration_submitBtn"
                 style="?android:attr/buttonStyleSmall"
@@ -93,22 +83,25 @@
                 android:layout_height="wrap_content"
                 android:width="100dp"
                 android:height="50dp"
-                android:background="#7afe5f"
+                android:background="#3c7dfe"
                 android:text="Submit"
+                android:layout_marginBottom="40dp"
                 android:layout_alignParentBottom="true"
-                android:layout_alignStart="@+id/textView" />
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="42dp" />
 
             <Button
                 android:id="@+id/fragment_registration_cancelBtn"
                 style="?android:attr/buttonStyleSmall"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignEnd="@+id/textView"
-                android:layout_alignTop="@+id/fragment_registration_submitBtn"
                 android:width="100dp"
                 android:height="50dp"
                 android:background="#fe4b4b"
-                android:text="Cancel"/>
+                android:text="Cancel"
+                android:layout_alignTop="@+id/fragment_registration_submitBtn"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="40dp" />
 
             <EditText
                 android:layout_width="wrap_content"
@@ -120,7 +113,7 @@
                 android:layout_below="@+id/fragment_registration_name"
                 android:layout_alignStart="@+id/fragment_registration_name"
                 android:layout_alignEnd="@+id/fragment_registration_proteinGramLabel"
-                android:hint="User Name" />
+                android:hint="Email Address" />
 
             <EditText
                 android:layout_width="wrap_content"
@@ -141,7 +134,8 @@
                 android:layout_alignStart="@+id/fragment_registration_carbsInput"
                 android:layout_marginTop="30dp"
                 android:layout_toStartOf="@+id/fragment_registration_gramLabel"
-                android:hint="Fats" />
+                android:hint="Fats"
+                android:numeric="integer" />
 
             <TextView
                 android:id="@+id/textView2"
@@ -152,6 +146,28 @@
                 android:textColor="#020202"
                 android:layout_alignBottom="@+id/fragment_registration_fatsInput"
                 android:layout_toEndOf="@+id/fragment_registration_fatsInput" />
+
+            <TextView
+                android:id="@+id/textView6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="g"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="#020202"
+                android:layout_alignBottom="@+id/fragment_registration_caloriesInput"
+                android:layout_toEndOf="@+id/fragment_registration_caloriesInput" />
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                android:ems="10"
+                android:id="@+id/fragment_registration_weight"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="30dp"
+                android:hint="Weight (lbs.)"
+                android:layout_below="@+id/fragment_registration_proteinInput"
+                android:numeric="integer" />
 
         </RelativeLayout>
     </LinearLayout>

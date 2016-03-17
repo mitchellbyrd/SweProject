@@ -11,7 +11,7 @@ public class Users {
     public String NameLast;
     public String EmailAddress;
     public String Password;
-    public String BirthDate;
+    public String DateBirth;
     public int Weight;
     public int PreferedCalorieLimit;
     public int PreferedFatLimit;

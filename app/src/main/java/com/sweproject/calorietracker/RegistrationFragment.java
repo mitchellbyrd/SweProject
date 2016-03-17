@@ -76,10 +76,12 @@ public class RegistrationFragment extends Fragment implements View.OnClickListen
 		String name = ((TextView) getActivity().findViewById(R.id.fragment_registration_name)).getText().toString();
 		try {
 			newUser.Password = ((TextView) getActivity().findViewById(R.id.fragment_registration_passwordInput)).getText().toString();
+			newUser.EmailAddress = ((TextView) getActivity().findViewById(R.id.fragment_registration_userNameInput)).getText().toString();
 			newUser.PreferedCalorieLimit = Integer.parseInt(((TextView) getActivity().findViewById(R.id.fragment_registration_caloriesInput)).getText().toString());
 			newUser.PreferedProteinLimit =Integer.parseInt(((TextView) getActivity().findViewById(R.id.fragment_registration_proteinInput)).getText().toString());
 			newUser.PreferedCarbLimit = Integer.parseInt(((TextView) getActivity().findViewById(R.id.fragment_registration_carbsInput)).getText().toString());
 			newUser.PreferedFatLimit = Integer.parseInt(((TextView) getActivity().findViewById(R.id.fragment_registration_fatsInput)).getText().toString());
+			newUser.Weight = Integer.parseInt(((TextView) getActivity().findViewById(R.id.fragment_registration_weight)).getText().toString());
 		}catch(NumberFormatException n) {
 			Toast.makeText(getActivity(), "You must enter a number for Calories, Protein, Carbs, and Fat!", Toast.LENGTH_SHORT).show();
 			n.printStackTrace();

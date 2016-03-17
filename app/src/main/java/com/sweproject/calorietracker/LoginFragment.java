@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 /**
  * Created by danny.oneal on 2/10/2016.
@@ -24,13 +25,8 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
 		Button submitBtn = (Button) getActivity().findViewById(R.id.fragment_login_submitBtn);
 		submitBtn.setOnClickListener(this);
 
-		if (isNewUser) {
-			RegistrationFragment regFragment = new RegistrationFragment();
-			MainActivity.nextFragment(this, regFragment, null, false, false);
-		} else {
-			FragmentCalendar calendarFragment = new FragmentCalendar();
-			MainActivity.nextFragment(this, calendarFragment, null, false, false);
-		}
+		TextView registerText = (TextView) getActivity().findViewById(R.id.fragement_login_registerText);
+		registerText.setOnClickListener(this);
 	}
 
 	@Override
