@@ -35,10 +35,6 @@ public class MainActivity extends AppCompatActivity{
 
 		mContainer = (FrameLayout) findViewById(R.id.activity_container);
 
-
-
-
-
 		foodList.add("Monely");
 		foodList.add("Sumer");
 		foodList.add("Werst");
