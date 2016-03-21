@@ -99,6 +99,7 @@ public class FragmentDay extends Fragment implements View.OnClickListener, Adapt
 	public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 		Bundle bun = new Bundle();
 		bun.putInt("Index", i);
-		MainActivity.nextFragment(this, new FragmentFoodEdit(), bun, true, false);
+		MainActivity.nextFragment(this, new CreateFood(), bun, true, false); // changed from FrgmentFoodEdit() to createfood for
+		// testing purposes
 	}
 }

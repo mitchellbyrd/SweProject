@@ -24,6 +24,9 @@ public class FragmentFoodSearch extends Fragment implements View.OnClickListener
 
 		FloatingActionButton fab = (FloatingActionButton) getActivity().findViewById(R.id.fragment_food_search_fab);
 		fab.setOnClickListener(this);
+
+
+
 	}
 
 	@Override
