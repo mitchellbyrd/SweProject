@@ -13,15 +13,19 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
 
+import com.microsoft.windowsazure.mobileservices.MobileServiceClient;
+
+import java.net.MalformedURLException;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity{
 
 	private static FragmentManager sFragmentManager;
 	private static FrameLayout mContainer;
-	//protected SQLiteDatabase sqLiteDatabase;
-	public static ArrayList<String> foodList = new ArrayList<>();
+	public static MobileServiceClient mClient;
 
+	public static ArrayList<Foods> sDBFoodList;
+	public static ArrayList<Foods> sAddedFoodList;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -32,27 +36,9 @@ public class MainActivity extends AppCompatActivity{
 		setSupportActionBar(toolbar);
 
 		sFragmentManager = getSupportFragmentManager();
-
 		mContainer = (FrameLayout) findViewById(R.id.activity_container);
-
-		foodList.add("Monely");
-		foodList.add("Sumer");
-		foodList.add("Werst");
-		foodList.add("Lioner");
-		foodList.add("Jacker");
-		foodList.add("Pie");
-		foodList.add("Queen");
-		foodList.add("Niel");
-		foodList.add("Asbol");
-		foodList.add("Polstim");
-		foodList.add("Salt");
-		foodList.add("Pepper");
-		foodList.add("Cheese");
-		foodList.add("Cake");
-		foodList.add("Muffin");
-		foodList.add("Fires");
-		foodList.add("Lop");
-		foodList.add("Spam");
+		sDBFoodList = new ArrayList<>();
+		sAddedFoodList = new ArrayList<>();
 
 		Window window = getWindow();
 
@@ -65,6 +51,11 @@ public class MainActivity extends AppCompatActivity{
 
 		// If first time opening app
 		if (savedInstanceState == null) {
+			try {
+				mClient = new MobileServiceClient("https://ksucaloriecounter.azurewebsites.net", this);
+			} catch (MalformedURLException e) {
+				e.printStackTrace();
+			}
 			nextFragment(null, new LoginFragment(), null, false, false);
 		}
 		// else will show the last visible fragment (Android destroys activity during rotation)

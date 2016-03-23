@@ -20,7 +20,7 @@ public class AdapterSearchFood extends BaseAdapter {
 
 	@Override
 	public int getCount() {
-		return MainActivity.foodList.size();
+		return 0;
 	}
 
 	@Override
@@ -38,7 +38,7 @@ public class AdapterSearchFood extends BaseAdapter {
 		View row = ((LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE))
 				.inflate(R.layout.search_food_single_row, parent, false);
 
-		((TextView) row.findViewById(R.id.search_food_title)).setText("" + MainActivity.foodList.get(count));
+		((TextView) row.findViewById(R.id.search_food_title)).setText("" + 0);
 
 		return row;
 	}

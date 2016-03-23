@@ -1,6 +1,5 @@
 package com.sweproject.calorietracker;
 
-import android.util.Log;
 import android.view.View;
 import android.widget.BaseAdapter;
 
@@ -11,8 +10,7 @@ public class DeleteFoodListener implements View.OnClickListener {
 
 	@Override
 	public void onClick(View view) {
-		Log.d("Thingkjdnd", "Clicking a tag with: " + view.getTag());
-		MainActivity.foodList.remove((int) view.getTag());
+		MainActivity.sAddedFoodList.remove((int) view.getTag());
 		((BaseAdapter) FragmentDay.foodList.getAdapter()).notifyDataSetChanged();
 	}
 }

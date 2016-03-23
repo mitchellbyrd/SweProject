@@ -23,12 +23,12 @@ public class AdapterDayFood extends BaseAdapter {
 
 	@Override
 	public int getCount() {
-		return MainActivity.foodList.size();
+		return MainActivity.sAddedFoodList.size();
 	}
 
 	@Override
 	public Object getItem(int i) {
-		return null;
+		return MainActivity.sAddedFoodList.get(i);
 	}
 
 	@Override
@@ -42,8 +42,8 @@ public class AdapterDayFood extends BaseAdapter {
 		View row = ((LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE))
 				.inflate(R.layout.calendar_day_single_row, parent, false);
 
-		((TextView) row.findViewById(R.id.single_row_title)).setText("Food item " + MainActivity.foodList.get(count));
-		((TextView) row.findViewById(R.id.single_row_calorie)).setText("" + MainActivity.foodList.get(count));
+		((TextView) row.findViewById(R.id.single_row_title)).setText(MainActivity.sAddedFoodList.get(count).Name);
+		((TextView) row.findViewById(R.id.single_row_calorie)).setText("" + 0);
 
 		ImageView icon = (ImageView) row.findViewById(R.id.single_row_ic);
 		icon.setTag(count);
