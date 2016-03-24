@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:orientation="vertical"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:weightSum="1">
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:weightSum="1">
+<!--
+
 
     <TextView
         android:layout_width="84dp"
@@ -162,5 +164,7 @@
         android:id="@+id/textView13"
         android:layout_alignBottom="@+id/editText3"
         android:layout_alignEnd="@+id/textView11"/>
+
+        -->
 
 </RelativeLayout>

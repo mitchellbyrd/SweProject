@@ -1,3 +1,4 @@
+
 package com.sweproject.calorietracker;
 
 import android.app.Activity;
@@ -19,6 +20,7 @@ import android.view.ViewGroup;
 /**
  * Created by jedwa145 on 2/23/2016.
  */
+
 public class CreateFood extends Fragment {
 
 	DatabaseHelperClass foodDb;
@@ -30,8 +32,8 @@ public class CreateFood extends Fragment {
 		Bundle bun = getArguments();
 
 
-		Spinner dropDown = (Spinner) getActivity().findViewById(R.id.spinner);
-		Spinner dropDown2 = (Spinner) getActivity().findViewById(R.id.spinner2);
+		Spinner dropDown = (Spinner) getActivity().findViewById(R.id.fragment_food_spinner_serving);
+		Spinner dropDown2 = (Spinner) getActivity().findViewById(R.id.fragment_food_spinner_serving_type);
 
 
 		String[] type = {"Grams", "Ounce"};
@@ -44,8 +46,7 @@ public class CreateFood extends Fragment {
 	}
 
 	@Override
-	public void onAttach(Activity activity)
-	{
+	public void onAttach(Activity activity) {
 		super.onAttach(activity);
 		foodDb = new DatabaseHelperClass(activity);
 	}
