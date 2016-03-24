@@ -55,4 +55,14 @@
         android:background="#fefefe"
         android:textColor="#59b4ff"
         android:clickable="true" />
+
+    <ProgressBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/progressBar"
+        android:layout_above="@+id/fragment_login_passwordField"
+        android:indeterminate="true"
+        android:layout_alignEnd="@+id/fragment_login_submitBtn"
+        android:layout_alignStart="@+id/fragment_login_submitBtn"
+        android:visibility="invisible" />
 </RelativeLayout>

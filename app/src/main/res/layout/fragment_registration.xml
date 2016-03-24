@@ -30,7 +30,7 @@
                 android:width="200dp"
                 android:layout_alignEnd="@+id/fragment_registration_name"
                 android:layout_marginTop="30dp"
-                android:layout_below="@+id/fragment_registration_weight"
+                android:layout_below="@+id/fragment_registration_proteinInput"
                 android:hint="Calories"
                 android:numeric="integer" />
 
@@ -42,8 +42,9 @@
                 android:layout_centerVertical="true"
                 android:layout_alignStart="@+id/fragment_registration_caloriesInput"
                 android:layout_marginTop="30dp"
-                android:layout_below="@+id/fragment_registration_passwordInput"
-                android:hint="Protein" />
+                android:layout_below="@+id/fragment_registration_weight"
+                android:hint="Protein"
+                android:numeric="integer" />
 
             <EditText
                 android:id="@+id/fragment_registration_carbsInput"
@@ -163,11 +164,19 @@
                 android:inputType="number"
                 android:ems="10"
                 android:id="@+id/fragment_registration_weight"
-                android:layout_centerHorizontal="true"
                 android:layout_marginTop="30dp"
                 android:hint="Weight (lbs.)"
-                android:layout_below="@+id/fragment_registration_proteinInput"
-                android:numeric="integer" />
+                android:layout_below="@+id/fragment_registration_passwordInput"
+                android:numeric="integer"
+                android:layout_alignEnd="@+id/fragment_registration_passwordInput" />
+
+            <ProgressBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/progressBar2"
+                android:layout_alignTop="@+id/fragment_registration_submitBtn"
+                android:layout_centerHorizontal="true"
+                android:visibility="invisible" />
 
         </RelativeLayout>
     </LinearLayout>

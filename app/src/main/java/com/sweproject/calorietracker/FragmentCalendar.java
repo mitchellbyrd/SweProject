@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CalendarView;
+import android.widget.TextView;
 
 /**
  * Created by Marcus on 2/5/2016.
@@ -16,6 +17,7 @@ public class FragmentCalendar extends Fragment implements CalendarView.OnDateCha
 	public static final String MONTH = "MONTH";
 	public static final String DAY = "DAY";
 	private CalendarView mCalendarView;
+	private TextView mCalendarTitle;
 	private Long mSelectedDate;
 
 	@Override
@@ -26,7 +28,8 @@ public class FragmentCalendar extends Fragment implements CalendarView.OnDateCha
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		View root = inflater.inflate(R.layout.fragment_calendar, container, false);
-
+		this.mCalendarTitle = (TextView) root.findViewById(R.id.fragment_calendar_title);
+		this.mCalendarTitle.setText(MainActivity.CurrentUser.NameFirst);
 		mCalendarView = (CalendarView) root.findViewById(R.id.fragment_calendar_calendar);
 		mCalendarView.setOnDateChangeListener(this);
 		mSelectedDate = mCalendarView.getDate();

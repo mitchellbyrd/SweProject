@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
+import android.widget.TextView;
 
 import com.microsoft.windowsazure.mobileservices.MobileServiceClient;
 import com.sweproject.calorietracker.DataObjects.Users;
@@ -89,6 +90,7 @@ public class MainActivity extends AppCompatActivity{
 		getMenuInflater().inflate(R.menu.menu_main, menu);
 		return true;
 	}
+
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
