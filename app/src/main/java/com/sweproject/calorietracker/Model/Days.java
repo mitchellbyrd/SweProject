@@ -1,4 +1,4 @@
-package com.sweproject.calorietracker;
+package com.sweproject.calorietracker.Model;
 
 /**
  * Created by Marcus on 3/17/2016.
