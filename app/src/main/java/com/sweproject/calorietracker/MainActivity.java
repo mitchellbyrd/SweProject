@@ -1,5 +1,6 @@
 package com.sweproject.calorietracker;
 
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -14,6 +15,8 @@ import android.view.WindowManager;
 import android.widget.FrameLayout;
 
 import com.microsoft.windowsazure.mobileservices.MobileServiceClient;
+import com.microsoft.windowsazure.mobileservices.MobileServiceList;
+import com.sweproject.calorietracker.Callbacks.DBDataListener;
 import com.sweproject.calorietracker.DataObjects.Foods;
 
 import java.net.MalformedURLException;
@@ -113,6 +116,47 @@ public class MainActivity extends AppCompatActivity{
 					.replace(R.id.activity_container, toFrag)
 					.commit();
 		}
+	}
+
+	/**
+	 * Allows client to get all the data from the table that matches the class.
+	 * There currently is not filtering built into this function
+	 *
+	 * @param clazz    The table you want to access (pass Class.class)
+	 * @param listener The class that will receive the callbacks
+	 */
+	public static void getDBData(final Class clazz, final DBDataListener listener) {
+		new AsyncTask<Void, Void, Void>() {
+			ArrayList<Object> temp = new ArrayList<>();
+
+			@Override
+			protected Void doInBackground(Void... params) {
+				try {
+					final MobileServiceList<?> result = mClient.getTable(Class.forName(clazz.getName())).execute().get();
+
+					new Runnable() {
+						@Override
+						public void run() {
+							for (Object item : result) {
+								temp.add(item);
+							}
+						}
+					};
+				} catch (Exception exception) {
+					exception.printStackTrace();
+				}
+				return null;
+			}
+
+			@Override
+			protected void onPostExecute(Void aVoid) {
+				if (temp.size() != 0) {
+					listener.onGoodDataReturn(temp);
+				} else {
+					listener.onBadDataReturn();
+				}
+			}
+		}.execute();
 	}
 
 	@Override

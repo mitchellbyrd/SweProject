@@ -8,6 +8,8 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.sweproject.calorietracker.Callbacks.DeleteFoodListener;
+
 /**
  * Created by Marcus on 2/15/2016.
  */

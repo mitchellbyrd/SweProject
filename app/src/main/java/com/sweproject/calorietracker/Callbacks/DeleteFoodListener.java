@@ -1,7 +1,10 @@
-package com.sweproject.calorietracker;
+package com.sweproject.calorietracker.Callbacks;
 
 import android.view.View;
 import android.widget.BaseAdapter;
+
+import com.sweproject.calorietracker.FragmentDay;
+import com.sweproject.calorietracker.MainActivity;
 
 /**
  * Created by Marcus on 3/3/2016.
