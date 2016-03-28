@@ -8,8 +8,8 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.sweproject.calorietracker.Model.Foods;
-import com.sweproject.calorietracker.Model.ServingSizes;
+import com.sweproject.calorietracker.DataObjects.Foods;
+import com.sweproject.calorietracker.DataObjects.ServingSizes;
 
 import java.util.ArrayList;
 

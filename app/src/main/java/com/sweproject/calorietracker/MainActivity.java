@@ -14,7 +14,7 @@ import android.view.WindowManager;
 import android.widget.FrameLayout;
 
 import com.microsoft.windowsazure.mobileservices.MobileServiceClient;
-import com.sweproject.calorietracker.Model.Foods;
+import com.sweproject.calorietracker.DataObjects.Foods;
 
 import java.net.MalformedURLException;
 import java.util.ArrayList;

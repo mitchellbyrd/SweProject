@@ -14,7 +14,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.microsoft.windowsazure.mobileservices.MobileServiceList;
-import com.sweproject.calorietracker.Model.Foods;
+import com.sweproject.calorietracker.DataObjects.Foods;
 
 import java.util.ArrayList;
 
