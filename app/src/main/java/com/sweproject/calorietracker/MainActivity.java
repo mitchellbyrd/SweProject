@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 	private MobileServiceClient mClient;
 	private EditText mName;
-	private ArrayList<Users> listings;
+	private ArrayList<Object> listings;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -96,17 +96,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 				break;
 			case R.id.activity_load_btn:
 				Toast.makeText(MainActivity.this, "Loading", Toast.LENGTH_SHORT).show();
+				final Class obj = Users.class;
 				new AsyncTask<Void, Void, Void>() {
 
 					@Override
 					protected Void doInBackground(Void... params) {
 						try {
-							final MobileServiceList<Users> result = mClient.getTable(Users.class).execute().get();
+							// final MobileServiceList<Users> result = mClient.getTable(Users.class).execute().get();
+							final MobileServiceList<?> result = mClient.getTable(Class.forName(obj.getName())).execute().get();
 							runOnUiThread(new Runnable() {
 
 								@Override
 								public void run() {
-									for (Users item : result) {
+									for (Object item : result) {
 										listings.add(item);
 									}
 								}
@@ -121,9 +123,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 					protected void onPostExecute(Void aVoid) {
 						if (listings.size() != 0) {
 							// This grabs the first item in the db. change the 0 to grab another item
-							mName.setText(listings.get(0).NameFirst);
+							mName.setText(((Users) listings.get(0)).NameFirst);
 
-							Toast.makeText(MainActivity.this, "Loaded to DB ID: " + listings.get(0).Id, Toast.LENGTH_SHORT).show();
+							Toast.makeText(MainActivity.this, "Loaded to DB ID: " + ((Users) listings.get(0)).Id, Toast.LENGTH_SHORT).show();
 						} else {
 							Toast.makeText(MainActivity.this, "No data found in DB", Toast.LENGTH_SHORT).show();
 						}
