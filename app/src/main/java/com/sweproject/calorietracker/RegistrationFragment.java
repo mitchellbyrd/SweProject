@@ -78,7 +78,6 @@ public class RegistrationFragment extends Fragment implements View.OnClickListen
 								userTable.insert(newUser);
 								users = userTable.where().field("EmailAddress").eq(newUser.EmailAddress).execute().get();
 								MainActivity.CurrentUser = users.get(0);
-								MainActivity.nextFragment(new RegistrationFragment(), new FragmentCalendar(), null, false, false);
 							}
 							else {
 								new Handler(Looper.getMainLooper()).post(new Runnable() {
@@ -106,7 +105,8 @@ public class RegistrationFragment extends Fragment implements View.OnClickListen
 			spinner.setVisibility(View.INVISIBLE);
 			e.printStackTrace();
 		}
-
+		MainActivity.CurrentUser = newUser;
+		MainActivity.nextFragment(new RegistrationFragment(), new FragmentCalendar(), null, false, false);
 	}
 
 	private Users GetNewUserFromView() {

@@ -96,6 +96,15 @@
         android:background="#7afe5f"
         android:clickable="false" />
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Preferences"
+        android:id="@+id/fragment_preferences_title"
+        android:layout_below="@+id/fragment_preferences_userPreferencesLabel"
+        android:layout_centerHorizontal="true" />
+
 </RelativeLayout>
 
 </LinearLayout>
