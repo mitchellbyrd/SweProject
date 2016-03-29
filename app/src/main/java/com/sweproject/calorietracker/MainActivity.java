@@ -3,6 +3,7 @@ package com.sweproject.calorietracker;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
@@ -16,6 +17,7 @@ import android.widget.FrameLayout;
 
 import com.microsoft.windowsazure.mobileservices.MobileServiceClient;
 import com.microsoft.windowsazure.mobileservices.MobileServiceList;
+import com.microsoft.windowsazure.mobileservices.table.MobileServiceTable;
 import com.sweproject.calorietracker.Callbacks.DBDataListener;
 import com.sweproject.calorietracker.DataObjects.Foods;
 
@@ -30,6 +32,7 @@ public class MainActivity extends AppCompatActivity{
 
 	public static ArrayList<Foods> sDBFoodList;
 	public static ArrayList<Foods> sAddedFoodList;
+	public static ArrayList<Object> dbSearchReuslt;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +45,7 @@ public class MainActivity extends AppCompatActivity{
 		sFragmentManager = getSupportFragmentManager();
 		mContainer = (FrameLayout) findViewById(R.id.activity_container);
 		sDBFoodList = new ArrayList<>();
+		dbSearchReuslt = new ArrayList<>();
 		sAddedFoodList = new ArrayList<>();
 
 		Window window = getWindow();
@@ -125,25 +129,29 @@ public class MainActivity extends AppCompatActivity{
 	 * @param clazz    The table you want to access (pass Class.class)
 	 * @param listener The class that will receive the callbacks
 	 */
-	public static void getDBData(final Class clazz, final DBDataListener listener) {
-		new AsyncTask<Void, Void, Void>() {
+	public static void getDBData(@NonNull final Class clazz, @NonNull final DBDataListener listener, String field, String filter) {
+
+		if (field != null && filter != null) {
+			if (field.isEmpty() || filter.isEmpty()) {
+				filter = field = null;
+			}
+		}
+		new AsyncTask<String, Object, Void>() {
+
 			ArrayList<Object> temp = new ArrayList<>();
-
 			@Override
-			protected Void doInBackground(Void... params) {
+			protected Void doInBackground(String... params) {
 				try {
-					final MobileServiceList<?> result = mClient.getTable(Class.forName(clazz.getName())).execute().get();
 
-					new Runnable() {
-						@Override
-						public void run() {
-							for (Object item : result) {
-								temp.add(item);
-							}
-						}
-					};
+					MobileServiceTable<?> table = mClient.getTable(Class.forName(clazz.getName()));
+					MobileServiceList<?> result = (params[0] != null && params[1] != null) ? table.where().field(params[0]).eq(params[1]).execute().get() : table.execute().get();
+
+					for (Object item : result) {
+						temp.add(item);
+					}
+
 				} catch (Exception exception) {
-					exception.printStackTrace();
+					listener.onBadDataReturn(exception);
 				}
 				return null;
 			}
@@ -152,11 +160,9 @@ public class MainActivity extends AppCompatActivity{
 			protected void onPostExecute(Void aVoid) {
 				if (temp.size() != 0) {
 					listener.onGoodDataReturn(temp);
-				} else {
-					listener.onBadDataReturn();
 				}
 			}
-		}.execute();
+		}.execute(field, filter);
 	}
 
 	@Override

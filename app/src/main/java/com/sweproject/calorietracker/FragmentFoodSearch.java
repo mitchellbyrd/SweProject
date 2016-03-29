@@ -1,6 +1,5 @@
 package com.sweproject.calorietracker;
 
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
@@ -8,12 +7,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.microsoft.windowsazure.mobileservices.MobileServiceList;
+import com.sweproject.calorietracker.Callbacks.DBDataListener;
 import com.sweproject.calorietracker.DataObjects.Foods;
 
 import java.util.ArrayList;
@@ -21,9 +18,8 @@ import java.util.ArrayList;
 /**
  * Created by Marcus on 3/3/2016.
  */
-public class FragmentFoodSearch extends Fragment implements View.OnClickListener, AdapterView.OnItemClickListener {
+public class FragmentFoodSearch extends Fragment implements View.OnClickListener, AdapterView.OnItemClickListener, DBDataListener {
 
-	private ArrayList<String> listings = new ArrayList<>();
 	private ListView foodList;
 
 	@Override
@@ -31,7 +27,7 @@ public class FragmentFoodSearch extends Fragment implements View.OnClickListener
 		super.onActivityCreated(savedInstance);
 
 		foodList = (ListView) getActivity().findViewById(R.id.fragment_food_search_listview);
-		foodList.setAdapter(new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, listings));
+		foodList.setAdapter(new AdapterSearchFood(getActivity(), new ArrayList<Foods>()));
 		foodList.setOnItemClickListener(this);
 
 		FloatingActionButton fab = (FloatingActionButton) getActivity().findViewById(R.id.fragment_food_search_fab);
@@ -39,7 +35,9 @@ public class FragmentFoodSearch extends Fragment implements View.OnClickListener
 
 		Toast.makeText(getActivity(), "Loading...", Toast.LENGTH_LONG).show();
 
-		new AsyncTask<Void, Void, Void>() {
+		MainActivity.getDBData(Foods.class, this, null, null);
+
+		/*new AsyncTask<Void, Void, Void>() {
 			@Override
 			protected Void doInBackground(Void... params) {
 				try {
@@ -69,7 +67,8 @@ public class FragmentFoodSearch extends Fragment implements View.OnClickListener
 					Toast.makeText(getActivity(), "No records found", Toast.LENGTH_SHORT).show();
 				}
 			}
-		}.execute();
+		}.execute();*/
+
 	}
 
 	@Override
@@ -91,5 +90,16 @@ public class FragmentFoodSearch extends Fragment implements View.OnClickListener
 		Bundle bun = new Bundle();
 		bun.putInt("Food", i);
 		MainActivity.nextFragment(this, new FragmentFoodAdd(), bun, true, false);
+	}
+
+	@Override
+	public void onGoodDataReturn(ArrayList<Object> data) {
+		Toast.makeText(getActivity(), data.size() + "|", Toast.LENGTH_SHORT).show();
+		((AdapterSearchFood) foodList.getAdapter()).setData(data);
+	}
+
+	@Override
+	public void onBadDataReturn(Exception e) {
+		e.printStackTrace();
 	}
 }

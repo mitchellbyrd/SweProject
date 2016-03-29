@@ -20,6 +20,7 @@ public class FragmentFoodAdd extends Fragment implements View.OnClickListener {
 		super.onActivityCreated(savedInstance);
 		Bundle bun = getArguments();
 
+
 		TextView title = (TextView) getActivity().findViewById(R.id.fragmet_food_title);
 		Spinner dropDown = (Spinner) getActivity().findViewById(R.id.fragment_food_spinner_serving);
 		Spinner dropDown2 = (Spinner) getActivity().findViewById(R.id.fragment_food_spinner_serving_type);
