@@ -123,8 +123,7 @@ public class MainActivity extends AppCompatActivity{
 	}
 
 	/**
-	 * Allows client to get all the data from the table that matches the class.
-	 * There currently is not filtering built into this function
+	 * Allows client to get data from the Azure database.
 	 *
 	 * @param clazz    The table you want to access (pass Class.class)
 	 * @param listener The class that will receive the callbacks
@@ -143,7 +142,7 @@ public class MainActivity extends AppCompatActivity{
 			protected Void doInBackground(String... params) {
 				try {
 
-					MobileServiceTable<?> table = mClient.getTable(Class.forName(clazz.getName()));
+					MobileServiceTable<?> table = mClient.getTable(clazz);
 					MobileServiceList<?> result = (params[0] != null && params[1] != null) ? table.where().field(params[0]).eq(params[1]).execute().get() : table.execute().get();
 
 					for (Object item : result) {
@@ -163,6 +162,15 @@ public class MainActivity extends AppCompatActivity{
 				}
 			}
 		}.execute(field, filter);
+	}
+
+
+	public static void insertDBData(Class clazz, Object item) {
+		try {
+			mClient.getTable(clazz).insert(clazz.cast(item));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Override

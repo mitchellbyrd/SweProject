@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.sweproject.calorietracker.Callbacks.DBDataListener;
@@ -21,6 +22,7 @@ import java.util.ArrayList;
 public class FragmentFoodSearch extends Fragment implements View.OnClickListener, AdapterView.OnItemClickListener, DBDataListener {
 
 	private ListView foodList;
+	private ProgressBar mProgressBar;
 
 	@Override
 	public void onActivityCreated(Bundle savedInstance) {
@@ -33,42 +35,9 @@ public class FragmentFoodSearch extends Fragment implements View.OnClickListener
 		FloatingActionButton fab = (FloatingActionButton) getActivity().findViewById(R.id.fragment_food_search_fab);
 		fab.setOnClickListener(this);
 
-		Toast.makeText(getActivity(), "Loading...", Toast.LENGTH_LONG).show();
+		mProgressBar = (ProgressBar) getActivity().findViewById(R.id.fragment_food_search_progress);
 
 		MainActivity.getDBData(Foods.class, this, null, null);
-
-		/*new AsyncTask<Void, Void, Void>() {
-			@Override
-			protected Void doInBackground(Void... params) {
-				try {
-					final MobileServiceList<Foods> result = MainActivity.mClient.getTable(Foods.class).execute().get();
-					getActivity().runOnUiThread(new Runnable() {
-
-						@Override
-						public void run() {
-							for (Foods item : result) {
-								listings.add(item.Name);
-								MainActivity.sDBFoodList.add(item);
-							}
-						}
-					});
-				} catch (Exception exception) {
-					exception.printStackTrace();
-				}
-				return null;
-			}
-
-			@Override
-			protected void onPostExecute(Void aVoid) {
-				if (MainActivity.sDBFoodList.size() != 0) {
-					((BaseAdapter) foodList.getAdapter()).notifyDataSetChanged();
-					Toast.makeText(getActivity(), "Done", Toast.LENGTH_SHORT).show();
-				} else {
-					Toast.makeText(getActivity(), "No records found", Toast.LENGTH_SHORT).show();
-				}
-			}
-		}.execute();*/
-
 	}
 
 	@Override
@@ -94,12 +63,14 @@ public class FragmentFoodSearch extends Fragment implements View.OnClickListener
 
 	@Override
 	public void onGoodDataReturn(ArrayList<Object> data) {
-		Toast.makeText(getActivity(), data.size() + "|", Toast.LENGTH_SHORT).show();
+		mProgressBar.setVisibility(View.GONE);
 		((AdapterSearchFood) foodList.getAdapter()).setData(data);
 	}
 
 	@Override
 	public void onBadDataReturn(Exception e) {
+		Toast.makeText(getActivity(), "Server Error", Toast.LENGTH_SHORT).show();
+		mProgressBar.setVisibility(View.GONE);
 		e.printStackTrace();
 	}
 }
