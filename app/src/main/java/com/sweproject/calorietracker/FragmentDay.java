@@ -15,7 +15,7 @@ import android.widget.TextView;
  */
 public class FragmentDay extends Fragment implements View.OnClickListener, AdapterView.OnItemClickListener {
 
-	private static Bundle mBundle;
+	private Bundle mBundle;
 	public static ListView foodList;
 
 	@Override
@@ -90,14 +90,14 @@ public class FragmentDay extends Fragment implements View.OnClickListener, Adapt
 	public void onClick(View view) {
 		switch (view.getId()) {
 			case R.id.fragment_calendar_fab:
-				MainActivity.nextFragment(this, new FragmentFoodSearch(), null, true, false);
+				MainActivity.nextFragment(this, new FragmentFoodSearch(), getArguments(), true, false);
 				break;
 		}
 	}
 
 	@Override
 	public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-		Bundle bun = new Bundle();
+		Bundle bun = getArguments();
 		bun.putInt("Index", i);
 		MainActivity.nextFragment(this, new FragmentFoodEdit(), bun, true, false);
 	}

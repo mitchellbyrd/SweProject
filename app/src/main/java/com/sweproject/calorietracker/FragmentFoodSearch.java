@@ -42,8 +42,8 @@ public class FragmentFoodSearch extends Fragment implements View.OnClickListener
 
 	@Override
 	public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-		Bundle bun = new Bundle();
+		Bundle bun = getArguments();
 		bun.putInt("Index", i);
-		MainActivity.nextFragment(this, new FragmentFoodAdd(), bun, true, false);
+		MainActivity.nextFragment(this, new FragmentFoodAdd(), getArguments(), true, false);
 	}
 }
