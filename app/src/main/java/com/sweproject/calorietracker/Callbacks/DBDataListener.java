@@ -16,4 +16,9 @@ public interface DBDataListener {
 	 * When a call to the getDBData is made, when invalid data is received, this method is called
 	 **/
 	void onBadDataReturn(Exception exception);
+
+	/**
+	 * Simply notifies of a successful insert
+	 **/
+	void onGoodInsert();
 }

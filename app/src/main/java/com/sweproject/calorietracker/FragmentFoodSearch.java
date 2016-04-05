@@ -81,4 +81,7 @@ public class FragmentFoodSearch extends Fragment implements View.OnClickListener
 		mProgressBar.setVisibility(View.GONE);
 		e.printStackTrace();
 	}
+
+	@Override
+	public void onGoodInsert() { /* ignore */ }
 }

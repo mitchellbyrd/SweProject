@@ -1,14 +1,16 @@
 package com.sweproject.calorietracker;
 
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ListView;
-import android.widget.Toast;
+import android.widget.TextView;
 
-import com.sweproject.calorietracker.DataObjects.Foods;
+import com.sweproject.calorietracker.Callbacks.OnDialogDismissListener;
 import com.sweproject.calorietracker.DataObjects.ServingSizes;
 import com.sweproject.calorietracker.ListViewAdapters.AdapterCreateFood;
 
@@ -17,35 +19,28 @@ import java.util.ArrayList;
 /**
  * Created by jedwa145 on 2/23/2016.
  */
-public class CreateFood extends Fragment implements View.OnClickListener {
+public class CreateFood extends Fragment implements View.OnClickListener, OnDialogDismissListener {
 
+	private TextView mFoodName;
 	private ListView mCreateList;
+	private FloatingActionButton mFab;
+	private Button mCreateBtn;
+
 	private ArrayList<ServingSizes> mServingSizes;
-	private ArrayList<Foods> mFoods;
 
 	@Override
 	public void onActivityCreated(Bundle savedInstance) {
 		super.onActivityCreated(savedInstance);
 
-		Bundle bun = getArguments();
-
-		mCreateList = (ListView) getActivity().findViewById(R.id.create_food_listview);
-		mCreateList.setAdapter(new AdapterCreateFood(getActivity(), this));
-
 		mServingSizes = new ArrayList<>();
-		mFoods = new ArrayList<>();
 
-		//Spinner dropDown = (Spinner) getActivity().findViewById(R.id.create_food_type_spin);
-		//Spinner dropDown2 = (Spinner) getActivity().findViewById(R.id.create_food_serving_type_spin);
+		mFoodName = (TextView) getActivity().findViewById(R.id.create_food_name_edit);
+		mCreateList = (ListView) getActivity().findViewById(R.id.create_food_listview);
+		mFab = (FloatingActionButton) getActivity().findViewById(R.id.create_food_fab);
+		mCreateBtn = (Button) getActivity().findViewById(R.id.create_food_btn);
 
-
-		String[] type = {"Grams", "Ounce"};
-		String[] size = {"1", "2", "3", "4", "5"};
-
-
-		//dropDown.setAdapter(new ArrayAdapter<>(getActivity(), R.layout.support_simple_spinner_dropdown_item, size));
-		//dropDown2.setAdapter(new ArrayAdapter<>(getActivity(), R.layout.support_simple_spinner_dropdown_item, type));
-
+		mFab.setOnClickListener(this);
+		mCreateList.setAdapter(new AdapterCreateFood(getActivity(), mServingSizes));
 	}
 
 	@Override
@@ -55,7 +50,21 @@ public class CreateFood extends Fragment implements View.OnClickListener {
 
 	@Override
 	public void onClick(View view) {
-		Toast.makeText(getActivity(), "Click", Toast.LENGTH_SHORT).show();
-		((AdapterCreateFood) mCreateList.getAdapter()).setCount(5);
+		switch (view.getId()) {
+			case R.id.create_food_fab:
+				DialogServingAdd dialogServingAdd = new DialogServingAdd();
+				dialogServingAdd.setOnDismissListener(this);
+				dialogServingAdd.show(getActivity().getSupportFragmentManager(), null);
+				break;
+			case R.id.create_food_btn:
+				// Insert food, get id, add id to servingsize and insert that
+				break;
+		}
+	}
+
+	@Override
+	public void onDismiss(ServingSizes obj) {
+		mServingSizes.add(obj);
+		((AdapterCreateFood) mCreateList.getAdapter()).notifyDataSetChanged();
 	}
 }

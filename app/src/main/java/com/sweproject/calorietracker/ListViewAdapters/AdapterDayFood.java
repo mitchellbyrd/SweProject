@@ -46,7 +46,7 @@ public class AdapterDayFood extends BaseAdapter {
 		View row = ((LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE))
 				.inflate(R.layout.calendar_day_single_row, parent, false);
 
-		((TextView) row.findViewById(R.id.single_row_title)).setText(FragmentDay.sAddedFoodList.get(count).Name);
+		((TextView) row.findViewById(R.id.single_row_title)).setText(FragmentDay.sAddedFoodList.get(count).getName());
 		((TextView) row.findViewById(R.id.single_row_calorie)).setText("" + 0);
 
 		ImageView icon = (ImageView) row.findViewById(R.id.single_row_ic);

@@ -29,7 +29,7 @@ public class FragmentFoodAdd extends Fragment implements View.OnClickListener {
 
 		FragmentDay.sAddedFoodList.add(FragmentFoodSearch.sDBFoodList.get(getArguments().getInt("Food")));
 
-		title.setText(FragmentFoodSearch.sDBFoodList.get(getArguments().getInt("Food")).Name);
+		title.setText(FragmentFoodSearch.sDBFoodList.get(getArguments().getInt("Food")).getName());
 		dropDown.setAdapter(new ArrayAdapter<>(getActivity(), R.layout.support_simple_spinner_dropdown_item, size));
 		dropDown2.setAdapter(new ArrayAdapter<>(getActivity(), R.layout.support_simple_spinner_dropdown_item, type));
 		submit.setOnClickListener(this);

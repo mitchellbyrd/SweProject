@@ -55,7 +55,7 @@ public class AdapterSearchFood extends BaseAdapter {
 		View row = ((LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE))
 				.inflate(R.layout.search_food_single_row, parent, false);
 
-		((TextView) row.findViewById(R.id.search_food_title)).setText(mData.get(count).Name);
+		((TextView) row.findViewById(R.id.search_food_title)).setText(mData.get(count).getName());
 
 		return row;
 	}

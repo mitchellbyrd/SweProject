@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/dialog_serving_add_calorie_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:text="Calories"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="20dp"
+        android:layout_marginStart="20dp"/>
+
+    <EditText
+        android:id="@+id/dialog_serving_add_calories_edit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="number"
+        android:layout_alignBottom="@+id/dialog_serving_add_calorie_view"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_above="@+id/dialog_serving_add_proteins_view"
+        android:layout_marginRight="20dp"/>
+
+    <TextView
+        android:id="@+id/dialog_serving_add_proteins_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/dialog_serving_add_calorie_view"
+        android:layout_alignStart="@+id/dialog_serving_add_calorie_view"
+        android:layout_below="@+id/dialog_serving_add_calorie_view"
+        android:layout_marginTop="30dp"
+        android:text="Proteins"
+        android:textAppearance="?android:attr/textAppearanceLarge"/>
+
+    <EditText
+        android:id="@+id/dialog_serving_add_protein_edit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/dialog_serving_add_proteins_view"
+        android:layout_alignEnd="@+id/dialog_serving_add_calories_edit"
+        android:layout_alignLeft="@+id/dialog_serving_add_calories_edit"
+        android:layout_alignRight="@+id/dialog_serving_add_calories_edit"
+        android:layout_alignStart="@+id/dialog_serving_add_calories_edit"
+        android:ems="10"
+        android:inputType="number"/>
+
+    <TextView
+        android:id="@+id/dialog_serving_add_fats_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/dialog_serving_add_proteins_view"
+        android:layout_alignStart="@+id/dialog_serving_add_proteins_view"
+        android:layout_below="@+id/dialog_serving_add_proteins_view"
+        android:layout_marginTop="30dp"
+        android:text="Fats"
+        android:textAppearance="?android:attr/textAppearanceLarge"/>
+
+    <EditText
+        android:id="@+id/dialog_serving_add_fats_edit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/dialog_serving_add_fats_view"
+        android:layout_alignEnd="@+id/dialog_serving_add_protein_edit"
+        android:layout_alignLeft="@+id/dialog_serving_add_protein_edit"
+        android:layout_alignRight="@+id/dialog_serving_add_protein_edit"
+        android:layout_alignStart="@+id/dialog_serving_add_protein_edit"
+        android:ems="10"
+        android:inputType="number"/>
+
+    <TextView
+        android:id="@+id/dialog_serving_add_serving_type_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/dialog_serving_add_carb_view"
+        android:layout_alignStart="@+id/dialog_serving_add_carb_view"
+        android:layout_below="@+id/dialog_serving_add_carb_view"
+        android:layout_marginTop="50dp"
+        android:text="Serving Type"
+        android:textAppearance="?android:attr/textAppearanceLarge"/>
+
+    <TextView
+        android:id="@+id/dialog_serving_add_carb_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/dialog_serving_add_fats_view"
+        android:layout_alignStart="@+id/dialog_serving_add_fats_view"
+        android:layout_below="@+id/dialog_serving_add_fats_view"
+        android:layout_marginTop="30dp"
+        android:text="Carbs"
+        android:textAppearance="?android:attr/textAppearanceLarge"/>
+
+    <EditText
+        android:id="@+id/dialog_serving_add_carbs_edit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/dialog_serving_add_serving_type_view"
+        android:layout_alignEnd="@+id/dialog_serving_add_fats_edit"
+        android:layout_alignLeft="@+id/dialog_serving_add_fats_edit"
+        android:layout_alignRight="@+id/dialog_serving_add_fats_edit"
+        android:layout_alignStart="@+id/dialog_serving_add_fats_edit"
+        android:ems="10"
+        android:inputType="number"/>
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/dialog_serving_add_serving_type_edit"
+        android:layout_alignBottom="@+id/dialog_serving_add_serving_type_view"
+        android:layout_alignRight="@+id/dialog_serving_add_carbs_edit"
+        android:layout_alignEnd="@+id/dialog_serving_add_carbs_edit"
+        android:layout_alignLeft="@+id/dialog_serving_add_carbs_edit"
+        android:layout_alignStart="@+id/dialog_serving_add_carbs_edit"
+        />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Add"
+        android:id="@+id/dialog_serving_add_btn_add"
+        android:layout_alignParentBottom="true"
+        android:layout_alignRight="@+id/dialog_serving_add_serving_type_edit"
+        android:layout_alignEnd="@+id/dialog_serving_add_serving_type_edit"
+        android:layout_marginBottom="15dp"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Cancel"
+        android:id="@+id/dialog_serving_add_btn_cancel"
+        android:layout_alignParentBottom="true"
+        android:layout_alignLeft="@+id/dialog_serving_add_serving_type_view"
+        android:layout_alignStart="@+id/dialog_serving_add_serving_type_view"
+        android:layout_marginBottom="15dp"/>
+</RelativeLayout>
