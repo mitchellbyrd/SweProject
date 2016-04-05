@@ -21,7 +21,9 @@
         android:layout_marginTop="50dp"
         android:layout_below="@+id/fragmet_food_title"
         android:layout_alignParentStart="true"
-        android:layout_marginStart="20dp"/>
+        android:layout_alignParentLeft="true"
+        android:layout_marginStart="20dp"
+        android:layout_marginLeft="20dp"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -30,7 +32,8 @@
         android:layout_marginLeft="50dp"
         android:id="@+id/fragment_food_value_calorie"
         android:layout_alignTop="@+id/fragment_food_label_calories"
-        android:layout_toEndOf="@+id/fragment_food_label_calories"/>
+        android:layout_toEndOf="@+id/fragment_food_label_calories"
+        android:layout_toRightOf="@+id/fragment_food_label_calories"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -38,7 +41,8 @@
         android:text="Carbohydrates"
         android:id="@+id/fragment_food_label_carbs"
         android:layout_below="@+id/fragment_food_label_calories"
-        android:layout_alignStart="@+id/fragment_food_label_calories"/>
+        android:layout_alignStart="@+id/fragment_food_label_calories"
+        android:layout_alignLeft="@+id/fragment_food_label_calories"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -46,7 +50,8 @@
         android:text="123"
         android:id="@+id/fragment_food_value_carbs"
         android:layout_below="@+id/fragment_food_value_calorie"
-        android:layout_alignStart="@+id/fragment_food_value_calorie"/>
+        android:layout_alignStart="@+id/fragment_food_value_calorie"
+        android:layout_alignLeft="@+id/fragment_food_value_calorie"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -54,7 +59,8 @@
         android:text="Proteins"
         android:id="@+id/fragment_food_label_protein"
         android:layout_below="@+id/fragment_food_label_carbs"
-        android:layout_alignStart="@+id/fragment_food_label_carbs"/>
+        android:layout_alignStart="@+id/fragment_food_label_carbs"
+        android:layout_alignLeft="@+id/fragment_food_label_carbs"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -62,7 +68,8 @@
         android:text="345"
         android:id="@+id/fragment_food_value_protein"
         android:layout_alignTop="@+id/fragment_food_label_protein"
-        android:layout_alignStart="@+id/fragment_food_value_carbs"/>
+        android:layout_alignStart="@+id/fragment_food_value_carbs"
+        android:layout_alignLeft="@+id/fragment_food_value_carbs"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -70,7 +77,8 @@
         android:text="Fats"
         android:id="@+id/fragment_food_label_fats"
         android:layout_below="@+id/fragment_food_label_protein"
-        android:layout_alignStart="@+id/fragment_food_label_protein"/>
+        android:layout_alignStart="@+id/fragment_food_label_protein"
+        android:layout_alignLeft="@+id/fragment_food_label_protein"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -78,7 +86,8 @@
         android:text="900000000"
         android:id="@+id/fragment_food_value_fats"
         android:layout_alignTop="@+id/fragment_food_label_fats"
-        android:layout_alignStart="@+id/fragment_food_value_protein"/>
+        android:layout_alignStart="@+id/fragment_food_value_protein"
+        android:layout_alignLeft="@+id/fragment_food_value_protein"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -87,6 +96,7 @@
         android:id="@+id/fragment_food_label_serving"
         android:layout_below="@+id/fragment_food_label_fats"
         android:layout_alignStart="@+id/fragment_food_label_fats"
+        android:layout_alignLeft="@+id/fragment_food_label_fats"
         android:layout_marginTop="50dp"/>
 
     <TextView
@@ -95,7 +105,8 @@
         android:text="Serving Type"
         android:id="@+id/fragment_food_label_serving_type"
         android:layout_below="@+id/fragment_food_label_serving"
-        android:layout_alignStart="@+id/fragment_food_label_serving"/>
+        android:layout_alignStart="@+id/fragment_food_label_serving"
+        android:layout_alignLeft="@+id/fragment_food_label_serving"/>
 
     <Spinner
         android:layout_width="wrap_content"
@@ -103,6 +114,7 @@
         android:id="@+id/fragment_food_spinner_serving"
         android:layout_alignTop="@+id/fragment_food_label_serving"
         android:layout_alignStart="@+id/fragment_food_value_fats"
+        android:layout_alignLeft="@+id/fragment_food_value_fats"
         android:spinnerMode="dropdown"
         android:layout_above="@+id/fragment_food_label_serving_type"/>
 
@@ -113,6 +125,7 @@
         android:spinnerMode="dropdown"
         android:layout_alignTop="@+id/fragment_food_label_serving_type"
         android:layout_alignStart="@+id/fragment_food_spinner_serving"
+        android:layout_alignLeft="@+id/fragment_food_spinner_serving"
         android:layout_alignBottom="@+id/fragment_food_label_serving_type"/>
 
     <Button
@@ -122,5 +135,6 @@
         android:id="@+id/fragment_food_btn_submit"
         android:layout_below="@+id/fragment_food_spinner_serving_type"
         android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
         android:layout_marginTop="72dp"/>
 </RelativeLayout>

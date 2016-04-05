@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import com.sweproject.calorietracker.Callbacks.DBDataListener;
 import com.sweproject.calorietracker.DataObjects.Foods;
+import com.sweproject.calorietracker.ListViewAdapters.AdapterSearchFood;
 
 import java.util.ArrayList;
 
@@ -23,6 +24,10 @@ public class FragmentFoodSearch extends Fragment implements View.OnClickListener
 
 	private ListView foodList;
 	private ProgressBar mProgressBar;
+	/**
+	 * When a search is performed, food in the db is returned in this list
+	 **/
+	public static ArrayList<Foods> sDBFoodList = new ArrayList<>();
 
 	@Override
 	public void onActivityCreated(Bundle savedInstance) {
@@ -56,15 +61,18 @@ public class FragmentFoodSearch extends Fragment implements View.OnClickListener
 
 	@Override
 	public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-		Bundle bun = new Bundle();
-		bun.putInt("Food", i);
-		MainActivity.nextFragment(this, new FragmentFoodAdd(), bun, true, false);
+		getArguments().putInt("Food", i);
+		MainActivity.nextFragment(this, new FragmentFoodAdd(), getArguments(), true, false);
 	}
 
 	@Override
 	public void onGoodDataReturn(ArrayList<Object> data) {
 		mProgressBar.setVisibility(View.GONE);
 		((AdapterSearchFood) foodList.getAdapter()).setData(data);
+
+		FragmentFoodSearch.sDBFoodList.clear();
+		for (Object obj : data) {
+			FragmentFoodSearch.sDBFoodList.add((Foods)obj); }
 	}
 
 	@Override

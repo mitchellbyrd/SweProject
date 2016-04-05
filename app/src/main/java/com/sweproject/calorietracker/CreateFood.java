@@ -10,6 +10,7 @@ import android.widget.Toast;
 
 import com.sweproject.calorietracker.DataObjects.Foods;
 import com.sweproject.calorietracker.DataObjects.ServingSizes;
+import com.sweproject.calorietracker.ListViewAdapters.AdapterCreateFood;
 
 import java.util.ArrayList;
 

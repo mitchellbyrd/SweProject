@@ -1,4 +1,4 @@
-package com.sweproject.calorietracker;
+package com.sweproject.calorietracker.ListViewAdapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -8,6 +8,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.sweproject.calorietracker.DataObjects.Foods;
+import com.sweproject.calorietracker.R;
 
 import java.util.ArrayList;
 
@@ -46,7 +47,7 @@ public class AdapterSearchFood extends BaseAdapter {
 
 	@Override
 	public long getItemId(int i) {
-		return -1;
+		return i;
 	}
 
 	@Override

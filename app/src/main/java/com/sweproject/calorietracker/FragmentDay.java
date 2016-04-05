@@ -11,6 +11,10 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.sweproject.calorietracker.Callbacks.DeleteFoodListener;
+import com.sweproject.calorietracker.DataObjects.Foods;
+import com.sweproject.calorietracker.ListViewAdapters.AdapterDayFood;
+
+import java.util.ArrayList;
 
 /**
  * Created by Marcus on 2/15/2016.
@@ -19,6 +23,10 @@ public class FragmentDay extends Fragment implements View.OnClickListener, Adapt
 
 	private static Bundle mBundle;
 	public static ListView foodList;
+	/**
+	 * Foods added by the FragmentFoodAdd class are placed here to be displayed in the Fragment Day listview
+	 **/
+	public static ArrayList<Foods> sAddedFoodList = new ArrayList<>();
 
 	@Override
 	public void onActivityCreated(Bundle savedInstance) {
@@ -92,15 +100,14 @@ public class FragmentDay extends Fragment implements View.OnClickListener, Adapt
 	public void onClick(View view) {
 		switch (view.getId()) {
 			case R.id.fragment_calendar_fab:
-				MainActivity.nextFragment(this, new FragmentFoodSearch(), null, true, false);
+				MainActivity.nextFragment(this, new FragmentFoodSearch(), getArguments(), true, false);
 				break;
 		}
 	}
 
 	@Override
 	public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-		Bundle bun = new Bundle();
-		bun.putInt("Index", i);
-		MainActivity.nextFragment(this, new FragmentFoodEdit(), bun, true, false);
+		getArguments().putInt("Index", i);
+		MainActivity.nextFragment(this, new FragmentFoodEdit(), getArguments(), true, false);
 	}
 }

@@ -1,4 +1,4 @@
-package com.sweproject.calorietracker;
+package com.sweproject.calorietracker.ListViewAdapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -9,6 +9,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.sweproject.calorietracker.Callbacks.DeleteFoodListener;
+import com.sweproject.calorietracker.FragmentDay;
+import com.sweproject.calorietracker.R;
 
 /**
  * Created by Marcus on 2/15/2016.
@@ -25,12 +27,12 @@ public class AdapterDayFood extends BaseAdapter {
 
 	@Override
 	public int getCount() {
-		return MainActivity.sAddedFoodList.size();
+		return FragmentDay.sAddedFoodList.size();
 	}
 
 	@Override
 	public Object getItem(int i) {
-		return MainActivity.sAddedFoodList.get(i);
+		return FragmentDay.sAddedFoodList.get(i);
 	}
 
 	@Override
@@ -44,7 +46,7 @@ public class AdapterDayFood extends BaseAdapter {
 		View row = ((LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE))
 				.inflate(R.layout.calendar_day_single_row, parent, false);
 
-		((TextView) row.findViewById(R.id.single_row_title)).setText(MainActivity.sAddedFoodList.get(count).Name);
+		((TextView) row.findViewById(R.id.single_row_title)).setText(FragmentDay.sAddedFoodList.get(count).Name);
 		((TextView) row.findViewById(R.id.single_row_calorie)).setText("" + 0);
 
 		ImageView icon = (ImageView) row.findViewById(R.id.single_row_ic);

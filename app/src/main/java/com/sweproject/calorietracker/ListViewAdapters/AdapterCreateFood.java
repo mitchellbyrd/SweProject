@@ -1,4 +1,4 @@
-package com.sweproject.calorietracker;
+package com.sweproject.calorietracker.ListViewAdapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -6,6 +6,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
+
+import com.sweproject.calorietracker.R;
 
 /**
  * Created by Marcus on 3/24/2016.
@@ -34,7 +36,7 @@ public class AdapterCreateFood extends BaseAdapter {
 
 	@Override
 	public Object getItem(int i) {
-		return null;
+		return i;
 	}
 
 	@Override

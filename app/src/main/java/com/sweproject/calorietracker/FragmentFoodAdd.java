@@ -18,8 +18,6 @@ public class FragmentFoodAdd extends Fragment implements View.OnClickListener {
 	@Override
 	public void onActivityCreated(Bundle savedInstance) {
 		super.onActivityCreated(savedInstance);
-		Bundle bun = getArguments();
-
 
 		TextView title = (TextView) getActivity().findViewById(R.id.fragmet_food_title);
 		Spinner dropDown = (Spinner) getActivity().findViewById(R.id.fragment_food_spinner_serving);
@@ -29,13 +27,12 @@ public class FragmentFoodAdd extends Fragment implements View.OnClickListener {
 		String[] type = {"Grams", "Ounce"};
 		String[] size = {"1", "2", "3", "4", "5"};
 
-		MainActivity.sAddedFoodList.add(MainActivity.sDBFoodList.get(bun.getInt("Index")));
+		FragmentDay.sAddedFoodList.add(FragmentFoodSearch.sDBFoodList.get(getArguments().getInt("Food")));
 
-		title.setText(MainActivity.sDBFoodList.get(bun.getInt("Index")).Name);
+		title.setText(FragmentFoodSearch.sDBFoodList.get(getArguments().getInt("Food")).Name);
 		dropDown.setAdapter(new ArrayAdapter<>(getActivity(), R.layout.support_simple_spinner_dropdown_item, size));
 		dropDown2.setAdapter(new ArrayAdapter<>(getActivity(), R.layout.support_simple_spinner_dropdown_item, type));
 		submit.setOnClickListener(this);
-
 	}
 
 	@Override
@@ -48,4 +45,5 @@ public class FragmentFoodAdd extends Fragment implements View.OnClickListener {
 		// GetArguments returns the date back to the Day fragment
 		MainActivity.nextFragment(this, new FragmentDay(), getArguments(), true, true);
 	}
+
 }

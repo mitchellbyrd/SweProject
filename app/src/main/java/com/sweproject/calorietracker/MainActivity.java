@@ -19,7 +19,6 @@ import com.microsoft.windowsazure.mobileservices.MobileServiceClient;
 import com.microsoft.windowsazure.mobileservices.MobileServiceList;
 import com.microsoft.windowsazure.mobileservices.table.MobileServiceTable;
 import com.sweproject.calorietracker.Callbacks.DBDataListener;
-import com.sweproject.calorietracker.DataObjects.Foods;
 
 import java.net.MalformedURLException;
 import java.util.ArrayList;
@@ -30,8 +29,6 @@ public class MainActivity extends AppCompatActivity{
 	private static FrameLayout mContainer;
 	public static MobileServiceClient mClient;
 
-	public static ArrayList<Foods> sDBFoodList;
-	public static ArrayList<Foods> sAddedFoodList;
 	public static ArrayList<Object> dbSearchReuslt;
 
 	@Override
@@ -44,9 +41,9 @@ public class MainActivity extends AppCompatActivity{
 
 		sFragmentManager = getSupportFragmentManager();
 		mContainer = (FrameLayout) findViewById(R.id.activity_container);
-		sDBFoodList = new ArrayList<>();
-		dbSearchReuslt = new ArrayList<>();
-		sAddedFoodList = new ArrayList<>();
+		//sDBFoodList = new ArrayList<>();
+		//dbSearchReuslt = new ArrayList<>();
+		//sAddedFoodList = new ArrayList<>();
 
 		Window window = getWindow();
 
