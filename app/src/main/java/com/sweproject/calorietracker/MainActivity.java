@@ -21,7 +21,7 @@ import com.sweproject.calorietracker.Callbacks.DBDataListener;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity{
+public class MainActivity extends AppCompatActivity {
 
 	private static FragmentManager sFragmentManager;
 	private static FrameLayout mContainer;
@@ -65,25 +65,26 @@ public class MainActivity extends AppCompatActivity{
 	}
 
 
-	/** Commits replacement transactions with fragments.
+	/**
+	 * Commits replacement transactions with fragments.
 	 *
 	 * @param fromFrag Fragment that should be replaced. Pass null transition should be sliding left to right instead of up and down
-	 * @param toFrag Instance of the fragment that should be called next.
-	 * @param bun Data that should be set to the fragment or null if none.
-	 * @param add True if fragment should be added to the backstack.
-	 * @param clear True if system should clear backstack then add fragment
+	 * @param toFrag   Instance of the fragment that should be called next.
+	 * @param bun      Data that should be set to the fragment or null if none.
+	 * @param add      True if fragment should be added to the backstack.
+	 * @param clear    True if system should clear backstack then add fragment
 	 */
-	public static void nextFragment(Fragment fromFrag, Fragment toFrag, Bundle bun, boolean add, boolean clear){
+	public static void nextFragment(Fragment fromFrag, Fragment toFrag, Bundle bun, boolean add, boolean clear) {
 
-		if (bun != null){
+		if (bun != null) {
 			toFrag.setArguments(bun);
 		}
-		if (clear){
+		if (clear) {
 			// Clears the back stack, leaving the first fragment added to be displayed
 			mContainer.removeAllViews();
 			sFragmentManager.popBackStack(sFragmentManager.getBackStackEntryAt(0).getId(), FragmentManager.POP_BACK_STACK_INCLUSIVE);
 		}
-		if (add){
+		if (add) {
 			sFragmentManager.beginTransaction()
 					.replace(R.id.activity_container, toFrag)
 					.addToBackStack(null)
@@ -111,6 +112,9 @@ public class MainActivity extends AppCompatActivity{
 		new AsyncTask<String, Object, Void>() {
 
 			ArrayList<Object> temp = new ArrayList<>();
+			private boolean error = false;
+			private Exception exception;
+
 			@Override
 			protected Void doInBackground(String... params) {
 				try {
@@ -122,42 +126,62 @@ public class MainActivity extends AppCompatActivity{
 						temp.add(item);
 					}
 
-				} catch (Exception exception) {
-					listener.onBadDataReturn(exception);
+				} catch (Exception e) {
+					error = true;
+					exception = e;
 				}
 				return null;
 			}
 
 			@Override
 			protected void onPostExecute(Void aVoid) {
-				if (temp.size() != 0) {
-					listener.onGoodDataReturn(temp);
+				if (!error) {
+					if (temp.size() != 0) {
+						listener.onGoodDataReturn(temp);
+					}
+				} else {
+					listener.onBadDataReturn(exception);
 				}
 			}
 		}.execute(field, filter);
 	}
 
 
-	public static void insertDBData(@NonNull final Class clazz, @NonNull final DBDataListener listener, Object item) {
+	public static void insertDBData(@NonNull final Class clazz, @NonNull final DBDataListener listener, Object item, Boolean getData) {
 
 		new AsyncTask<Object, Object, Void>() {
+
+			private Object obj;
+			private boolean getData;
+			private boolean error = false;
+			private Exception exception;
+
 			@Override
 			protected Void doInBackground(Object... params) {
 
 				try {
-					mClient.getTable(clazz).insert(clazz.cast(params[0]));
-				} catch (Exception exception) {
-					listener.onBadDataReturn(exception);
+					obj = mClient.getTable(clazz).insert(clazz.cast(params[0])).get();
+					getData = (Boolean) params[1];
+				} catch (Exception e) {
+					error = true;
+					exception = e;
 				}
 				return null;
 			}
 
 			@Override
 			protected void onPostExecute(Void aVoid) {
-				listener.onGoodInsert();
+				if (!error) {
+					if (getData)
+						listener.onGoodInsertReturn(obj);
+					else
+						listener.onGoodInsert();
+				} else {
+					listener.onBadDataReturn(exception);
+				}
 			}
 
-		}.execute(item);
+		}.execute(item, getData);
 	}
 
 	@Override

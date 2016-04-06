@@ -83,5 +83,8 @@ public class FragmentFoodSearch extends Fragment implements View.OnClickListener
 	}
 
 	@Override
-	public void onGoodInsert() { /* ignore */ }
+	public void onGoodInsert() { /* Ignore */ }
+
+	@Override
+	public void onGoodInsertReturn(Object obj) { /* ignore */ }
 }

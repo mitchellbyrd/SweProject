@@ -21,4 +21,9 @@ public interface DBDataListener {
 	 * Simply notifies of a successful insert
 	 **/
 	void onGoodInsert();
+
+	/**
+	 * Notifies of successful insert with data that was inserted
+	 */
+	void onGoodInsertReturn(Object obj);
 }

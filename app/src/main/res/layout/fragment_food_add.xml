@@ -28,7 +28,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="1000"
+        android:text="0"
         android:layout_marginLeft="50dp"
         android:id="@+id/fragment_food_value_calorie"
         android:layout_alignTop="@+id/fragment_food_label_calories"
@@ -47,7 +47,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="123"
+        android:text="0"
         android:id="@+id/fragment_food_value_carbs"
         android:layout_below="@+id/fragment_food_value_calorie"
         android:layout_alignStart="@+id/fragment_food_value_calorie"
@@ -65,7 +65,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="345"
+        android:text="0"
         android:id="@+id/fragment_food_value_protein"
         android:layout_alignTop="@+id/fragment_food_label_protein"
         android:layout_alignStart="@+id/fragment_food_value_carbs"
@@ -83,7 +83,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="900000000"
+        android:text="0"
         android:id="@+id/fragment_food_value_fats"
         android:layout_alignTop="@+id/fragment_food_label_fats"
         android:layout_alignStart="@+id/fragment_food_value_protein"

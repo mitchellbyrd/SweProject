@@ -5,34 +5,95 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.sweproject.calorietracker.Callbacks.DBDataListener;
+import com.sweproject.calorietracker.DataObjects.Foods;
+import com.sweproject.calorietracker.DataObjects.ServingSizes;
+
+import java.util.ArrayList;
 
 /**
  * Created by Marcus on 2/18/2016.
  */
-public class FragmentFoodAdd extends Fragment implements View.OnClickListener {
+public class FragmentFoodAdd extends Fragment implements View.OnClickListener, DBDataListener {
+
+	private int mSelectedIndex;
+	private Foods mFood;
+	private ArrayList<ServingSizes> mServingSizes;
+
+	private TextView mTitle;
+	private TextView mCalorie;
+	private TextView mCarbs;
+	private TextView mPro;
+	private TextView mFats;
+
+	private Spinner mServingSpin;
+	private Spinner mTypeSpin;
 
 	@Override
 	public void onActivityCreated(Bundle savedInstance) {
 		super.onActivityCreated(savedInstance);
 
-		TextView title = (TextView) getActivity().findViewById(R.id.fragmet_food_title);
-		Spinner dropDown = (Spinner) getActivity().findViewById(R.id.fragment_food_spinner_serving);
-		Spinner dropDown2 = (Spinner) getActivity().findViewById(R.id.fragment_food_spinner_serving_type);
+		FragmentDay.sAddedFoodList.add(mFood);
+
+		mSelectedIndex = 0;
+		String[] mSizes = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10"};
+		mFood = FragmentFoodSearch.sDBFoodList.get(getArguments().getInt("Food"));
+		mServingSizes = new ArrayList<>();
+
+		mTitle = (TextView) getActivity().findViewById(R.id.fragmet_food_title);
+		mCalorie = (TextView) getActivity().findViewById(R.id.fragment_food_value_calorie);
+		mCarbs = (TextView) getActivity().findViewById(R.id.fragment_food_value_carbs);
+		mPro = (TextView) getActivity().findViewById(R.id.fragment_food_value_protein);
+		mFats = (TextView) getActivity().findViewById(R.id.fragment_food_value_fats);
+
+		mServingSpin = (Spinner) getActivity().findViewById(R.id.fragment_food_spinner_serving);
+		mTypeSpin = (Spinner) getActivity().findViewById(R.id.fragment_food_spinner_serving_type);
 		Button submit = (Button) getActivity().findViewById(R.id.fragment_food_btn_submit);
 
-		String[] type = {"Grams", "Ounce"};
-		String[] size = {"1", "2", "3", "4", "5"};
+		mTitle.setText(mFood.getName());
+		mServingSpin.setAdapter(new ArrayAdapter<>(getActivity(), R.layout.support_simple_spinner_dropdown_item, mSizes));
 
-		FragmentDay.sAddedFoodList.add(FragmentFoodSearch.sDBFoodList.get(getArguments().getInt("Food")));
+		mTypeSpin.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+			@Override
+			public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+				if (mServingSizes.size() != 0) {
+					mSelectedIndex = i;
+					mCalorie.setText(String.valueOf(mServingSizes.get(i).getCalories() * (mServingSpin.getSelectedItemPosition() + 1)));
+					mCarbs.setText(String.valueOf(mServingSizes.get(i).getCarbs() * (mServingSpin.getSelectedItemPosition() + 1)));
+					mPro.setText(String.valueOf(mServingSizes.get(i).getProteins() * (mServingSpin.getSelectedItemPosition() + 1)));
+					mFats.setText(String.valueOf(mServingSizes.get(i).getFats() * (mServingSpin.getSelectedItemPosition() + 1)));
+				}
+			}
 
-		title.setText(FragmentFoodSearch.sDBFoodList.get(getArguments().getInt("Food")).getName());
-		dropDown.setAdapter(new ArrayAdapter<>(getActivity(), R.layout.support_simple_spinner_dropdown_item, size));
-		dropDown2.setAdapter(new ArrayAdapter<>(getActivity(), R.layout.support_simple_spinner_dropdown_item, type));
+			@Override
+			public void onNothingSelected(AdapterView<?> adapterView) {
+			}
+		});
+		mServingSpin.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+			@Override
+			public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+				if (mServingSizes.size() != 0) {
+					mCalorie.setText(String.valueOf(mServingSizes.get(mSelectedIndex).getCalories() * (i + 1)));
+					mCarbs.setText(String.valueOf(mServingSizes.get(mSelectedIndex).getCarbs() * (i + 1)));
+					mPro.setText(String.valueOf(mServingSizes.get(mSelectedIndex).getProteins() * (i + 1)));
+					mFats.setText(String.valueOf(mServingSizes.get(mSelectedIndex).getFats() * (i + 1)));
+				}
+			}
+
+			@Override
+			public void onNothingSelected(AdapterView<?> adapterView) {
+			}
+		});
 		submit.setOnClickListener(this);
+
+		MainActivity.getDBData(ServingSizes.class, this, "FoodId", mFood.getId());
 	}
 
 	@Override
@@ -46,4 +107,34 @@ public class FragmentFoodAdd extends Fragment implements View.OnClickListener {
 		MainActivity.nextFragment(this, new FragmentDay(), getArguments(), true, true);
 	}
 
+	@Override
+	public void onGoodDataReturn(ArrayList<Object> data) {
+		String[] type = new String[data.size()];
+
+		for (Object o : data) {
+			type[mServingSizes.size()] = ((ServingSizes) o).getServingSizeType();
+			mServingSizes.add((ServingSizes) o);
+		}
+
+		mTypeSpin.setAdapter(new ArrayAdapter<>(getActivity(), R.layout.support_simple_spinner_dropdown_item, type));
+		mTypeSpin.setSelection(0);
+		mServingSpin.setSelection(0);
+
+		mCalorie.setText(String.valueOf(mServingSizes.get(0).getCalories()));
+		mCarbs.setText(String.valueOf(mServingSizes.get(0).getCarbs()));
+		mPro.setText(String.valueOf(mServingSizes.get(0).getProteins()));
+		mFats.setText(String.valueOf(mServingSizes.get(0).getFats()));
+	}
+
+	@Override
+	public void onBadDataReturn(Exception exception) {
+		Toast.makeText(getActivity(), "FoodAdd - Server Error", Toast.LENGTH_SHORT).show();
+		exception.printStackTrace();
+	}
+
+	@Override
+	public void onGoodInsert() { /* Ignore */ }
+
+	@Override
+	public void onGoodInsertReturn(Object obj) { /* Ignore */ }
 }

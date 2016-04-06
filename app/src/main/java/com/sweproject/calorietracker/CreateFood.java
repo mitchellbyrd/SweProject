@@ -9,8 +9,11 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.sweproject.calorietracker.Callbacks.DBDataListener;
 import com.sweproject.calorietracker.Callbacks.OnDialogDismissListener;
+import com.sweproject.calorietracker.DataObjects.Foods;
 import com.sweproject.calorietracker.DataObjects.ServingSizes;
 import com.sweproject.calorietracker.ListViewAdapters.AdapterCreateFood;
 
@@ -19,7 +22,7 @@ import java.util.ArrayList;
 /**
  * Created by jedwa145 on 2/23/2016.
  */
-public class CreateFood extends Fragment implements View.OnClickListener, OnDialogDismissListener {
+public class CreateFood extends Fragment implements View.OnClickListener, OnDialogDismissListener, DBDataListener {
 
 	private TextView mFoodName;
 	private ListView mCreateList;
@@ -40,6 +43,7 @@ public class CreateFood extends Fragment implements View.OnClickListener, OnDial
 		mCreateBtn = (Button) getActivity().findViewById(R.id.create_food_btn);
 
 		mFab.setOnClickListener(this);
+		mCreateBtn.setOnClickListener(this);
 		mCreateList.setAdapter(new AdapterCreateFood(getActivity(), mServingSizes));
 	}
 
@@ -57,7 +61,8 @@ public class CreateFood extends Fragment implements View.OnClickListener, OnDial
 				dialogServingAdd.show(getActivity().getSupportFragmentManager(), null);
 				break;
 			case R.id.create_food_btn:
-				// Insert food, get id, add id to servingsize and insert that
+				// After a successful insert, the callback, onGoodInsertReturn, will be called with the id needed
+				MainActivity.insertDBData(Foods.class, this, new Foods(mFoodName.getText().toString(), "0fad13aa-400f-4785-bcc8-eb79f7755733"), true);
 				break;
 		}
 	}
@@ -66,5 +71,31 @@ public class CreateFood extends Fragment implements View.OnClickListener, OnDial
 	public void onDismiss(ServingSizes obj) {
 		mServingSizes.add(obj);
 		((AdapterCreateFood) mCreateList.getAdapter()).notifyDataSetChanged();
+	}
+
+	@Override
+	public void onGoodDataReturn(ArrayList<Object> data) { /* Ignore */ }
+
+	@Override
+	public void onBadDataReturn(Exception exception) {
+		Toast.makeText(getActivity(), "CreateFood - Server Error", Toast.LENGTH_SHORT).show();
+		exception.printStackTrace();
+	}
+
+	@Override
+	public void onGoodInsert() {
+		Toast.makeText(getActivity(), "CreateFood - Serving Inserted", Toast.LENGTH_SHORT).show();
+	}
+
+	@Override
+	public void onGoodInsertReturn(Object obj) {
+		String foodID = ((Foods) obj).getId();
+		for (ServingSizes s : mServingSizes) {
+			s.setFoodId(foodID);
+			MainActivity.insertDBData(ServingSizes.class, this, s, false);
+		}
+
+		Toast.makeText(getActivity(), "CreateFood - Operation complete", Toast.LENGTH_SHORT).show();
+		MainActivity.nextFragment(this, new FragmentFoodSearch(), getArguments(), false, false);
 	}
 }

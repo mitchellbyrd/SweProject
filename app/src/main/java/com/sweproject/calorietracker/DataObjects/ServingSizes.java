@@ -4,7 +4,7 @@ package com.sweproject.calorietracker.DataObjects;
  * Created by Marcus on 3/17/2016.
  */
 public class ServingSizes {
-	private float id;
+	private String id;
 	private float Amount;
 	private float Calories;
 	private float Carbs;
@@ -72,7 +72,7 @@ public class ServingSizes {
 		return FoodId;
 	}
 
-	public float getId() {
+	public String getId() {
 		return id;
 	}
 
