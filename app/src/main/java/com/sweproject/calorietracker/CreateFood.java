@@ -24,6 +24,9 @@ import java.util.ArrayList;
  */
 public class CreateFood extends Fragment implements View.OnClickListener, OnDialogDismissListener, DBDataListener {
 
+	// Counts how many times goodInsert was called to determine if all inserts were done
+	private int mCount = 0;
+
 	private TextView mFoodName;
 	private ListView mCreateList;
 	private FloatingActionButton mFab;
@@ -85,6 +88,11 @@ public class CreateFood extends Fragment implements View.OnClickListener, OnDial
 	@Override
 	public void onGoodInsert() {
 		Toast.makeText(getActivity(), "CreateFood - Serving Inserted", Toast.LENGTH_SHORT).show();
+		mCount++;
+		if (mCount == mServingSizes.size()) {
+			Toast.makeText(getActivity(), "CreateFood - Operation complete", Toast.LENGTH_SHORT).show();
+			MainActivity.nextFragment(this, new FragmentFoodSearch(), getArguments(), false, false);
+		}
 	}
 
 	@Override
@@ -94,8 +102,5 @@ public class CreateFood extends Fragment implements View.OnClickListener, OnDial
 			s.setFoodId(foodID);
 			MainActivity.insertDBData(ServingSizes.class, this, s, false);
 		}
-
-		Toast.makeText(getActivity(), "CreateFood - Operation complete", Toast.LENGTH_SHORT).show();
-		MainActivity.nextFragment(this, new FragmentFoodSearch(), getArguments(), false, false);
 	}
 }

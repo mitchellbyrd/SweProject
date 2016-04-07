@@ -13,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.sweproject.calorietracker.Callbacks.DBDataListener;
+import com.sweproject.calorietracker.DataObjects.Food_Day;
 import com.sweproject.calorietracker.DataObjects.Foods;
 import com.sweproject.calorietracker.DataObjects.ServingSizes;
 
@@ -21,7 +22,7 @@ import java.util.ArrayList;
 /**
  * Created by Marcus on 2/18/2016.
  */
-public class FragmentFoodAdd extends Fragment implements View.OnClickListener, DBDataListener {
+public class FragmentFood extends Fragment implements View.OnClickListener, DBDataListener {
 
 	private int mSelectedIndex;
 	private Foods mFood;
@@ -40,11 +41,10 @@ public class FragmentFoodAdd extends Fragment implements View.OnClickListener, D
 	public void onActivityCreated(Bundle savedInstance) {
 		super.onActivityCreated(savedInstance);
 
-		FragmentDay.sAddedFoodList.add(mFood);
-
 		mSelectedIndex = 0;
 		String[] mSizes = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10"};
 		mFood = FragmentFoodSearch.sDBFoodList.get(getArguments().getInt("Food"));
+		FragmentDay.sAddedFoodList.add(mFood);
 		mServingSizes = new ArrayList<>();
 
 		mTitle = (TextView) getActivity().findViewById(R.id.fragmet_food_title);
@@ -98,13 +98,12 @@ public class FragmentFoodAdd extends Fragment implements View.OnClickListener, D
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		return inflater.inflate(R.layout.fragment_food_add, container, false);
+		return inflater.inflate(R.layout.fragment_food, container, false);
 	}
 
 	@Override
 	public void onClick(View view) {
-		// GetArguments returns the date back to the Day fragment
-		MainActivity.nextFragment(this, new FragmentDay(), getArguments(), true, true);
+		MainActivity.insertDBData(Food_Day.class, this, new Food_Day(FragmentCalendar.currentDay.getId(), mServingSpin.getSelectedItemPosition(), mServingSizes.get(mSelectedIndex).getId()), false);
 	}
 
 	@Override
@@ -133,7 +132,10 @@ public class FragmentFoodAdd extends Fragment implements View.OnClickListener, D
 	}
 
 	@Override
-	public void onGoodInsert() { /* Ignore */ }
+	public void onGoodInsert() {
+		// GetArguments returns the date back to the Day fragment
+		MainActivity.nextFragment(this, new FragmentDay(), getArguments(), true, true);
+	}
 
 	@Override
 	public void onGoodInsertReturn(Object obj) { /* Ignore */ }

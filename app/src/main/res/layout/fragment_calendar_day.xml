@@ -20,9 +20,11 @@
         android:text="@string/fragment_day_calories"
         android:id="@+id/fragment_calendar_day_textview_calorie"
         android:layout_marginStart="30dp"
+        android:layout_marginLeft="30dp"
         android:layout_marginTop="50dp"
         android:layout_below="@+id/fragment_calendar_day_textview_title"
-        android:layout_alignParentStart="true"/>
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"/>
 
     <ProgressBar
         style="?android:attr/progressBarStyleHorizontal"
@@ -30,12 +32,14 @@
         android:layout_height="wrap_content"
         android:id="@+id/fragment_calendar_day_progressbar_calorie"
         android:layout_alignStart="@+id/fragment_calendar_day_textview_title"
+        android:layout_alignLeft="@+id/fragment_calendar_day_textview_title"
         android:layout_alignParentEnd="true"
-        android:progress="20"
+        android:layout_alignParentRight="true"
         android:indeterminate="false"
         android:layout_alignBottom="@+id/fragment_calendar_day_textview_calorie"
         android:layout_alignTop="@+id/fragment_calendar_day_textview_calorie"
-        android:layout_marginEnd="15dp"/>
+        android:layout_marginEnd="15dp"
+        android:layout_marginRight="15dp"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -44,6 +48,7 @@
         android:id="@+id/fragment_calendar_day_textview_proteins"
         android:layout_below="@+id/fragment_calendar_day_textview_calorie"
         android:layout_alignStart="@+id/fragment_calendar_day_textview_calorie"
+        android:layout_alignLeft="@+id/fragment_calendar_day_textview_calorie"
         android:layout_marginTop="30dp"/>
 
     <ProgressBar
@@ -52,12 +57,14 @@
         android:layout_height="wrap_content"
         android:id="@+id/fragment_calendar_day_progressbar_proteins"
         android:layout_alignStart="@+id/fragment_calendar_day_progressbar_calorie"
+        android:layout_alignLeft="@+id/fragment_calendar_day_progressbar_calorie"
         android:layout_alignTop="@+id/fragment_calendar_day_textview_proteins"
         android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
         android:layout_alignBottom="@+id/fragment_calendar_day_textview_proteins"
-        android:progress="45"
         android:indeterminate="false"
-        android:layout_marginEnd="15dp"/>
+        android:layout_marginEnd="15dp"
+        android:layout_marginRight="15dp"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -66,7 +73,8 @@
         android:id="@+id/fragment_calendar_day_textview_carbs"
         android:layout_marginTop="30dp"
         android:layout_below="@+id/fragment_calendar_day_textview_proteins"
-        android:layout_alignStart="@+id/fragment_calendar_day_textview_proteins"/>
+        android:layout_alignStart="@+id/fragment_calendar_day_textview_proteins"
+        android:layout_alignLeft="@+id/fragment_calendar_day_textview_proteins"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -75,6 +83,7 @@
         android:id="@+id/fragment_calendar_day_textview_fats"
         android:layout_below="@+id/fragment_calendar_day_textview_carbs"
         android:layout_alignStart="@+id/fragment_calendar_day_textview_carbs"
+        android:layout_alignLeft="@+id/fragment_calendar_day_textview_carbs"
         android:layout_marginTop="30dp"/>
 
     <ProgressBar
@@ -83,12 +92,14 @@
         android:layout_height="wrap_content"
         android:id="@+id/fragment_calendar_day_progressbar_carbs"
         android:layout_alignStart="@+id/fragment_calendar_day_progressbar_proteins"
+        android:layout_alignLeft="@+id/fragment_calendar_day_progressbar_proteins"
         android:layout_alignTop="@+id/fragment_calendar_day_textview_carbs"
         android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
         android:layout_above="@+id/fragment_calendar_day_textview_fats"
         android:indeterminate="false"
-        android:progress="56"
-        android:layout_marginEnd="15dp"/>
+        android:layout_marginEnd="15dp"
+        android:layout_marginRight="15dp"/>
 
     <ProgressBar
         style="?android:attr/progressBarStyleHorizontal"
@@ -96,12 +107,14 @@
         android:layout_height="wrap_content"
         android:id="@+id/fragment_calendar_day_progressbar_fats"
         android:layout_alignStart="@+id/fragment_calendar_day_progressbar_carbs"
+        android:layout_alignLeft="@+id/fragment_calendar_day_progressbar_carbs"
         android:layout_alignTop="@+id/fragment_calendar_day_textview_fats"
         android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
         android:layout_alignBottom="@+id/fragment_calendar_day_textview_fats"
         android:indeterminate="false"
-        android:progress="70"
-        android:layout_marginEnd="15dp"/>
+        android:layout_marginEnd="15dp"
+        android:layout_marginRight="15dp"/>
 
     <ListView
         android:layout_width="wrap_content"
@@ -121,8 +134,10 @@
         android:id="@+id/fragment_calendar_fab"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
         android:layout_marginBottom="10dp"
         android:layout_marginEnd="10dp"
+        android:layout_marginRight="10dp"
         android:src="@drawable/ic_add_white_24dp"/>
 
 </RelativeLayout>

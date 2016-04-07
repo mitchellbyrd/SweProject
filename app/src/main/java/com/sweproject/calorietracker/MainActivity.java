@@ -136,9 +136,7 @@ public class MainActivity extends AppCompatActivity {
 			@Override
 			protected void onPostExecute(Void aVoid) {
 				if (!error) {
-					if (temp.size() != 0) {
-						listener.onGoodDataReturn(temp);
-					}
+					listener.onGoodDataReturn(temp);
 				} else {
 					listener.onBadDataReturn(exception);
 				}

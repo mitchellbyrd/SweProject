@@ -54,7 +54,7 @@ public class FragmentFoodSearch extends Fragment implements View.OnClickListener
 	public void onClick(View view) {
 		switch (view.getId()) {
 			case R.id.fragment_food_search_fab:
-				MainActivity.nextFragment(this, new CreateFood(), null, true, false);
+				MainActivity.nextFragment(this, new CreateFood(), getArguments(), true, false);
 				break;
 		}
 	}
@@ -62,7 +62,7 @@ public class FragmentFoodSearch extends Fragment implements View.OnClickListener
 	@Override
 	public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 		getArguments().putInt("Food", i);
-		MainActivity.nextFragment(this, new FragmentFoodAdd(), getArguments(), true, false);
+		MainActivity.nextFragment(this, new FragmentFood(), getArguments(), true, false);
 	}
 
 	@Override

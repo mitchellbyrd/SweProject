@@ -9,8 +9,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.sweproject.calorietracker.Callbacks.DeleteFoodListener;
-import com.sweproject.calorietracker.FragmentDay;
+import com.sweproject.calorietracker.DataObjects.Foods;
 import com.sweproject.calorietracker.R;
+
+import java.util.ArrayList;
 
 /**
  * Created by Marcus on 2/15/2016.
@@ -18,21 +20,29 @@ import com.sweproject.calorietracker.R;
 public class AdapterDayFood extends BaseAdapter {
 
 	private Context mContext;
+	private ArrayList<Foods> mData;
 	private DeleteFoodListener mListener;
 
-	public AdapterDayFood(Context context, DeleteFoodListener deleteFoodListener) {
+	public AdapterDayFood(Context context, ArrayList<Foods> data, DeleteFoodListener deleteFoodListener) {
 		mContext = context;
+		mData = new ArrayList<>();
+		mData.addAll(data);
 		mListener = deleteFoodListener;
+	}
+
+	public void setData(ArrayList<Foods> data) {
+		mData = data;
+		notifyDataSetChanged();
 	}
 
 	@Override
 	public int getCount() {
-		return FragmentDay.sAddedFoodList.size();
+		return mData.size();
 	}
 
 	@Override
 	public Object getItem(int i) {
-		return FragmentDay.sAddedFoodList.get(i);
+		return mData.get(i);
 	}
 
 	@Override
@@ -46,7 +56,7 @@ public class AdapterDayFood extends BaseAdapter {
 		View row = ((LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE))
 				.inflate(R.layout.calendar_day_single_row, parent, false);
 
-		((TextView) row.findViewById(R.id.single_row_title)).setText(FragmentDay.sAddedFoodList.get(count).getName());
+		((TextView) row.findViewById(R.id.single_row_title)).setText(mData.get(count).getName());
 		((TextView) row.findViewById(R.id.single_row_calorie)).setText("" + 0);
 
 		ImageView icon = (ImageView) row.findViewById(R.id.single_row_ic);

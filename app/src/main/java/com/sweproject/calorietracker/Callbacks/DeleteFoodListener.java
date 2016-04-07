@@ -13,6 +13,6 @@ public class DeleteFoodListener implements View.OnClickListener {
 	@Override
 	public void onClick(View view) {
 		FragmentDay.sAddedFoodList.remove((int) view.getTag());
-		((BaseAdapter) FragmentDay.foodList.getAdapter()).notifyDataSetChanged();
+		((BaseAdapter) FragmentDay.sFoodList.getAdapter()).notifyDataSetChanged();
 	}
 }
