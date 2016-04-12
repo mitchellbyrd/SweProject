@@ -65,7 +65,7 @@ public class CreateFood extends Fragment implements View.OnClickListener, OnDial
 				break;
 			case R.id.create_food_btn:
 				// After a successful insert, the callback, onGoodInsertReturn, will be called with the id needed
-				MainActivity.insertDBData(Foods.class, this, new Foods(mFoodName.getText().toString(), "0fad13aa-400f-4785-bcc8-eb79f7755733"), true);
+				MainActivity.insertDBData(Foods.class, this, new Foods(mFoodName.getText().toString(), MainActivity.CurrentUser.Id), true);
 				break;
 		}
 	}

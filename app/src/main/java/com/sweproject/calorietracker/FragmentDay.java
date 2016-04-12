@@ -29,7 +29,7 @@ public class FragmentDay extends Fragment implements View.OnClickListener, Adapt
 	/**
 	 * Foods added by the FragmentFoodAdd class are placed here to be displayed in the Fragment Day listview
 	 **/
-	public static ArrayList<Foods> sAddedFoodList = new ArrayList<>();
+	public static ArrayList<Foods> sAddedFoodList;
 	public static ListView sFoodList;
 
 	private ProgressBar mCalBar;
@@ -64,6 +64,7 @@ public class FragmentDay extends Fragment implements View.OnClickListener, Adapt
 		mFoodDayList = new ArrayList<>();
 		mServingList = new ArrayList<>();
 		mFoodsList = new ArrayList<>();
+		sAddedFoodList = new ArrayList<>();
 
 		String date = getMonth(month) + " " + day + ", " + year;
 

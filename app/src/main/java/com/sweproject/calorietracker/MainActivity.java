@@ -12,12 +12,12 @@ import android.support.v7.widget.Toolbar;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
-import android.widget.TextView;
 
 import com.microsoft.windowsazure.mobileservices.MobileServiceClient;
 import com.microsoft.windowsazure.mobileservices.MobileServiceList;
 import com.microsoft.windowsazure.mobileservices.table.MobileServiceTable;
 import com.sweproject.calorietracker.Callbacks.DBDataListener;
+import com.sweproject.calorietracker.DataObjects.Users;
 
 import java.net.MalformedURLException;
 import java.util.ArrayList;

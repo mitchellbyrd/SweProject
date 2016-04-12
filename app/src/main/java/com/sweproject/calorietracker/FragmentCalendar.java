@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CalendarView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.sweproject.calorietracker.Callbacks.DBDataListener;
@@ -13,7 +14,6 @@ import com.sweproject.calorietracker.DataObjects.Days;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import android.widget.TextView;
 
 /**
  * Created by Marcus on 2/5/2016.
@@ -33,7 +33,7 @@ public class FragmentCalendar extends Fragment implements CalendarView.OnDateCha
 	String mFormattedDate;
 
 	@Override
-	public void onActivityCreated(Bundle savedInstance){
+	public void onActivityCreated(Bundle savedInstance) {
 		super.onActivityCreated(savedInstance);
 		mBun = new Bundle();
 	}
@@ -63,19 +63,24 @@ public class FragmentCalendar extends Fragment implements CalendarView.OnDateCha
 			mBun.putInt(DAY, dayOfMonth);
 
 			Toast.makeText(getActivity(), "Calendar - Looking for day", Toast.LENGTH_SHORT).show();
-			MainActivity.getDBData(Days.class, this, "Date", mFormattedDate);
+			MainActivity.getDBData(Days.class, this, "UserId", MainActivity.CurrentUser.Id);
 		}
 	}
 
 	@Override
 	public void onGoodDataReturn(ArrayList<Object> data) {
+
 		if (data.size() != 0) {
-			currentDay = (Days) data.get(0);
-			MainActivity.nextFragment(this, new FragmentDay(), mBun, true, false);
-		} else {
-			Toast.makeText(getActivity(), "Calendar - Making new day", Toast.LENGTH_SHORT).show();
-			MainActivity.insertDBData(Days.class, this, new Days(mFormattedDate, "0fad13aa-400f-4785-bcc8-eb79f7755733"), true);
+			for (Object o : data) {
+				if (((Days) o).getDate().equals(mFormattedDate)) {
+					currentDay = (Days) o;
+					MainActivity.nextFragment(this, new FragmentDay(), mBun, true, false);
+					return;
+				}
+			}
 		}
+		Toast.makeText(getActivity(), "Calendar - Making new day", Toast.LENGTH_SHORT).show();
+		MainActivity.insertDBData(Days.class, this, new Days(mFormattedDate, MainActivity.CurrentUser.Id), true);
 
 	}
 
