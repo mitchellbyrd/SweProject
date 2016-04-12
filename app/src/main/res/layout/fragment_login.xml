@@ -29,20 +29,20 @@
         android:inputType="textPassword"
         android:ems="10"
         android:id="@+id/fragment_login_passwordField"
-        android:text="Password"
         android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:hint="Password" />
 
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:inputType="textPersonName"
-        android:text="User Name"
         android:ems="10"
         android:id="@+id/fragment_login_userNameField"
         android:layout_above="@+id/fragment_login_passwordField"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="75dp" />
+        android:layout_marginBottom="75dp"
+        android:hint="Username" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -53,5 +53,16 @@
         android:layout_below="@+id/fragment_login_passwordField"
         android:layout_centerHorizontal="true"
         android:background="#fefefe"
-        android:textColor="#59b4ff" />
+        android:textColor="#59b4ff"
+        android:clickable="true" />
+
+    <ProgressBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/progressBar"
+        android:layout_above="@+id/fragment_login_passwordField"
+        android:indeterminate="true"
+        android:layout_alignEnd="@+id/fragment_login_submitBtn"
+        android:layout_alignStart="@+id/fragment_login_submitBtn"
+        android:visibility="invisible" />
 </RelativeLayout>

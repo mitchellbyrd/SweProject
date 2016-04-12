@@ -12,6 +12,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
+import android.widget.TextView;
 
 import com.microsoft.windowsazure.mobileservices.MobileServiceClient;
 import com.microsoft.windowsazure.mobileservices.MobileServiceList;
@@ -26,8 +27,8 @@ public class MainActivity extends AppCompatActivity {
 	private static FragmentManager sFragmentManager;
 	private static FrameLayout mContainer;
 	public static MobileServiceClient mClient;
+	public static Users CurrentUser;
 
-	public static ArrayList<Object> dbSearchReuslt;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -39,9 +40,6 @@ public class MainActivity extends AppCompatActivity {
 
 		sFragmentManager = getSupportFragmentManager();
 		mContainer = (FrameLayout) findViewById(R.id.activity_container);
-		//sDBFoodList = new ArrayList<>();
-		//dbSearchReuslt = new ArrayList<>();
-		//sAddedFoodList = new ArrayList<>();
 
 		Window window = getWindow();
 
