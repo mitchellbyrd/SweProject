@@ -9,8 +9,10 @@
         android:id="@+id/fragment_food_search_fab"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
         android:layout_marginBottom="10dp"
         android:layout_marginEnd="10dp"
+        android:layout_marginRight="10dp"
         android:src="@drawable/ic_add_white_24dp"/>
 
     <SearchView
@@ -19,6 +21,8 @@
         android:id="@+id/fragment_food_search_searchView"
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:queryHint="Search for Food"/>
 
@@ -28,8 +32,19 @@
         android:id="@+id/fragment_food_search_listview"
         android:layout_below="@+id/fragment_food_search_searchView"
         android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
         android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
         android:choiceMode="singleChoice"/>
+
+    <ProgressBar
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/fragment_food_search_progress"
+        android:layout_below="@+id/fragment_food_search_searchView"
+        android:layout_centerHorizontal="true"
+        android:indeterminate="true"/>
 
 </RelativeLayout>

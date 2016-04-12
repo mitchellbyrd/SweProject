@@ -29,7 +29,7 @@ public class FragmentFoodEdit extends Fragment implements View.OnClickListener {
 		String[] type = {"Grams", "Ounce"};
 		String[] size = {"1", "2", "3", "4", "5"};
 
-		title.setText(MainActivity.foodList.get(bun.getInt("Index")));
+		//title.setText(MainActivity.foodList.get(bun.getInt("Index")));
 		dropDown.setAdapter(new ArrayAdapter<>(getActivity(), R.layout.support_simple_spinner_dropdown_item, size));
 		dropDown2.setAdapter(new ArrayAdapter<>(getActivity(), R.layout.support_simple_spinner_dropdown_item, type));
 		submit.setOnClickListener(this);
