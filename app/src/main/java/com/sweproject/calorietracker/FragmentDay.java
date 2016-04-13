@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import com.sweproject.calorietracker.Callbacks.DBDataListener;
 import com.sweproject.calorietracker.Callbacks.DeleteFoodListener;
+import com.sweproject.calorietracker.Callbacks.DeleteFoodListenerResponse;
 import com.sweproject.calorietracker.DataObjects.Food_Day;
 import com.sweproject.calorietracker.DataObjects.Foods;
 import com.sweproject.calorietracker.DataObjects.ServingSizes;
@@ -24,7 +25,7 @@ import java.util.ArrayList;
 /**
  * Created by Marcus on 2/15/2016.
  */
-public class FragmentDay extends Fragment implements View.OnClickListener, AdapterView.OnItemClickListener, DBDataListener {
+public class FragmentDay extends Fragment implements View.OnClickListener, AdapterView.OnItemClickListener, DBDataListener, DeleteFoodListenerResponse {
 
 	/**
 	 * Foods added by the FragmentFoodAdd class are placed here to be displayed in the Fragment Day listview
@@ -41,6 +42,8 @@ public class FragmentDay extends Fragment implements View.OnClickListener, Adapt
 	private ArrayList<Food_Day> mFoodDayList;
 	private ArrayList<ServingSizes> mServingList;
 	private ArrayList<Foods> mFoodsList;
+
+	private DeleteFoodListener listener;
 
 	@Override
 	public void onActivityCreated(Bundle savedInstance) {
@@ -66,6 +69,8 @@ public class FragmentDay extends Fragment implements View.OnClickListener, Adapt
 		mFoodsList = new ArrayList<>();
 		sAddedFoodList = new ArrayList<>();
 
+		listener = new DeleteFoodListener(this);
+
 		String date = getMonth(month) + " " + day + ", " + year;
 
 		TextView title = (TextView) getActivity().findViewById(R.id.fragment_calendar_day_textview_title);
@@ -75,12 +80,11 @@ public class FragmentDay extends Fragment implements View.OnClickListener, Adapt
 		mCarBar = (ProgressBar) getActivity().findViewById(R.id.fragment_calendar_day_progressbar_carbs);
 		mFatBar = (ProgressBar) getActivity().findViewById(R.id.fragment_calendar_day_progressbar_fats);
 
-
 		title.setText(date);
 		fab.setOnClickListener(this);
 
 		sFoodList = (ListView) getActivity().findViewById(R.id.fragment_calendar_day_listview);
-		sFoodList.setAdapter(new AdapterDayFood(getActivity(), sAddedFoodList, new DeleteFoodListener()));
+		sFoodList.setAdapter(new AdapterDayFood(getActivity(), sAddedFoodList, listener));
 		sFoodList.setOnItemClickListener(this);
 
 		Toast.makeText(getActivity(), "Getting Food days", Toast.LENGTH_SHORT).show();
@@ -212,11 +216,17 @@ public class FragmentDay extends Fragment implements View.OnClickListener, Adapt
 
 	@Override
 	public void onGoodInsert() {
-
 	}
 
 	@Override
 	public void onGoodInsertReturn(Object obj) {
+	}
 
+	@Override
+	public void onFoodDeleted(ServingSizes s) {
+		mCalBar.setProgress(mCalBar.getProgress() - (int) s.getCalories());
+		mProBar.setProgress(mProBar.getProgress() - (int) s.getProteins());
+		mCarBar.setProgress(mCarBar.getProgress() - (int) s.getCarbs());
+		mFatBar.setProgress(mFatBar.getProgress() - (int) s.getFats());
 	}
 }
