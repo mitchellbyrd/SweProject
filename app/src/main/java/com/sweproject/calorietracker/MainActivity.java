@@ -62,7 +62,6 @@ public class MainActivity extends AppCompatActivity {
 		// else will show the last visible fragment (Android destroys activity during rotation)
 	}
 
-
 	/**
 	 * Commits replacement transactions with fragments.
 	 *
@@ -142,7 +141,6 @@ public class MainActivity extends AppCompatActivity {
 		}.execute(field, filter);
 	}
 
-
 	public static void insertDBData(@NonNull final Class clazz, @NonNull final DBDataListener listener, Object item, Boolean getData) {
 
 		new AsyncTask<Object, Object, Void>() {
@@ -178,6 +176,28 @@ public class MainActivity extends AppCompatActivity {
 			}
 
 		}.execute(item, getData);
+	}
+
+	public static void deleteDBData(@NonNull final Class clazz, Object item) {
+
+		new AsyncTask<Object, Object, Void>() {
+
+			@Override
+			protected Void doInBackground(Object... params) {
+
+				try {
+					mClient.getTable(clazz).delete(params[0]);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				return null;
+			}
+
+			@Override
+			protected void onPostExecute(Void aVoid) {
+			}
+
+		}.execute(item);
 	}
 
 	@Override
