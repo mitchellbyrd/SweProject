@@ -1,5 +1,6 @@
 package com.sweproject.calorietracker.Callbacks;
 
+import com.sweproject.calorietracker.DataObjects.Food_Day;
 import com.sweproject.calorietracker.DataObjects.ServingSizes;
 
 /**
@@ -7,5 +8,5 @@ import com.sweproject.calorietracker.DataObjects.ServingSizes;
  */
 public interface DeleteFoodListenerResponse {
 
-	void onFoodDeleted(ServingSizes s);
+	void onFoodDeleted(ServingSizes s, Food_Day d);
 }

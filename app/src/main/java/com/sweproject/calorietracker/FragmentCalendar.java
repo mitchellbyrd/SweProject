@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CalendarView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,6 +28,7 @@ public class FragmentCalendar extends Fragment implements CalendarView.OnDateCha
 	public static Days currentDay;
 	private Bundle mBun;
 	private CalendarView mCalendarView;
+	private ProgressBar mLoadingProgress;
 	private TextView mCalendarTitle;
 	private Long mSelectedDate;
 
@@ -44,6 +46,9 @@ public class FragmentCalendar extends Fragment implements CalendarView.OnDateCha
 		this.mCalendarTitle = (TextView) root.findViewById(R.id.fragment_calendar_title);
 		this.mCalendarTitle.setText(MainActivity.CurrentUser.NameFirst);
 		mCalendarView = (CalendarView) root.findViewById(R.id.fragment_calendar_calendar);
+		mLoadingProgress = (ProgressBar) root.findViewById(R.id.fragment_calendar_progress_loading);
+
+		mLoadingProgress.setVisibility(View.GONE);
 		mCalendarView.setOnDateChangeListener(this);
 		mSelectedDate = mCalendarView.getDate();
 
@@ -63,6 +68,7 @@ public class FragmentCalendar extends Fragment implements CalendarView.OnDateCha
 			mBun.putInt(DAY, dayOfMonth);
 
 			Toast.makeText(getActivity(), "Calendar - Looking for day", Toast.LENGTH_SHORT).show();
+			mLoadingProgress.setVisibility(View.VISIBLE);
 			MainActivity.getDBData(Days.class, this, "UserId", MainActivity.CurrentUser.Id);
 		}
 	}
@@ -70,10 +76,11 @@ public class FragmentCalendar extends Fragment implements CalendarView.OnDateCha
 	@Override
 	public void onGoodDataReturn(ArrayList<Object> data) {
 
-		if (data.size() != 0) {
+		if (data.size() != 0 && isVisible()) {
 			for (Object o : data) {
 				if (((Days) o).getDate().equals(mFormattedDate)) {
 					currentDay = (Days) o;
+					mLoadingProgress.setVisibility(View.GONE);
 					MainActivity.nextFragment(this, new FragmentDay(), mBun, true, false);
 					return;
 				}
@@ -81,11 +88,13 @@ public class FragmentCalendar extends Fragment implements CalendarView.OnDateCha
 		}
 		Toast.makeText(getActivity(), "Calendar - Making new day", Toast.LENGTH_SHORT).show();
 		MainActivity.insertDBData(Days.class, this, new Days(mFormattedDate, MainActivity.CurrentUser.Id), true);
-
 	}
 
 	@Override
 	public void onBadDataReturn(Exception exception) {
+		if (isVisible()) {
+			mLoadingProgress.setVisibility(View.GONE);
+		}
 		Toast.makeText(getActivity(), "Calendar - Server Error", Toast.LENGTH_SHORT).show();
 		exception.printStackTrace();
 	}
@@ -97,6 +106,7 @@ public class FragmentCalendar extends Fragment implements CalendarView.OnDateCha
 	public void onGoodInsertReturn(Object obj) {
 		Toast.makeText(getActivity(), "Calendar - Good", Toast.LENGTH_SHORT).show();
 		currentDay = (Days) obj;
+		mLoadingProgress.setVisibility(View.GONE);
 		MainActivity.nextFragment(this, new FragmentDay(), mBun, true, false);
 	}
 }

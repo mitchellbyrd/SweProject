@@ -29,7 +29,6 @@ public class MainActivity extends AppCompatActivity {
 	public static MobileServiceClient mClient;
 	public static Users CurrentUser;
 
-
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -187,6 +186,28 @@ public class MainActivity extends AppCompatActivity {
 
 				try {
 					mClient.getTable(clazz).delete(params[0]);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				return null;
+			}
+
+			@Override
+			protected void onPostExecute(Void aVoid) {
+			}
+
+		}.execute(item);
+	}
+
+	public static void updateDBData(@NonNull final Class clazz, Object item) {
+
+		new AsyncTask<Object, Object, Void>() {
+
+			@Override
+			protected Void doInBackground(Object... params) {
+
+				try {
+					mClient.getTable(clazz).update(params[0]);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}

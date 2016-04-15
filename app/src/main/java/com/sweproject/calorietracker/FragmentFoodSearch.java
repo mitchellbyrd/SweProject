@@ -67,18 +67,23 @@ public class FragmentFoodSearch extends Fragment implements View.OnClickListener
 
 	@Override
 	public void onGoodDataReturn(ArrayList<Object> data) {
-		mProgressBar.setVisibility(View.GONE);
-		((AdapterSearchFood) foodList.getAdapter()).setData(data);
+		if (isVisible()) {
+			mProgressBar.setVisibility(View.GONE);
+			((AdapterSearchFood) foodList.getAdapter()).setData(data);
 
-		FragmentFoodSearch.sDBFoodList.clear();
-		for (Object obj : data) {
-			FragmentFoodSearch.sDBFoodList.add((Foods)obj); }
+			FragmentFoodSearch.sDBFoodList.clear();
+			for (Object obj : data) {
+				FragmentFoodSearch.sDBFoodList.add((Foods) obj);
+			}
+		}
 	}
 
 	@Override
 	public void onBadDataReturn(Exception e) {
-		Toast.makeText(getActivity(), "Server Error", Toast.LENGTH_SHORT).show();
-		mProgressBar.setVisibility(View.GONE);
+		if (isVisible()) {
+			Toast.makeText(getActivity(), "Server Error", Toast.LENGTH_SHORT).show();
+			mProgressBar.setVisibility(View.GONE);
+		}
 		e.printStackTrace();
 	}
 
