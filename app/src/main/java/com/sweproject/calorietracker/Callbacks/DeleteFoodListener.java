@@ -69,7 +69,7 @@ public class DeleteFoodListener implements View.OnClickListener, DBDataListener 
 				Log.d("Azure", "Checking to delete");
 				if (d.getServingSizeId().equals(s.getId())) {
 					Log.d("Azure", "Delete");
-					mResponse.onFoodDeleted(s);
+					mResponse.onFoodDeleted(s, d);
 					MainActivity.deleteDBData(Food_Day.class, d);
 					return;
 				}

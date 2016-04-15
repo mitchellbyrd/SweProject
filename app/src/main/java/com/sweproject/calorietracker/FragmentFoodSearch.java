@@ -54,7 +54,7 @@ public class FragmentFoodSearch extends Fragment implements View.OnClickListener
 	public void onClick(View view) {
 		switch (view.getId()) {
 			case R.id.fragment_food_search_fab:
-				MainActivity.nextFragment(this, new CreateFood(), getArguments(), true, false);
+				MainActivity.nextFragment(this, new CreateFood(), getArguments(), true, false, 0);
 				break;
 		}
 	}
@@ -62,23 +62,28 @@ public class FragmentFoodSearch extends Fragment implements View.OnClickListener
 	@Override
 	public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 		getArguments().putInt("Food", i);
-		MainActivity.nextFragment(this, new FragmentFood(), getArguments(), true, false);
+		MainActivity.nextFragment(this, new FragmentFood(), getArguments(), true, false, 0);
 	}
 
 	@Override
 	public void onGoodDataReturn(ArrayList<Object> data) {
-		mProgressBar.setVisibility(View.GONE);
-		((AdapterSearchFood) foodList.getAdapter()).setData(data);
+		if (isVisible()) {
+			mProgressBar.setVisibility(View.GONE);
+			((AdapterSearchFood) foodList.getAdapter()).setData(data);
 
-		FragmentFoodSearch.sDBFoodList.clear();
-		for (Object obj : data) {
-			FragmentFoodSearch.sDBFoodList.add((Foods)obj); }
+			FragmentFoodSearch.sDBFoodList.clear();
+			for (Object obj : data) {
+				FragmentFoodSearch.sDBFoodList.add((Foods) obj);
+			}
+		}
 	}
 
 	@Override
 	public void onBadDataReturn(Exception e) {
-		Toast.makeText(getActivity(), "Server Error", Toast.LENGTH_SHORT).show();
-		mProgressBar.setVisibility(View.GONE);
+		if (isVisible()) {
+			Toast.makeText(getActivity(), "Server Error", Toast.LENGTH_SHORT).show();
+			mProgressBar.setVisibility(View.GONE);
+		}
 		e.printStackTrace();
 	}
 

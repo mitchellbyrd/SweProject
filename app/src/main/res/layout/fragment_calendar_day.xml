@@ -140,4 +140,13 @@
         android:layout_marginRight="10dp"
         android:src="@drawable/ic_add_white_24dp"/>
 
+    <ProgressBar
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/fragment_calendar_day_progress_loading"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:indeterminate="true"/>
+
 </RelativeLayout>
