@@ -13,15 +13,11 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.microsoft.windowsazure.mobileservices.*;
-import com.microsoft.windowsazure.mobileservices.table.MobileServiceJsonTable;
+import com.microsoft.windowsazure.mobileservices.MobileServiceException;
+import com.microsoft.windowsazure.mobileservices.MobileServiceList;
 import com.microsoft.windowsazure.mobileservices.table.MobileServiceTable;
 import com.sweproject.calorietracker.DataObjects.Users;
 
-import org.w3c.dom.Text;
-
-import java.lang.reflect.Array;
-import java.text.ParseException;
 import java.util.concurrent.ExecutionException;
 
 public class RegistrationFragment extends Fragment implements View.OnClickListener {
@@ -106,7 +102,7 @@ public class RegistrationFragment extends Fragment implements View.OnClickListen
 			e.printStackTrace();
 		}
 		MainActivity.CurrentUser = newUser;
-		MainActivity.nextFragment(new RegistrationFragment(), new FragmentCalendar(), null, false, false);
+		MainActivity.nextFragment(new RegistrationFragment(), new FragmentCalendar(), null, false, false, 0);
 	}
 
 	private Users GetNewUserFromView() {

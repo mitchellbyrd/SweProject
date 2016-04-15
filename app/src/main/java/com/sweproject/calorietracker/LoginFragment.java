@@ -59,7 +59,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
 				}
 				break;
 			case R.id.fragement_login_registerText:
-				MainActivity.nextFragment(this, new RegistrationFragment(), null, false, false);
+				MainActivity.nextFragment(this, new RegistrationFragment(), null, false, false, 0);
 				break;
 		}
 	}
@@ -92,7 +92,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
 
 						MainActivity.CurrentUser = queriedUsers.get(0);
 
-						MainActivity.nextFragment(new LoginFragment(), new FragmentCalendar(), null, false, false);
+						MainActivity.nextFragment(new LoginFragment(), new FragmentCalendar(), null, false, false, 0);
 					}
 				} catch (Exception exception) {
 					Toast.makeText(getActivity(), "Uh Oh Something Happened. Please try again!", Toast.LENGTH_SHORT).show();

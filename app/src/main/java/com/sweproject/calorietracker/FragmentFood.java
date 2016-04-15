@@ -136,7 +136,7 @@ public class FragmentFood extends Fragment implements View.OnClickListener, DBDa
 	@Override
 	public void onGoodInsert() {
 		// GetArguments returns the date back to the Day fragment
-		MainActivity.nextFragment(this, new FragmentDay(), getArguments(), true, true);
+		MainActivity.nextFragment(this, new FragmentDay(), getArguments(), true, true, 0);
 	}
 
 	@Override

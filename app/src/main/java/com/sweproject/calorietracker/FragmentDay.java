@@ -181,7 +181,7 @@ public class FragmentDay extends Fragment implements View.OnClickListener, Adapt
 	public void onClick(View view) {
 		switch (view.getId()) {
 			case R.id.fragment_calendar_fab:
-				MainActivity.nextFragment(this, new FragmentFoodSearch(), mBundle, true, false);
+				MainActivity.nextFragment(this, new FragmentFoodSearch(), mBundle, true, false, 0);
 				break;
 		}
 	}
@@ -194,7 +194,7 @@ public class FragmentDay extends Fragment implements View.OnClickListener, Adapt
 				for (Food_Day f : mFoodDayList) {
 					if (f.getServingSizeId().equals(s.getId())) {
 						sSelectedFoodDay = f;
-						MainActivity.nextFragment(this, new FragmentFoodEdit(), getArguments(), true, false);
+						MainActivity.nextFragment(this, new FragmentFoodEdit(), getArguments(), true, false, 0);
 						return;
 					}
 				}

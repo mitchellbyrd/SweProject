@@ -81,7 +81,7 @@ public class FragmentCalendar extends Fragment implements CalendarView.OnDateCha
 				if (((Days) o).getDate().equals(mFormattedDate)) {
 					currentDay = (Days) o;
 					mLoadingProgress.setVisibility(View.GONE);
-					MainActivity.nextFragment(this, new FragmentDay(), mBun, true, false);
+					MainActivity.nextFragment(this, new FragmentDay(), mBun, true, false, 0);
 					return;
 				}
 			}
@@ -107,6 +107,6 @@ public class FragmentCalendar extends Fragment implements CalendarView.OnDateCha
 		Toast.makeText(getActivity(), "Calendar - Good", Toast.LENGTH_SHORT).show();
 		currentDay = (Days) obj;
 		mLoadingProgress.setVisibility(View.GONE);
-		MainActivity.nextFragment(this, new FragmentDay(), mBun, true, false);
+		MainActivity.nextFragment(this, new FragmentDay(), mBun, true, false, 0);
 	}
 }

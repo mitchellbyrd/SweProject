@@ -91,7 +91,7 @@ public class CreateFood extends Fragment implements View.OnClickListener, OnDial
 		mCount++;
 		if (mCount == mServingSizes.size()) {
 			Toast.makeText(getActivity(), "CreateFood - Operation complete", Toast.LENGTH_SHORT).show();
-			MainActivity.nextFragment(this, new FragmentFoodSearch(), getArguments(), false, false);
+			MainActivity.nextFragment(this, new FragmentFoodSearch(), getArguments(), false, false, 0);
 		}
 	}
 

@@ -105,7 +105,7 @@ public class FragmentFoodEdit extends Fragment implements View.OnClickListener, 
 		FragmentDay.sSelectedFoodDay.setServingSizeId(mServingSizes.get(mSelectedIndex).getId());
 		FragmentDay.sSelectedFoodDay.setNumberOfServings(mServingSpin.getSelectedItemPosition() + 1);
 		MainActivity.updateDBData(Food_Day.class, FragmentDay.sSelectedFoodDay);
-		MainActivity.nextFragment(this, new FragmentDay(), getArguments(), false, false);
+		MainActivity.nextFragment(this, new FragmentDay(), getArguments(), true, false, 2);
 	}
 
 	@Override
@@ -138,7 +138,7 @@ public class FragmentFoodEdit extends Fragment implements View.OnClickListener, 
 	@Override
 	public void onGoodInsert() {
 		// GetArguments returns the date back to the Day fragment
-		MainActivity.nextFragment(this, new FragmentDay(), getArguments(), true, true);
+		//MainActivity.nextFragment(this, new FragmentDay(), getArguments(), true, true, 2);
 	}
 
 	@Override
