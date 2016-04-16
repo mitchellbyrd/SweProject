@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 23
-    buildToolsVersion "23.0.2"
+    buildToolsVersion "23.0.3"
 
     defaultConfig {
         applicationId "com.sweproject.calorietracker"
@@ -13,10 +13,14 @@ android {
     }
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+}
+
+repositories {
+    maven { url "https://jitpack.io" }
 }
 
 dependencies {
@@ -25,4 +29,5 @@ dependencies {
     compile 'com.android.support:appcompat-v7:23.2.0'
     compile 'com.android.support:design:23.2.0'
     compile 'com.microsoft.azure:azure-mobile-android:3.0'
+    compile 'com.github.PhilJay:MPAndroidChart:v2.2.4'
 }
