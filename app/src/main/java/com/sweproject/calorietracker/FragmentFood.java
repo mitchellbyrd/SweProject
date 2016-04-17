@@ -47,7 +47,7 @@ public class FragmentFood extends Fragment implements View.OnClickListener, DBDa
 		FragmentDay.sAddedFoodList.add(mFood);
 		mServingSizes = new ArrayList<>();
 
-		mTitle = (TextView) getActivity().findViewById(R.id.fragmet_food_title);
+		mTitle = (TextView) getActivity().findViewById(R.id.fragment_food_title);
 		mCalorie = (TextView) getActivity().findViewById(R.id.fragment_food_value_calorie);
 		mCarbs = (TextView) getActivity().findViewById(R.id.fragment_food_value_carbs);
 		mPro = (TextView) getActivity().findViewById(R.id.fragment_food_value_protein);
@@ -103,26 +103,28 @@ public class FragmentFood extends Fragment implements View.OnClickListener, DBDa
 
 	@Override
 	public void onClick(View view) {
-		MainActivity.insertDBData(Food_Day.class, this, new Food_Day(FragmentCalendar.currentDay.getId(), mServingSpin.getSelectedItemPosition(), mServingSizes.get(mSelectedIndex).getId()), false);
+		MainActivity.insertDBData(Food_Day.class, this, new Food_Day(FragmentCalendar.currentDay.getId(), mServingSpin.getSelectedItemPosition() + 1, mServingSizes.get(mSelectedIndex).getId()), false);
 	}
 
 	@Override
 	public void onGoodDataReturn(ArrayList<Object> data) {
-		String[] type = new String[data.size()];
+		if (isVisible()) {
+			String[] type = new String[data.size()];
 
-		for (Object o : data) {
-			type[mServingSizes.size()] = ((ServingSizes) o).getServingSizeType();
-			mServingSizes.add((ServingSizes) o);
+			for (Object o : data) {
+				type[mServingSizes.size()] = ((ServingSizes) o).getServingSizeType();
+				mServingSizes.add((ServingSizes) o);
+			}
+
+			mTypeSpin.setAdapter(new ArrayAdapter<>(getActivity(), R.layout.support_simple_spinner_dropdown_item, type));
+			mTypeSpin.setSelection(0);
+			mServingSpin.setSelection(0);
+
+			mCalorie.setText(String.valueOf(mServingSizes.get(0).getCalories()));
+			mCarbs.setText(String.valueOf(mServingSizes.get(0).getCarbs()));
+			mPro.setText(String.valueOf(mServingSizes.get(0).getProteins()));
+			mFats.setText(String.valueOf(mServingSizes.get(0).getFats()));
 		}
-
-		mTypeSpin.setAdapter(new ArrayAdapter<>(getActivity(), R.layout.support_simple_spinner_dropdown_item, type));
-		mTypeSpin.setSelection(0);
-		mServingSpin.setSelection(0);
-
-		mCalorie.setText(String.valueOf(mServingSizes.get(0).getCalories()));
-		mCarbs.setText(String.valueOf(mServingSizes.get(0).getCarbs()));
-		mPro.setText(String.valueOf(mServingSizes.get(0).getProteins()));
-		mFats.setText(String.valueOf(mServingSizes.get(0).getFats()));
 	}
 
 	@Override

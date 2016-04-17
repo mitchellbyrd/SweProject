@@ -31,7 +31,8 @@
         android:id="@+id/fragment_login_passwordField"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"
-        android:hint="Password" />
+        android:hint="Password"
+        android:text="downcast"/>
 
     <EditText
         android:layout_width="wrap_content"
@@ -42,7 +43,8 @@
         android:layout_above="@+id/fragment_login_passwordField"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="75dp"
-        android:hint="Username" />
+        android:hint="Username"
+        android:text="Downcast@yomama.com"/>
 
     <TextView
         android:layout_width="wrap_content"
