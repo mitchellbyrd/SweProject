@@ -6,12 +6,20 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CalendarView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.sweproject.calorietracker.Callbacks.DBDataListener;
+import com.sweproject.calorietracker.DataObjects.Days;
+
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 
 /**
  * Created by Marcus on 2/5/2016.
  */
-public class FragmentCalendar extends Fragment implements CalendarView.OnDateChangeListener {
+public class FragmentCalendar extends Fragment implements CalendarView.OnDateChangeListener, DBDataListener {
 
 	public static final String YEAR = "YEAR";
 	public static final String MONTH = "MONTH";
@@ -19,9 +27,13 @@ public class FragmentCalendar extends Fragment implements CalendarView.OnDateCha
 	private CalendarView mCalendarView;
 	private TextView mCalendarTitle;
 	private Long mSelectedDate;
+	private ProgressBar mLoadingProgress;
+	private Bundle mBun;
+	String mFormattedDate;
+	public static Days currentDay;
 
 	@Override
-	public void onActivityCreated(Bundle savedInstance){
+	public void onActivityCreated(Bundle savedInstance) {
 		super.onActivityCreated(savedInstance);
 	}
 
@@ -43,11 +55,53 @@ public class FragmentCalendar extends Fragment implements CalendarView.OnDateCha
 		if (mCalendarView.getDate() != mSelectedDate) {
 			mSelectedDate = mCalendarView.getDate();
 
-			Bundle bun = new Bundle();
-			bun.putInt(YEAR, year);
-			bun.putInt(MONTH, month);
-			bun.putInt(DAY, dayOfMonth);
-			MainActivity.nextFragment(this, new FragmentDay(), bun, true, false);
+
+			mFormattedDate = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(mSelectedDate);
+
+			mBun.putInt(YEAR, year);
+			mBun.putInt(MONTH, month);
+			mBun.putInt(DAY, dayOfMonth);
+
+			Toast.makeText(getActivity(), "Calendar - Looking for day", Toast.LENGTH_SHORT).show();
+			MainActivity.getDBData(Days.class, this, "UserId", MainActivity.CurrentUser.Id);
 		}
+	}
+
+	@Override
+	public void onGoodDataReturn(ArrayList<Object> data) {
+
+		if (data.size() != 0 && isVisible()) {
+			for (Object o : data) {
+				if (((Days) o).getDate().equals(mFormattedDate)) {
+					currentDay = (Days) o;
+					mLoadingProgress.setVisibility(View.GONE);
+					MainActivity.nextFragment(this, new FragmentDay(), mBun, true, false, 0);
+					return;
+				}
+			}
+		}
+		Toast.makeText(getActivity(), "Calendar - Making new day", Toast.LENGTH_SHORT).show();
+		MainActivity.insertDBData(Days.class, this, new Days(mFormattedDate, MainActivity.CurrentUser.Id), true);
+	}
+
+	@Override
+	public void onBadDataReturn(Exception exception) {
+		if (isVisible()) {
+			mLoadingProgress.setVisibility(View.GONE);
+		}
+		Toast.makeText(getActivity(), "Calendar - Server Error", Toast.LENGTH_SHORT).show();
+		exception.printStackTrace();
+	}
+
+	@Override
+	public void onGoodInsert() { /* Ignore */ }
+
+	@Override
+	public void onGoodInsertReturn(Object obj) {
+		Toast.makeText(getActivity(), "Calendar - Good", Toast.LENGTH_SHORT).show();
+		currentDay = (Days) obj;
+		mLoadingProgress.setVisibility(View.GONE);
+		MainActivity.nextFragment(this, new FragmentDay(), mBun, true, false, 0);
+
 	}
 }
