@@ -36,9 +36,11 @@ public class RegistrationFragment extends Fragment implements View.OnClickListen
 	public void onActivityCreated(Bundle savedInstance) {
 		super.onActivityCreated(savedInstance);
 		Button submitBtn = (Button) getActivity().findViewById(R.id.fragment_registration_submitBtn);
+		Button cancelBtn = (Button) getActivity().findViewById(R.id.fragment_registration_cancelBtn);
 		spinner = (ProgressBar) getActivity().findViewById(R.id.progressBar2);
 		userTable = MainActivity.mClient.getTable(Users.class);
 		submitBtn.setOnClickListener(this);
+		cancelBtn.setOnClickListener(this);
 	}
 
 	@Override
@@ -61,6 +63,9 @@ public class RegistrationFragment extends Fragment implements View.OnClickListen
 					e.printStackTrace();
 				}
 				break;
+			case R.id.fragment_registration_cancelBtn:
+				MainActivity.nextFragment(this, new LoginFragment(), null, false, false, 0);
+				break;
 		}
 	}
 
@@ -78,6 +83,8 @@ public class RegistrationFragment extends Fragment implements View.OnClickListen
 								userTable.insert(newUser);
 								users = userTable.where().field("EmailAddress").eq(newUser.EmailAddress).execute().get();
 								MainActivity.CurrentUser = users.get(0);
+								MainActivity.CurrentUser = newUser;
+								MainActivity.nextFragment(new RegistrationFragment(), new FragmentCalendar(), null, false, false, 0);
 							}
 							else {
 								new Handler(Looper.getMainLooper()).post(new Runnable() {
@@ -105,8 +112,6 @@ public class RegistrationFragment extends Fragment implements View.OnClickListen
 			spinner.setVisibility(View.INVISIBLE);
 			e.printStackTrace();
 		}
-		MainActivity.CurrentUser = newUser;
-		MainActivity.nextFragment(new RegistrationFragment(), new FragmentCalendar(), null, false, false);
 	}
 
 	private Users GetNewUserFromView() {

@@ -36,19 +36,29 @@ public class PreferencesController extends Fragment implements View.OnClickListe
     public void onActivityCreated(Bundle savedInstance) {
         super.onActivityCreated(savedInstance);
         Button submitBtn = (Button) getActivity().findViewById(R.id.fragment_preferences_submitButton);
+        Button cancelBtn = (Button) getActivity().findViewById(R.id.fragment_preferences_cancelBtn);
         userTable = MainActivity.mClient.getTable(Users.class);
         submitBtn.setOnClickListener(this);
+        cancelBtn.setOnClickListener(this);
+        String calorie = Integer.toString(MainActivity.CurrentUser.PreferedCalorieLimit);
+        String carb = Integer.toString(MainActivity.CurrentUser.PreferedCarbLimit);
+        String fat = Integer.toString(MainActivity.CurrentUser.PreferedFatLimit);
+        String protein = Integer.toString(MainActivity.CurrentUser.PreferedProteinLimit);
+        ((TextView) getActivity().findViewById(R.id.fragment_preferences_caloriesInput)).setText(calorie);
+        ((TextView) getActivity().findViewById(R.id.fragment_preferences_carbsInput)).setText(carb);
+        ((TextView) getActivity().findViewById(R.id.fragment_preferences_fatsInput)).setText(fat);
+        ((TextView) getActivity().findViewById(R.id.fragment_preferences_proteinInput)).setText(protein);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_registration, container, false);
+        return inflater.inflate(R.layout.fragment_preferences, container, false);
     }
 
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.fragment_registration_submitBtn:
+            case R.id.fragment_preferences_submitButton:
                 try {
                     UpdatePreferences();
                 } catch (InterruptedException e) {
@@ -59,6 +69,9 @@ public class PreferencesController extends Fragment implements View.OnClickListe
                     e.printStackTrace();
                 }
                 break;
+            case R.id.fragment_preferences_cancelBtn:
+                MainActivity.nextFragment(this, new FragmentCalendar(), null, false, false, 0);
+                break;
         }
     }
 
@@ -67,14 +80,14 @@ public class PreferencesController extends Fragment implements View.OnClickListe
         boolean isUserValid = Validate(newUser);
         try {
             if(isUserValid) {
-                new AsyncTask<Void, Void, Void>() {
+                new AsyncTask<Users, Void, Void>() {
                     @Override
-                    protected Void doInBackground(Void... params) {
+                    protected Void doInBackground(Users... params) {
                         try {
-                            MainActivity.CurrentUser.PreferedCalorieLimit = newUser.PreferedCalorieLimit;
-                            MainActivity.CurrentUser.PreferedFatLimit = newUser.PreferedFatLimit;
-                            MainActivity.CurrentUser.PreferedCarbLimit = newUser.PreferedCarbLimit;
-                            MainActivity.CurrentUser.PreferedProteinLimit = newUser.PreferedProteinLimit;
+                            params[0].PreferedCalorieLimit = newUser.PreferedCalorieLimit;
+                            params[0].PreferedFatLimit = newUser.PreferedFatLimit;
+                            params[0].PreferedCarbLimit = newUser.PreferedCarbLimit;
+                            params[0].PreferedProteinLimit = newUser.PreferedProteinLimit;
                             userTable.update(MainActivity.CurrentUser);
 
                         } catch (Exception exception) {
@@ -87,7 +100,7 @@ public class PreferencesController extends Fragment implements View.OnClickListe
                         }
                         return null;
                     }
-                }.execute();
+                }.execute(MainActivity.CurrentUser);
             }
         }
         catch(Exception e) {
@@ -95,7 +108,7 @@ public class PreferencesController extends Fragment implements View.OnClickListe
             e.printStackTrace();
         }
         MainActivity.CurrentUser = newUser;
-        MainActivity.nextFragment(new RegistrationFragment(), new FragmentCalendar(), null, false, false);
+        MainActivity.nextFragment(new PreferencesController(), new FragmentCalendar(), null, false, false, 0);
     }
 
     private Users GetNewUserFromView() {
