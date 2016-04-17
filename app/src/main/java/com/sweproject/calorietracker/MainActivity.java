@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
 			} catch (MalformedURLException e) {
 				e.printStackTrace();
 			}
-			nextFragment(null, new LoginFragment(), null, false, false,0);
+			nextFragment(null, new LoginFragment(), null, false, false, 0);
 		}
 		// else will show the last visible fragment (Android destroys activity during rotation)
 	}
@@ -81,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
 
 		//noinspection SimplifiableIfStatement
 		if (id == R.id.action_settings) {
-			nextFragment(new FragmentCalendar(), new PreferencesController(), null, false, false,0);
+			nextFragment(new FragmentCalendar(), new PreferencesController(), null, false, false, 0);
 		}
 
 		return super.onOptionsItemSelected(item);
@@ -95,6 +95,7 @@ public class MainActivity extends AppCompatActivity {
 	 * @param bun      Data that should be set to the fragment or null if none.
 	 * @param add      True if fragment should be added to the backstack.
 	 * @param clear    True if system should clear backstack then add fragment
+	 * @param popCount Number of fragments that should be popped off the top of the stack
 	 */
 	public static void nextFragment(Fragment fromFrag, Fragment toFrag, Bundle bun, boolean add, boolean clear, int popCount) {
 
@@ -105,6 +106,10 @@ public class MainActivity extends AppCompatActivity {
 			// Clears the back stack, leaving the first fragment added to be displayed
 			mContainer.removeAllViews();
 			sFragmentManager.popBackStack(sFragmentManager.getBackStackEntryAt(0).getId(), FragmentManager.POP_BACK_STACK_INCLUSIVE);
+		}
+		if (popCount != 0 && sFragmentManager.getBackStackEntryCount() - popCount >= 0) {
+			mContainer.removeAllViews();
+			sFragmentManager.popBackStack(sFragmentManager.getBackStackEntryAt(sFragmentManager.getBackStackEntryCount() - popCount).getId(), FragmentManager.POP_BACK_STACK_INCLUSIVE);
 		}
 		if (add) {
 			sFragmentManager.beginTransaction()
@@ -166,7 +171,6 @@ public class MainActivity extends AppCompatActivity {
 		}.execute(field, filter);
 	}
 
-
 	public static void insertDBData(@NonNull final Class clazz, @NonNull final DBDataListener listener, Object item, Boolean getData) {
 
 		new AsyncTask<Object, Object, Void>() {
@@ -202,6 +206,50 @@ public class MainActivity extends AppCompatActivity {
 			}
 
 		}.execute(item, getData);
+	}
+
+	public static void deleteDBData(@NonNull final Class clazz, Object item) {
+
+		new AsyncTask<Object, Object, Void>() {
+
+			@Override
+			protected Void doInBackground(Object... params) {
+
+				try {
+					mClient.getTable(clazz).delete(params[0]);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				return null;
+			}
+
+			@Override
+			protected void onPostExecute(Void aVoid) {
+			}
+
+		}.execute(item);
+	}
+
+	public static void updateDBData(@NonNull final Class clazz, Object item) {
+
+		new AsyncTask<Object, Object, Void>() {
+
+			@Override
+			protected Void doInBackground(Object... params) {
+
+				try {
+					mClient.getTable(clazz).update(params[0]);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				return null;
+			}
+
+			@Override
+			protected void onPostExecute(Void aVoid) {
+			}
+
+		}.execute(item);
 	}
 
 	@Override
