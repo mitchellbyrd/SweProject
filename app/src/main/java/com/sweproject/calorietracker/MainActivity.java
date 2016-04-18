@@ -7,8 +7,10 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.util.Pair;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
@@ -16,6 +18,7 @@ import android.widget.FrameLayout;
 import com.microsoft.windowsazure.mobileservices.MobileServiceClient;
 import com.microsoft.windowsazure.mobileservices.MobileServiceList;
 import com.microsoft.windowsazure.mobileservices.table.MobileServiceTable;
+import com.microsoft.windowsazure.mobileservices.table.query.ExecutableQuery;
 import com.sweproject.calorietracker.Callbacks.DBDataListener;
 import com.sweproject.calorietracker.DataObjects.Users;
 
@@ -100,14 +103,14 @@ public class MainActivity extends AppCompatActivity {
 	/**
 	 * Allows client to get data from the Azure database.
 	 *
-	 * @param clazz    The table you want to access (pass Class.class)
-	 * @param listener The class that will receive the callbacks
+	 * @param clazz         The table you want to access (pass Class.class)
+	 * @param listener      The class that will receive the callbacks
 	 */
 	public static void getDBData(@NonNull final Class clazz, @NonNull final DBDataListener listener, String field, String filter) {
 
 		if (field != null && filter != null) {
 			if (field.isEmpty() || filter.isEmpty()) {
-				filter = field = null;
+				field = filter = null;
 			}
 		}
 		new AsyncTask<String, Object, Void>() {
@@ -119,7 +122,6 @@ public class MainActivity extends AppCompatActivity {
 			@Override
 			protected Void doInBackground(String... params) {
 				try {
-
 					MobileServiceTable<?> table = mClient.getTable(clazz);
 					MobileServiceList<?> result = (params[0] != null && params[1] != null) ? table.where().field(params[0]).eq(params[1]).execute().get() : table.execute().get();
 
@@ -143,6 +145,80 @@ public class MainActivity extends AppCompatActivity {
 				}
 			}
 		}.execute(field, filter);
+	}
+
+	/**
+	 * Allows client to get data from the Azure database.
+	 *
+	 * @param clazz       The table you want to access (pass Class.class)
+	 * @param listener    The class that will receive the callbacks
+	 * @param fieldFilter Holds multiple field (first) and filter (second) values to provide constraints on the data returned.
+	 *                    If any data is null or empty, all the values will be ignored and no filtering will be performed
+	 */
+	public static void getDBData2(@NonNull final Class clazz, @NonNull final DBDataListener listener, Pair<String, String>... fieldFilter) {
+
+		for (Pair<String, String> p : fieldFilter) {
+			if (p.first != null && p.second != null) {
+				if (p.first.isEmpty() || p.second.isEmpty()) {
+					fieldFilter = null;
+					break;
+				}
+			}
+		}
+		new AsyncTask<Object, Object, Void>() {
+
+			ArrayList<Object> temp = new ArrayList<>();
+			private boolean error = false;
+			private Exception exception;
+
+			@Override
+			protected Void doInBackground(Object... params) {
+				boolean allPairsValid = true;
+				try {
+					MobileServiceTable<?> table = mClient.getTable(clazz);
+					MobileServiceList<?> result;
+					if (params[0] != null) {
+						ExecutableQuery<?> query = table.where();
+						for (Object o : params) {
+							if (o instanceof Pair) {
+								Pair<String, String> pair = (Pair<String, String>) o;
+								query = query.field(pair.first).eq(pair.second);
+							} else {
+								Log.e("Azure", "Object not instance of Pair");
+								allPairsValid = false;
+								break;
+							}
+						}
+						if (allPairsValid) {
+							result = query.execute().get();
+						} else {
+							result = table.execute().get();
+						}
+
+					} else {
+						result = table.execute().get();
+					}
+
+					for (Object item : result) {
+						temp.add(item);
+					}
+
+				} catch (Exception e) {
+					error = true;
+					exception = e;
+				}
+				return null;
+			}
+
+			@Override
+			protected void onPostExecute(Void aVoid) {
+				if (!error) {
+					listener.onGoodDataReturn(temp);
+				} else {
+					listener.onBadDataReturn(exception);
+				}
+			}
+		}.execute(fieldFilter);
 	}
 
 	public static void insertDBData(@NonNull final Class clazz, @NonNull final DBDataListener listener, Object item, Boolean getData) {
