@@ -59,7 +59,8 @@ public class MainActivity extends AppCompatActivity {
 			} catch (MalformedURLException e) {
 				e.printStackTrace();
 			}
-			nextFragment(null, new LoginFragment(), null, false, false, 0);
+			//nextFragment(null, new LoginFragment(), null, false, false, 0);
+			nextFragment(null, new FragmentReport(), null, false, false, 0);
 		}
 		// else will show the last visible fragment (Android destroys activity during rotation)
 	}
