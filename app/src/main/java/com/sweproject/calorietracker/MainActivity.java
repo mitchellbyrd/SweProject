@@ -156,7 +156,7 @@ public class MainActivity extends AppCompatActivity {
 	 * @param fieldFilter Holds multiple field (first) and filter (second) values to provide constraints on the data returned.
 	 *                    If any data is null or empty, all the values will be ignored and no filtering will be performed
 	 */
-	public static void getDBData2(@NonNull final Class clazz, @NonNull final DBDataListener listener, Pair<String, String>... fieldFilter) {
+	public static void getDBData(@NonNull final Class clazz, @NonNull final DBDataListener listener, Pair<String, String>... fieldFilter) {
 
 		for (Pair<String, String> p : fieldFilter) {
 			if (p.first != null && p.second != null) {
@@ -220,6 +220,49 @@ public class MainActivity extends AppCompatActivity {
 				}
 			}
 		}.execute(fieldFilter);
+	}
+
+	public static void getDBData(@NonNull final Class clazz, @NonNull final DBDataListener listener, ExecutableQuery<?> query) {
+
+		new AsyncTask<ExecutableQuery<?>, Void, Void>() {
+
+			ArrayList<Object> temp = new ArrayList<>();
+			private boolean error = false;
+			private Exception exception;
+
+			@Override
+			protected Void doInBackground(ExecutableQuery<?>... params) {
+				try {
+					MobileServiceTable<?> table = mClient.getTable(clazz);
+					MobileServiceList<?> result;
+					if (params[0] != null) {
+						params[0].setTable(mClient.getTable(clazz));
+						result = params[0].execute().get();
+
+					} else {
+						result = table.execute().get();
+					}
+
+					for (Object item : result) {
+						temp.add(item);
+					}
+
+				} catch (Exception e) {
+					error = true;
+					exception = e;
+				}
+				return null;
+			}
+
+			@Override
+			protected void onPostExecute(Void aVoid) {
+				if (!error) {
+					listener.onGoodDataReturn(temp);
+				} else {
+					listener.onBadDataReturn(exception);
+				}
+			}
+		}.execute(query);
 	}
 
 	public static void insertDBData(@NonNull final Class clazz, @NonNull final DBDataListener listener, Object item, Boolean getData) {

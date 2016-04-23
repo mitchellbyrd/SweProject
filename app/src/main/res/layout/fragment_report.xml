@@ -46,7 +46,7 @@
             android:layout_marginLeft="20dp"
             android:layout_toEndOf="@+id/fragment_report_start_view"
             android:layout_toRightOf="@+id/fragment_report_start_view"
-            android:text="10/29/2016"
+            android:text="1/1/2016"
             android:clickable="true"/>
 
         <TextView
@@ -67,7 +67,7 @@
             android:layout_alignLeft="@+id/fragment_report_start_edit"
             android:layout_alignStart="@+id/fragment_report_start_edit"
             android:layout_alignTop="@+id/fragment_report_end_view"
-            android:text="12/10/2016"
+            android:text="1/2/2016"
             android:clickable="true"/>
 
         <TextView
@@ -76,7 +76,7 @@
             android:layout_height="wrap_content"
             android:layout_alignLeft="@+id/fragment_report_end_view"
             android:layout_alignStart="@+id/fragment_report_end_view"
-            android:layout_below="@+id/fragment_report_end_view"
+            android:layout_below="@+id/fragment_report_execute_btn"
             android:layout_marginTop="40dp"
             android:text="Totals"/>
 
@@ -204,5 +204,16 @@
             android:layout_alignTop="@+id/fragment_report_total_fat_amount_view"
             android:checked="true"
             android:text="On"/>
+
+        <Button
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Execute"
+            android:id="@+id/fragment_report_execute_btn"
+            android:layout_below="@+id/fragment_report_end_view"
+            android:layout_alignLeft="@+id/fragment_report_end_view"
+            android:layout_alignStart="@+id/fragment_report_end_view"
+            android:layout_marginTop="15dp"/>
     </RelativeLayout>
 </ScrollView>

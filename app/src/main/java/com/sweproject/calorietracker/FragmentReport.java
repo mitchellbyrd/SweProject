@@ -4,13 +4,16 @@ import android.app.DatePickerDialog;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.XAxis;
@@ -21,6 +24,9 @@ import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.formatter.FillFormatter;
 import com.github.mikephil.charting.interfaces.dataprovider.LineDataProvider;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
+import com.microsoft.windowsazure.mobileservices.table.query.ExecutableQuery;
+import com.sweproject.calorietracker.Callbacks.DBDataListener;
+import com.sweproject.calorietracker.DataObjects.Days;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -28,7 +34,7 @@ import java.util.Calendar;
 /**
  * Created by Marcus on 4/20/2016.
  */
-public class FragmentReport extends Fragment implements FillFormatter, CompoundButton.OnCheckedChangeListener, View.OnClickListener, DatePickerDialog.OnDateSetListener {
+public class FragmentReport extends Fragment implements FillFormatter, CompoundButton.OnCheckedChangeListener, View.OnClickListener, DatePickerDialog.OnDateSetListener, DBDataListener {
 
 	private LineChart mChart;
 
@@ -44,6 +50,7 @@ public class FragmentReport extends Fragment implements FillFormatter, CompoundB
 
 	private TextView mStart;
 	private TextView mEnd;
+	private Button mBtn;
 
 	private DatePickerDialog mDatePickerDialog;
 
@@ -70,7 +77,13 @@ public class FragmentReport extends Fragment implements FillFormatter, CompoundB
 		mStart = (TextView) getActivity().findViewById(R.id.fragment_report_start_edit);
 		mEnd = (TextView) getActivity().findViewById(R.id.fragment_report_end_edit);
 
-		mDatePickerDialog = new DatePickerDialog(getActivity(), this, 2016, 3, 23);
+		mBtn = (Button) getActivity().findViewById(R.id.fragment_report_execute_btn);
+		mBtn.setOnClickListener(this);
+
+		mDatePickerDialog = new DatePickerDialog(getActivity(), this, 2016, 0, 1);
+		Calendar cal = Calendar.getInstance();
+		cal.set(2015, 0, 1);
+		mDatePickerDialog.getDatePicker().setMinDate(cal.getTimeInMillis());
 
 		mStart.setOnClickListener(this);
 		mEnd.setOnClickListener(this);
@@ -255,19 +268,55 @@ public class FragmentReport extends Fragment implements FillFormatter, CompoundB
 			case R.id.fragment_report_start_edit:
 				isStartSelected = true;
 				Calendar cal = Calendar.getInstance();
-				cal.set(2010, 0, 0);
+				cal.set(2015, 0, 1);
 				mDatePickerDialog.getDatePicker().setMinDate(cal.getTimeInMillis());
+				mDatePickerDialog.show();
 				break;
 			case R.id.fragment_report_end_edit:
 				isEndSelected = true;
+				mDatePickerDialog.show();
+				break;
+			case R.id.fragment_report_execute_btn:
+				String end[] = mEnd.getText().toString().split("/", 3);
+				String start[] = mStart.getText().toString().split("/", 3);
+
+				if (Integer.valueOf(end[2]) > Integer.valueOf(start[2])) {
+					Toast.makeText(getActivity(), "Valid Year Range", Toast.LENGTH_SHORT).show();
+					getTotals();
+
+				} else if (Integer.valueOf(end[2]).intValue() == Integer.valueOf(start[2]).intValue()) {
+					if (Integer.valueOf(end[0]) > Integer.valueOf(start[0])) {
+						Toast.makeText(getActivity(), "Valid Month Range", Toast.LENGTH_SHORT).show();
+						getTotals();
+
+					} else if (Integer.valueOf(end[0]).intValue() == Integer.valueOf(start[0]).intValue()) {
+						if (Integer.valueOf(end[1]) >= Integer.valueOf(start[1])) {
+							Toast.makeText(getActivity(), "Valid Day Range", Toast.LENGTH_SHORT).show();
+							getTotals();
+
+						} else {
+							Toast.makeText(getActivity(), "InValid Day Range", Toast.LENGTH_SHORT).show();
+						}
+					} else {
+						Toast.makeText(getActivity(), "Invalid Month Range", Toast.LENGTH_SHORT).show();
+					}
+				} else {
+					Toast.makeText(getActivity(), "Invalid Year Range", Toast.LENGTH_SHORT).show();
+				}
 				break;
 		}
-		mDatePickerDialog.show();
+	}
+
+	private void getTotals() {
+		ExecutableQuery<?> query = new ExecutableQuery<>();
+		query.field("UserId").eq(MainActivity.CurrentUser.Id);
+		MainActivity.getDBData(Days.class, this, query);
+
 	}
 
 	@Override
 	public void onDateSet(DatePicker datePicker, int selectedYear, int selectedMonth, int selectedDay) {
-		String month = String.valueOf(selectedMonth);
+		String month = String.valueOf(selectedMonth + 1);
 		String day = String.valueOf(selectedDay);
 		String year = String.valueOf(selectedYear);
 
@@ -287,5 +336,25 @@ public class FragmentReport extends Fragment implements FillFormatter, CompoundB
 			}
 			isEndSelected = false;
 		}
+	}
+
+	@Override
+	public void onGoodDataReturn(ArrayList<Object> data) {
+		for (Object o : data) {
+			Log.d("skdjn", ((Days) o).getId());
+		}
+	}
+
+	@Override
+	public void onBadDataReturn(Exception exception) {
+		exception.printStackTrace();
+	}
+
+	@Override
+	public void onGoodInsert() {
+	}
+
+	@Override
+	public void onGoodInsertReturn(Object obj) {
 	}
 }
