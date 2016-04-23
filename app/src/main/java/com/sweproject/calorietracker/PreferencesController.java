@@ -88,7 +88,7 @@ public class PreferencesController extends Fragment implements View.OnClickListe
                             params[0].PreferedFatLimit = newUser.PreferedFatLimit;
                             params[0].PreferedCarbLimit = newUser.PreferedCarbLimit;
                             params[0].PreferedProteinLimit = newUser.PreferedProteinLimit;
-                            userTable.update(MainActivity.CurrentUser);
+                            userTable.update(params[0]);
 
                         } catch (Exception exception) {
                             new Handler(Looper.getMainLooper()).post(new Runnable() {

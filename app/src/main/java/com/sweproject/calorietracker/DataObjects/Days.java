@@ -1,5 +1,11 @@
 package com.sweproject.calorietracker.DataObjects;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
 /**
  * Created by Marcus on 3/17/2016.
  */
@@ -87,7 +93,7 @@ public class Days {
 	}
 
 	public String getDate() {
-		return Date;
+		return Date.split("T")[0];
 	}
 
 	public float getGoalTotalCalorie() {
