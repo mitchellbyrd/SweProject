@@ -13,6 +13,7 @@ import android.widget.Toast;
 import com.sweproject.calorietracker.Callbacks.DBDataListener;
 import com.sweproject.calorietracker.DataObjects.Days;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
@@ -61,7 +62,7 @@ public class FragmentCalendar extends Fragment implements CalendarView.OnDateCha
 		if (mCalendarView.getDate() != mSelectedDate) {
 			mSelectedDate = mCalendarView.getDate();
 
-			mFormattedDate = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(mSelectedDate);
+			mFormattedDate = new SimpleDateFormat("yyyy-MM-dd").format(mSelectedDate);
 
 			mBun.putInt(YEAR, year);
 			mBun.putInt(MONTH, month);

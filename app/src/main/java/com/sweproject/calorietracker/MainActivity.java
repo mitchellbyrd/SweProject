@@ -10,6 +10,8 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.util.Pair;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.util.Log;
 import android.view.Window;
 import android.view.WindowManager;
@@ -63,6 +65,29 @@ public class MainActivity extends AppCompatActivity {
 			nextFragment(null, new FragmentReport(), null, false, false, 0);
 		}
 		// else will show the last visible fragment (Android destroys activity during rotation)
+	}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		// Inflate the menu; this adds items to the action bar if it is present.
+		getMenuInflater().inflate(R.menu.menu_main, menu);
+		return true;
+	}
+
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		// Handle action bar item clicks here. The action bar will
+		// automatically handle clicks on the Home/Up button, so long
+		// as you specify a parent activity in AndroidManifest.xml.
+		int id = item.getItemId();
+
+		//noinspection SimplifiableIfStatement
+		if (id == R.id.action_settings) {
+			nextFragment(new FragmentCalendar(), new PreferencesController(), null, false, false, 0);
+		}
+
+		return super.onOptionsItemSelected(item);
 	}
 
 	/**
@@ -123,6 +148,7 @@ public class MainActivity extends AppCompatActivity {
 			@Override
 			protected Void doInBackground(String... params) {
 				try {
+
 					MobileServiceTable<?> table = mClient.getTable(clazz);
 					MobileServiceList<?> result = (params[0] != null && params[1] != null) ? table.where().field(params[0]).eq(params[1]).execute().get() : table.execute().get();
 

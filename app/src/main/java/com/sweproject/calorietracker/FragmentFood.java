@@ -19,6 +19,8 @@ import com.sweproject.calorietracker.DataObjects.ServingSizes;
 
 import java.util.ArrayList;
 
+import static com.sweproject.calorietracker.MainActivity.*;
+
 /**
  * Created by Marcus on 2/18/2016.
  */
@@ -93,7 +95,7 @@ public class FragmentFood extends Fragment implements View.OnClickListener, DBDa
 		});
 		submit.setOnClickListener(this);
 
-		MainActivity.getDBData(ServingSizes.class, this, "FoodId", mFood.getId());
+		getDBData(ServingSizes.class, this, "FoodId", mFood.getId());
 	}
 
 	@Override
@@ -103,7 +105,7 @@ public class FragmentFood extends Fragment implements View.OnClickListener, DBDa
 
 	@Override
 	public void onClick(View view) {
-		MainActivity.insertDBData(Food_Day.class, this, new Food_Day(FragmentCalendar.currentDay.getId(), mServingSpin.getSelectedItemPosition() + 1, mServingSizes.get(mSelectedIndex).getId()), false);
+		insertDBData(Food_Day.class, this, new Food_Day(FragmentCalendar.currentDay.getId(), mServingSpin.getSelectedItemPosition() + 1, mServingSizes.get(mSelectedIndex).getId()), false);
 	}
 
 	@Override
@@ -136,7 +138,7 @@ public class FragmentFood extends Fragment implements View.OnClickListener, DBDa
 	@Override
 	public void onGoodInsert() {
 		// GetArguments returns the date back to the Day fragment
-		MainActivity.nextFragment(this, new FragmentDay(), getArguments(), true, true, 0);
+		nextFragment(this, new FragmentDay(), getArguments(), true, true, 0);
 	}
 
 	@Override
