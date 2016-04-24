@@ -19,7 +19,9 @@ import com.sweproject.calorietracker.DataObjects.ServingSizes;
 
 import java.util.ArrayList;
 
-import static com.sweproject.calorietracker.MainActivity.*;
+import static com.sweproject.calorietracker.MainActivity.getDBData;
+import static com.sweproject.calorietracker.MainActivity.insertDBData;
+import static com.sweproject.calorietracker.MainActivity.nextFragment;
 
 /**
  * Created by Marcus on 2/18/2016.
