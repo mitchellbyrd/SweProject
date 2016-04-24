@@ -1,5 +1,6 @@
 package com.sweproject.calorietracker;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
@@ -15,6 +16,7 @@ import android.widget.Toast;
 import com.sweproject.calorietracker.Callbacks.DBDataListener;
 import com.sweproject.calorietracker.Callbacks.DeleteFoodListener;
 import com.sweproject.calorietracker.Callbacks.DeleteFoodListenerResponse;
+import com.sweproject.calorietracker.DataObjects.Days;
 import com.sweproject.calorietracker.DataObjects.Food_Day;
 import com.sweproject.calorietracker.DataObjects.Foods;
 import com.sweproject.calorietracker.DataObjects.ServingSizes;
@@ -82,6 +84,16 @@ public class FragmentDay extends Fragment implements View.OnClickListener, Adapt
 		mCarBar = (ProgressBar) getActivity().findViewById(R.id.fragment_calendar_day_progressbar_carbs);
 		mFatBar = (ProgressBar) getActivity().findViewById(R.id.fragment_calendar_day_progressbar_fats);
 		mLoading = (ProgressBar) getActivity().findViewById(R.id.fragment_calendar_day_progress_loading);
+
+		mCalBar.setMax(MainActivity.CurrentUser.PreferedCalorieLimit);
+		mProBar.setMax(MainActivity.CurrentUser.PreferedProteinLimit);
+		mCarBar.setMax(MainActivity.CurrentUser.PreferedCarbLimit);
+		mFatBar.setMax(MainActivity.CurrentUser.PreferedFatLimit);
+
+		mCalBar.getProgressDrawable().setColorFilter(Color.RED, android.graphics.PorterDuff.Mode.SRC_IN);
+		mProBar.getProgressDrawable().setColorFilter(Color.RED, android.graphics.PorterDuff.Mode.SRC_IN);
+		mCarBar.getProgressDrawable().setColorFilter(Color.RED, android.graphics.PorterDuff.Mode.SRC_IN);
+		mFatBar.getProgressDrawable().setColorFilter(Color.RED, android.graphics.PorterDuff.Mode.SRC_IN);
 
 		title.setText(date);
 		fab.setOnClickListener(this);
@@ -174,6 +186,49 @@ public class FragmentDay extends Fragment implements View.OnClickListener, Adapt
 		mProBar.setProgress(Math.round(pro));
 		mCarBar.setProgress(Math.round(car));
 		mFatBar.setProgress(Math.round(fat));
+
+		if (Math.round(cal) > MainActivity.CurrentUser.PreferedCalorieLimit) {
+			mCalBar.getProgressDrawable().setColorFilter(
+					Color.BLACK, android.graphics.PorterDuff.Mode.SRC_IN);
+		} else {
+			mCalBar.getProgressDrawable().setColorFilter(
+					Color.RED, android.graphics.PorterDuff.Mode.SRC_IN);
+		}
+
+		if (Math.round(pro) > MainActivity.CurrentUser.PreferedProteinLimit) {
+			mProBar.getProgressDrawable().setColorFilter(
+					Color.BLACK, android.graphics.PorterDuff.Mode.SRC_IN);
+		} else {
+			mProBar.getProgressDrawable().setColorFilter(
+					Color.RED, android.graphics.PorterDuff.Mode.SRC_IN);
+		}
+
+		if (Math.round(car) > MainActivity.CurrentUser.PreferedCarbLimit) {
+			mCarBar.getProgressDrawable().setColorFilter(
+					Color.BLACK, android.graphics.PorterDuff.Mode.SRC_IN);
+		} else {
+			mCarBar.getProgressDrawable().setColorFilter(
+					Color.RED, android.graphics.PorterDuff.Mode.SRC_IN);
+		}
+
+		if (Math.round(fat) > MainActivity.CurrentUser.PreferedFatLimit) {
+			mFatBar.getProgressDrawable().setColorFilter(
+					Color.BLACK, android.graphics.PorterDuff.Mode.SRC_IN);
+		} else {
+			mFatBar.getProgressDrawable().setColorFilter(
+					Color.RED, android.graphics.PorterDuff.Mode.SRC_IN);
+		}
+
+		updateDayTotals();
+	}
+
+	private void updateDayTotals() {
+		FragmentCalendar.currentDay.setCurrentTotalCalorie(mCalBar.getProgress());
+		FragmentCalendar.currentDay.setCurrentTotalCarb(mCarBar.getProgress());
+		FragmentCalendar.currentDay.setCurrentTotalProtein(mProBar.getProgress());
+		FragmentCalendar.currentDay.setCurrentTotalFat(mFatBar.getProgress());
+
+		MainActivity.updateDBData(Days.class, FragmentCalendar.currentDay);
 		mLoading.setVisibility(View.GONE);
 	}
 
@@ -246,5 +301,6 @@ public class FragmentDay extends Fragment implements View.OnClickListener, Adapt
 		mProBar.setProgress(mProBar.getProgress() - (int) (s.getProteins() * d.getNumberOfServings()));
 		mCarBar.setProgress(mCarBar.getProgress() - (int) (s.getCarbs() * d.getNumberOfServings()));
 		mFatBar.setProgress(mFatBar.getProgress() - (int) (s.getFats() * d.getNumberOfServings()));
+		updateDayTotals();
 	}
 }

@@ -90,6 +90,12 @@ public class FragmentReport extends Fragment implements FillFormatter, CompoundB
 		cal.set(2015, 0, 1);
 		mDatePickerDialog.getDatePicker().setMinDate(cal.getTimeInMillis());
 
+		cal.set(2016, 0, 1);
+		mStartTime = cal.getTimeInMillis();
+
+		cal.set(2016, 0, 2);
+		mEndTime = cal.getTimeInMillis();
+
 		mStart.setOnClickListener(this);
 		mEnd.setOnClickListener(this);
 

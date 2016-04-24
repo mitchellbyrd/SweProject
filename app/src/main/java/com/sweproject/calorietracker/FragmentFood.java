@@ -112,6 +112,7 @@ public class FragmentFood extends Fragment implements View.OnClickListener, DBDa
 
 	@Override
 	public void onGoodDataReturn(ArrayList<Object> data) {
+		// test for empty data
 		if (isVisible()) {
 			String[] type = new String[data.size()];
 

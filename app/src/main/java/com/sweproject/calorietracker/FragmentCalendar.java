@@ -5,11 +5,13 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.CalendarView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.microsoft.windowsazure.mobileservices.table.query.ExecutableQuery;
 import com.sweproject.calorietracker.Callbacks.DBDataListener;
 import com.sweproject.calorietracker.DataObjects.Days;
 
@@ -19,7 +21,7 @@ import java.util.ArrayList;
 /**
  * Created by Marcus on 2/5/2016.
  */
-public class FragmentCalendar extends Fragment implements CalendarView.OnDateChangeListener, DBDataListener {
+public class FragmentCalendar extends Fragment implements CalendarView.OnDateChangeListener, DBDataListener, View.OnClickListener {
 
 	public static final String YEAR = "YEAR";
 	public static final String MONTH = "MONTH";
@@ -29,15 +31,33 @@ public class FragmentCalendar extends Fragment implements CalendarView.OnDateCha
 	private Bundle mBun;
 	private CalendarView mCalendarView;
 	private ProgressBar mLoadingProgress;
+	private ProgressBar mTodayProgress;
 	private TextView mCalendarTitle;
+	private TextView mCalorieView;
+	private Button mBtn;
 	private Long mSelectedDate;
 
 	String mFormattedDate;
+	boolean initialDayLoaded;
 
 	@Override
 	public void onActivityCreated(Bundle savedInstance) {
 		super.onActivityCreated(savedInstance);
 		mBun = new Bundle();
+
+		initialDayLoaded = false;
+		mFormattedDate = new SimpleDateFormat("yyyy-MM-dd").format(mSelectedDate);
+
+		String date[] = mFormattedDate.split("-", 3);
+
+		mBun.putInt(YEAR, Integer.valueOf(date[0]));
+		mBun.putInt(MONTH, Integer.valueOf(date[1]) - 1);
+		mBun.putInt(DAY, Integer.valueOf(date[2]));
+
+		ExecutableQuery<?> query = new ExecutableQuery<>();
+		query.field("UserId").eq(MainActivity.CurrentUser.Id).and().field("Date").eq(mFormattedDate);
+		MainActivity.getDBData(Days.class, this, query);
+
 	}
 
 	@Override
@@ -45,12 +65,19 @@ public class FragmentCalendar extends Fragment implements CalendarView.OnDateCha
 		View root = inflater.inflate(R.layout.fragment_calendar, container, false);
 		this.mCalendarTitle = (TextView) root.findViewById(R.id.fragment_calendar_title);
 		this.mCalendarTitle.setText(MainActivity.CurrentUser.NameFirst);
+
 		mCalendarView = (CalendarView) root.findViewById(R.id.fragment_calendar_calendar);
+		mCalorieView = (TextView) root.findViewById(R.id.fragment_calendar_calorie);
 		mLoadingProgress = (ProgressBar) root.findViewById(R.id.fragment_calendar_progress_loading);
+		mTodayProgress = (ProgressBar) root.findViewById(R.id.fragment_calendar_progressbar);
+		mBtn = (Button) root.findViewById(R.id.fragment_calendar_btn);
 
 		mLoadingProgress.setVisibility(View.GONE);
-		mCalendarView.setOnDateChangeListener(this);
 		mSelectedDate = mCalendarView.getDate();
+		mTodayProgress.setMax(MainActivity.CurrentUser.PreferedCalorieLimit);
+
+		mCalendarView.setOnDateChangeListener(this);
+		mBtn.setOnClickListener(this);
 
 		return root;
 	}
@@ -66,15 +93,23 @@ public class FragmentCalendar extends Fragment implements CalendarView.OnDateCha
 			mBun.putInt(YEAR, year);
 			mBun.putInt(MONTH, month);
 			mBun.putInt(DAY, dayOfMonth);
-
-			Toast.makeText(getActivity(), "Calendar - Looking for day", Toast.LENGTH_SHORT).show();
-			mLoadingProgress.setVisibility(View.VISIBLE);
-			MainActivity.getDBData(Days.class, this, "UserId", MainActivity.CurrentUser.Id);
 		}
 	}
 
 	@Override
 	public void onGoodDataReturn(ArrayList<Object> data) {
+
+		if (!initialDayLoaded) {
+			if (!data.isEmpty()) {
+				mTodayProgress.setProgress((int) ((Days) data.get(0)).getCurrentTotalCalorie());
+				mCalorieView.setText(((Days) data.get(0)).getCurrentTotalCalorie() + "/" + MainActivity.CurrentUser.PreferedCalorieLimit);
+			} else {
+				mCalorieView.setText("0/" + MainActivity.CurrentUser.PreferedCalorieLimit);
+			}
+
+			initialDayLoaded = true;
+			return;
+		}
 
 		if (data.size() != 0 && isVisible()) {
 			for (Object o : data) {
@@ -108,5 +143,12 @@ public class FragmentCalendar extends Fragment implements CalendarView.OnDateCha
 		currentDay = (Days) obj;
 		mLoadingProgress.setVisibility(View.GONE);
 		MainActivity.nextFragment(this, new FragmentDay(), mBun, true, false, 0);
+	}
+
+	@Override
+	public void onClick(View view) {
+		Toast.makeText(getActivity(), "Calendar - Looking for day", Toast.LENGTH_SHORT).show();
+		mLoadingProgress.setVisibility(View.VISIBLE);
+		MainActivity.getDBData(Days.class, this, "UserId", MainActivity.CurrentUser.Id);
 	}
 }
