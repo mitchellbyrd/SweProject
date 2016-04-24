@@ -13,7 +13,6 @@ import android.widget.Toast;
 import com.sweproject.calorietracker.Callbacks.DBDataListener;
 import com.sweproject.calorietracker.DataObjects.Days;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 

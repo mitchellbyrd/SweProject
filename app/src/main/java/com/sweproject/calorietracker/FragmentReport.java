@@ -4,7 +4,6 @@ import android.app.DatePickerDialog;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,6 +27,7 @@ import com.microsoft.windowsazure.mobileservices.table.query.ExecutableQuery;
 import com.sweproject.calorietracker.Callbacks.DBDataListener;
 import com.sweproject.calorietracker.DataObjects.Days;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -50,6 +50,10 @@ public class FragmentReport extends Fragment implements FillFormatter, CompoundB
 
 	private TextView mStart;
 	private TextView mEnd;
+
+	private Long mStartTime;
+	private Long mEndTime;
+
 	private Button mBtn;
 
 	private DatePickerDialog mDatePickerDialog;
@@ -60,6 +64,7 @@ public class FragmentReport extends Fragment implements FillFormatter, CompoundB
 	private ArrayList<Entry> mFatEntries;
 
 	private ArrayList<ILineDataSet> mDataSets;
+	private ArrayList<Days> mDays;
 
 	private LineDataSet mCalSet;
 	private LineDataSet mCarSet;
@@ -111,49 +116,178 @@ public class FragmentReport extends Fragment implements FillFormatter, CompoundB
 		mProEntries = new ArrayList<>();
 		mFatEntries = new ArrayList<>();
 
-		mCalEntries.add(new Entry(0, 0));
-		mCalEntries.add(new Entry(4, 1));
-		mCalEntries.add(new Entry(10, 2));
-		mCalEntries.add(new Entry(12, 3));
-		mCalEntries.add(new Entry(14, 4));
-		mCalEntries.add(new Entry(16, 5));
-		mCalEntries.add(new Entry(50, 6));
-		mCalEntries.add(new Entry(0, 7));
-		mCalEntries.add(new Entry(14, 8));
-		mCalEntries.add(new Entry(20, 9));
+		mDays = new ArrayList<>();
 
-		mCarEntries.add(new Entry(10, 0));
-		mCarEntries.add(new Entry(5, 1));
-		mCarEntries.add(new Entry(31, 2));
-		mCarEntries.add(new Entry(12, 3));
-		mCarEntries.add(new Entry(6, 4));
-		mCarEntries.add(new Entry(11, 5));
-		mCarEntries.add(new Entry(57, 6));
-		mCarEntries.add(new Entry(28, 7));
-		mCarEntries.add(new Entry(9, 8));
-		mCarEntries.add(new Entry(44, 9));
+		//mChart.setData(data);
+		mChart.getAxisRight().setEnabled(false);
+		mChart.getAxisRight().setAxisMinValue(0);
+		mChart.getAxisRight().setAxisMaxValue(60);
+		mChart.getXAxis().setPosition(XAxis.XAxisPosition.BOTTOM);
+		mChart.setDescription("");
+		mChart.invalidate(); // refresh
+	}
 
-		mProEntries.add(new Entry(14, 0));
-		mProEntries.add(new Entry(60, 1));
-		mProEntries.add(new Entry(40, 2));
-		mProEntries.add(new Entry(22, 3));
-		mProEntries.add(new Entry(34, 4));
-		mProEntries.add(new Entry(56, 5));
-		mProEntries.add(new Entry(0, 6));
-		mProEntries.add(new Entry(0, 7));
-		mProEntries.add(new Entry(17, 8));
-		mProEntries.add(new Entry(55, 9));
+	@Override
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+		return inflater.inflate(R.layout.fragment_report, container, false);
+	}
 
-		mFatEntries.add(new Entry(17, 0));
-		mFatEntries.add(new Entry(55, 1));
-		mFatEntries.add(new Entry(33, 2));
-		mFatEntries.add(new Entry(19, 3));
-		mFatEntries.add(new Entry(59, 4));
-		mFatEntries.add(new Entry(17, 5));
-		mFatEntries.add(new Entry(56, 6));
-		mFatEntries.add(new Entry(35, 7));
-		mFatEntries.add(new Entry(1, 8));
-		mFatEntries.add(new Entry(3, 9));
+	@Override
+	public float getFillLinePosition(ILineDataSet dataSet, LineDataProvider dataProvider) {
+		return 0;
+	}
+
+	@Override
+	public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+		toggleVisibleData();
+	}
+
+	private void toggleVisibleData() {
+		ArrayList<String> xVals = new ArrayList<>();
+		for (int i = 0; i < mDays.size(); i++) {
+			xVals.add("Day " + String.valueOf(i + 1));
+		}
+
+		mChart.clear();
+		if (mDataSets != null) {
+			mDataSets.clear();
+
+			if (mCalSwitch.isChecked()) {
+				mDataSets.add(mCalSet);
+			}
+			if (mCarSwitch.isChecked()) {
+				mDataSets.add(mCarSet);
+			}
+			if (mProSwitch.isChecked()) {
+				mDataSets.add(mProSet);
+			}
+			if (mFatSwitch.isChecked()) {
+				mDataSets.add(mFatSet);
+			}
+
+			mChart.setData(new LineData(xVals, mDataSets));
+			mChart.invalidate(); // refresh
+		}
+	}
+
+	@Override
+	public void onClick(View view) {
+		switch (view.getId()) {
+			case R.id.fragment_report_start_edit:
+				isStartSelected = true;
+				Calendar cal = Calendar.getInstance();
+				cal.set(2015, 0, 1);
+				mDatePickerDialog.getDatePicker().setMinDate(cal.getTimeInMillis());
+				mDatePickerDialog.show();
+				break;
+			case R.id.fragment_report_end_edit:
+				isEndSelected = true;
+				mDatePickerDialog.show();
+				break;
+			case R.id.fragment_report_execute_btn:
+				String end[] = mEnd.getText().toString().split("/", 3);
+				String start[] = mStart.getText().toString().split("/", 3);
+
+				if (Integer.valueOf(end[2]) > Integer.valueOf(start[2])) {
+					getTotals();
+
+				} else if (Integer.valueOf(end[2]).intValue() == Integer.valueOf(start[2]).intValue()) {
+					if (Integer.valueOf(end[0]) > Integer.valueOf(start[0])) {
+						getTotals();
+
+					} else if (Integer.valueOf(end[0]).intValue() == Integer.valueOf(start[0]).intValue()) {
+						if (Integer.valueOf(end[1]) >= Integer.valueOf(start[1])) {
+							getTotals();
+
+						} else {
+							Toast.makeText(getActivity(), "InValid Day Range", Toast.LENGTH_SHORT).show();
+						}
+					} else {
+						Toast.makeText(getActivity(), "Invalid Month Range", Toast.LENGTH_SHORT).show();
+					}
+				} else {
+					Toast.makeText(getActivity(), "Invalid Year Range", Toast.LENGTH_SHORT).show();
+				}
+				break;
+		}
+	}
+
+	private void getTotals() {
+		ExecutableQuery<?> query = new ExecutableQuery<>();
+		query.field("UserId").eq(MainActivity.CurrentUser.Id).and()
+				.field("Date").ge(new SimpleDateFormat("yyyy-MM-dd").format(mStartTime));
+
+		MainActivity.getDBData(Days.class, this, query);
+		Toast.makeText(getActivity(), "Gathering data", Toast.LENGTH_SHORT).show();
+
+	}
+
+	@Override
+	public void onDateSet(DatePicker datePicker, int selectedYear, int selectedMonth, int selectedDay) {
+		String month = String.valueOf(selectedMonth + 1);
+		String day = String.valueOf(selectedDay);
+		String year = String.valueOf(selectedYear);
+
+		String date = month + "/" + day + "/" + year;
+
+		Calendar cal = Calendar.getInstance();
+		cal.set(selectedYear, selectedMonth, selectedDay);
+		long time = cal.getTimeInMillis();
+
+		if (isStartSelected) {
+			mStart.setText(date);
+			mDatePickerDialog.getDatePicker().setMinDate(time);
+			mStartTime = time;
+			isStartSelected = false;
+		} else if (isEndSelected) {
+			if (time > mDatePickerDialog.getDatePicker().getMinDate()) {
+				mEnd.setText(date);
+				mEndTime = time;
+			}
+			isEndSelected = false;
+		}
+	}
+
+	@Override
+	public void onGoodDataReturn(ArrayList<Object> data) {
+		mDays.clear();
+		mCalEntries.clear();
+		mCarEntries.clear();
+		mProEntries.clear();
+		mFatEntries.clear();
+
+		mCalView.setText("0");
+		mCarView.setText("0");
+		mProView.setText("0");
+		mFatView.setText("0");
+
+		if (!data.isEmpty()) {
+			for (Object o : data) {
+				if (((Days) o).getDate().compareToIgnoreCase(new SimpleDateFormat("yyyy-MM-dd").format(mEndTime)) <= 0) {
+					mDays.add((Days) o);
+				}
+			}
+			populateChart();
+			toggleVisibleData();
+		} else {
+			Toast.makeText(getActivity(), "No days found in range", Toast.LENGTH_SHORT).show();
+		}
+	}
+
+	private void populateChart() {
+
+		for (int i = 0; i < mDays.size(); i++) {
+
+			mCalEntries.add(new Entry(mDays.get(i).getCurrentTotalCalorie(), i));
+			mCarEntries.add(new Entry(mDays.get(i).getCurrentTotalCarb(), i));
+			mProEntries.add(new Entry(mDays.get(i).getCurrentTotalProtein(), i));
+			mFatEntries.add(new Entry(mDays.get(i).getCurrentTotalFat(), i));
+
+			mCalView.setText(String.valueOf(Float.valueOf(mCalView.getText().toString()) + mDays.get(i).getCurrentTotalCalorie()));
+			mCarView.setText(String.valueOf(Float.valueOf(mCarView.getText().toString()) + mDays.get(i).getCurrentTotalCarb()));
+			mProView.setText(String.valueOf(Float.valueOf(mProView.getText().toString()) + mDays.get(i).getCurrentTotalProtein()));
+			mFatView.setText(String.valueOf(Float.valueOf(mFatView.getText().toString()) + mDays.get(i).getCurrentTotalFat()));
+		}
 
 		mCalSet = new LineDataSet(mCalEntries, "Calorie intake");
 		mCalSet.setLineWidth(2f);
@@ -207,142 +341,12 @@ public class FragmentReport extends Fragment implements FillFormatter, CompoundB
 		mDataSets.add(mFatSet);
 
 		ArrayList<String> xVals = new ArrayList<>();
-		for (int i = 0; i < 10; i++) {
-			xVals.add("Day " + String.valueOf(i));
-		}
-
-		LineData data = new LineData(xVals, mDataSets);
-		mChart.setData(data);
-		mChart.getAxisRight().setEnabled(false);
-		mChart.getAxisRight().setAxisMinValue(0);
-		mChart.getAxisRight().setAxisMaxValue(60);
-		mChart.getXAxis().setPosition(XAxis.XAxisPosition.BOTTOM);
-		mChart.setDescription("");
-		mChart.invalidate(); // refresh
-	}
-
-	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		return inflater.inflate(R.layout.fragment_report, container, false);
-	}
-
-	@Override
-	public float getFillLinePosition(ILineDataSet dataSet, LineDataProvider dataProvider) {
-		return 0;
-	}
-
-	@Override
-	public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-		toggleVisibleData();
-	}
-
-	private void toggleVisibleData() {
-		ArrayList<String> xVals = new ArrayList<>();
-		for (int i = 0; i < 10; i++) {
-			xVals.add("Day " + String.valueOf(i));
-		}
-
-		mChart.clear();
-		mDataSets.clear();
-
-		if (mCalSwitch.isChecked()) {
-			mDataSets.add(mCalSet);
-		}
-		if (mCarSwitch.isChecked()) {
-			mDataSets.add(mCarSet);
-		}
-		if (mProSwitch.isChecked()) {
-			mDataSets.add(mProSet);
-		}
-		if (mFatSwitch.isChecked()) {
-			mDataSets.add(mFatSet);
+		for (int i = 0; i < mDays.size(); i++) {
+			xVals.add("Day " + String.valueOf(i + 1));
 		}
 
 		mChart.setData(new LineData(xVals, mDataSets));
-		mChart.invalidate(); // refresh
-	}
-
-	@Override
-	public void onClick(View view) {
-		switch (view.getId()) {
-			case R.id.fragment_report_start_edit:
-				isStartSelected = true;
-				Calendar cal = Calendar.getInstance();
-				cal.set(2015, 0, 1);
-				mDatePickerDialog.getDatePicker().setMinDate(cal.getTimeInMillis());
-				mDatePickerDialog.show();
-				break;
-			case R.id.fragment_report_end_edit:
-				isEndSelected = true;
-				mDatePickerDialog.show();
-				break;
-			case R.id.fragment_report_execute_btn:
-				String end[] = mEnd.getText().toString().split("/", 3);
-				String start[] = mStart.getText().toString().split("/", 3);
-
-				if (Integer.valueOf(end[2]) > Integer.valueOf(start[2])) {
-					Toast.makeText(getActivity(), "Valid Year Range", Toast.LENGTH_SHORT).show();
-					getTotals();
-
-				} else if (Integer.valueOf(end[2]).intValue() == Integer.valueOf(start[2]).intValue()) {
-					if (Integer.valueOf(end[0]) > Integer.valueOf(start[0])) {
-						Toast.makeText(getActivity(), "Valid Month Range", Toast.LENGTH_SHORT).show();
-						getTotals();
-
-					} else if (Integer.valueOf(end[0]).intValue() == Integer.valueOf(start[0]).intValue()) {
-						if (Integer.valueOf(end[1]) >= Integer.valueOf(start[1])) {
-							Toast.makeText(getActivity(), "Valid Day Range", Toast.LENGTH_SHORT).show();
-							getTotals();
-
-						} else {
-							Toast.makeText(getActivity(), "InValid Day Range", Toast.LENGTH_SHORT).show();
-						}
-					} else {
-						Toast.makeText(getActivity(), "Invalid Month Range", Toast.LENGTH_SHORT).show();
-					}
-				} else {
-					Toast.makeText(getActivity(), "Invalid Year Range", Toast.LENGTH_SHORT).show();
-				}
-				break;
-		}
-	}
-
-	private void getTotals() {
-		ExecutableQuery<?> query = new ExecutableQuery<>();
-		query.field("UserId").eq(MainActivity.CurrentUser.Id);
-		MainActivity.getDBData(Days.class, this, query);
-
-	}
-
-	@Override
-	public void onDateSet(DatePicker datePicker, int selectedYear, int selectedMonth, int selectedDay) {
-		String month = String.valueOf(selectedMonth + 1);
-		String day = String.valueOf(selectedDay);
-		String year = String.valueOf(selectedYear);
-
-		String date = month + "/" + day + "/" + year;
-
-		Calendar cal = Calendar.getInstance();
-		cal.set(selectedYear, selectedMonth, selectedDay);
-		long time = cal.getTimeInMillis();
-
-		if (isStartSelected) {
-			mStart.setText(date);
-			mDatePickerDialog.getDatePicker().setMinDate(time);
-			isStartSelected = false;
-		} else if (isEndSelected) {
-			if (time > mDatePickerDialog.getDatePicker().getMinDate()) {
-				mEnd.setText(date);
-			}
-			isEndSelected = false;
-		}
-	}
-
-	@Override
-	public void onGoodDataReturn(ArrayList<Object> data) {
-		for (Object o : data) {
-			Log.d("skdjn", ((Days) o).getId());
-		}
+		mChart.invalidate();
 	}
 
 	@Override

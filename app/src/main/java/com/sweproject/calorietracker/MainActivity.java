@@ -10,12 +10,13 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.util.Pair;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.util.Log;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
+import android.widget.Toast;
 
 import com.microsoft.windowsazure.mobileservices.MobileServiceClient;
 import com.microsoft.windowsazure.mobileservices.MobileServiceList;
@@ -61,8 +62,7 @@ public class MainActivity extends AppCompatActivity {
 			} catch (MalformedURLException e) {
 				e.printStackTrace();
 			}
-			//nextFragment(null, new LoginFragment(), null, false, false, 0);
-			nextFragment(null, new FragmentReport(), null, false, false, 0);
+			nextFragment(null, new LoginFragment(), null, false, false, 0);
 		}
 		// else will show the last visible fragment (Android destroys activity during rotation)
 	}
@@ -74,17 +74,19 @@ public class MainActivity extends AppCompatActivity {
 		return true;
 	}
 
-
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		// Handle action bar item clicks here. The action bar will
-		// automatically handle clicks on the Home/Up button, so long
-		// as you specify a parent activity in AndroidManifest.xml.
-		int id = item.getItemId();
-
-		//noinspection SimplifiableIfStatement
-		if (id == R.id.action_settings) {
-			nextFragment(new FragmentCalendar(), new PreferencesController(), null, false, false, 0);
+		if (MainActivity.CurrentUser != null) {
+			switch (item.getItemId()) {
+				case R.id.action_settings:
+					nextFragment(new FragmentCalendar(), new PreferencesController(), null, true, false, 0);
+					break;
+				case R.id.action_reports:
+					nextFragment(null, new FragmentReport(), null, true, false, 0);
+					break;
+			}
+		} else {
+			Toast.makeText(this, "You must be signed in to use this feature", Toast.LENGTH_SHORT).show();
 		}
 
 		return super.onOptionsItemSelected(item);
