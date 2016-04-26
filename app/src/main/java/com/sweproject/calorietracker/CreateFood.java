@@ -65,6 +65,7 @@ public class CreateFood extends Fragment implements View.OnClickListener, OnDial
 				break;
 			case R.id.create_food_btn:
 				// After a successful insert, the callback, onGoodInsertReturn, will be called with the id needed
+				Toast.makeText(getActivity(), "CreateFood - Inserting food...", Toast.LENGTH_SHORT).show();
 				MainActivity.insertDBData(Foods.class, this, new Foods(mFoodName.getText().toString(), MainActivity.CurrentUser.Id), true);
 				break;
 		}
@@ -91,7 +92,7 @@ public class CreateFood extends Fragment implements View.OnClickListener, OnDial
 		mCount++;
 		if (mCount == mServingSizes.size()) {
 			Toast.makeText(getActivity(), "CreateFood - Operation complete", Toast.LENGTH_SHORT).show();
-			MainActivity.nextFragment(this, new FragmentFoodSearch(), getArguments(), false, false, 0);
+			MainActivity.nextFragment(this, new FragmentFoodSearch(), getArguments(), true, false, 2);
 		}
 	}
 

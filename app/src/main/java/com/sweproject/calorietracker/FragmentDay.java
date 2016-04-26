@@ -99,7 +99,7 @@ public class FragmentDay extends Fragment implements View.OnClickListener, Adapt
 		fab.setOnClickListener(this);
 
 		sFoodList = (ListView) getActivity().findViewById(R.id.fragment_calendar_day_listview);
-		sFoodList.setAdapter(new AdapterDayFood(getActivity(), sAddedFoodList, listener));
+		sFoodList.setAdapter(new AdapterDayFood(getActivity(), sAddedFoodList, mServingList, mFoodDayList, listener));
 		sFoodList.setOnItemClickListener(this);
 
 		Toast.makeText(getActivity(), "Getting Food days", Toast.LENGTH_SHORT).show();
@@ -161,7 +161,7 @@ public class FragmentDay extends Fragment implements View.OnClickListener, Adapt
 
 	private void updateListviewData(int count) {
 		if (count == mServingList.size()) {
-			((AdapterDayFood) sFoodList.getAdapter()).setData(sAddedFoodList);
+			((AdapterDayFood) sFoodList.getAdapter()).setData(sAddedFoodList, mServingList, mFoodDayList);
 			updateProgressBars();
 		}
 	}
