@@ -102,7 +102,8 @@ public class PreferencesController extends Fragment implements View.OnClickListe
 			e.printStackTrace();
 		}
 		MainActivity.CurrentUser = newUser;
-		MainActivity.nextFragment(new PreferencesController(), new FragmentCalendar(), null, false, false, 0);
+		getActivity().getSupportFragmentManager().popBackStack();
+		//MainActivity.nextFragment(this, new FragmentCalendar(), null, true, false, 0);
 	}
 
 	private Users GetNewUserFromView() {

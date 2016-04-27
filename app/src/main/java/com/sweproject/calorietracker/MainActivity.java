@@ -121,11 +121,15 @@ public class MainActivity extends AppCompatActivity {
 		}
 		if (add) {
 			sFragmentManager.beginTransaction()
+					.setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left,
+							R.anim.slide_in_fade_from_left, R.anim.slide_out_fade_from_right)
 					.replace(R.id.activity_container, toFrag)
 					.addToBackStack(null)
 					.commit();
 		} else {
 			sFragmentManager.beginTransaction()
+					.setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left,
+							R.anim.slide_in_fade_from_left, R.anim.slide_out_fade_from_right)
 					.replace(R.id.activity_container, toFrag)
 					.commit();
 		}

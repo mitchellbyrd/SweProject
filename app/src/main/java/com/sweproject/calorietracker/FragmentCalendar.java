@@ -46,6 +46,8 @@ public class FragmentCalendar extends Fragment implements CalendarView.OnDateCha
 		mBun = new Bundle();
 
 		initialDayLoaded = false;
+		mSelectedDate = mCalendarView.getDate();
+		Toast.makeText(getActivity(), "" + mSelectedDate, Toast.LENGTH_SHORT).show();
 		mFormattedDate = new SimpleDateFormat("yyyy-MM-dd").format(mSelectedDate);
 
 		String date[] = mFormattedDate.split("-", 3);
@@ -54,10 +56,10 @@ public class FragmentCalendar extends Fragment implements CalendarView.OnDateCha
 		mBun.putInt(MONTH, Integer.valueOf(date[1]) - 1);
 		mBun.putInt(DAY, Integer.valueOf(date[2]));
 
+		Toast.makeText(getActivity(), "getting Day", Toast.LENGTH_SHORT).show();
 		ExecutableQuery<?> query = new ExecutableQuery<>();
 		query.field("UserId").eq(MainActivity.CurrentUser.Id).and().field("Date").eq(mFormattedDate);
 		MainActivity.getDBData(Days.class, this, query);
-
 	}
 
 	@Override
@@ -73,7 +75,6 @@ public class FragmentCalendar extends Fragment implements CalendarView.OnDateCha
 		mBtn = (Button) root.findViewById(R.id.fragment_calendar_btn);
 
 		mLoadingProgress.setVisibility(View.GONE);
-		mSelectedDate = mCalendarView.getDate();
 		mTodayProgress.setMax(MainActivity.CurrentUser.PreferedCalorieLimit);
 
 		mCalendarView.setOnDateChangeListener(this);
@@ -101,9 +102,12 @@ public class FragmentCalendar extends Fragment implements CalendarView.OnDateCha
 
 		if (!initialDayLoaded) {
 			if (!data.isEmpty()) {
+				Toast.makeText(getActivity(), "Got Day", Toast.LENGTH_SHORT).show();
 				mTodayProgress.setProgress((int) ((Days) data.get(0)).getCurrentTotalCalorie());
-				mCalorieView.setText(((Days) data.get(0)).getCurrentTotalCalorie() + "/" + MainActivity.CurrentUser.PreferedCalorieLimit);
+				String t = ((Days) data.get(0)).getCurrentTotalCalorie() + "/" + MainActivity.CurrentUser.PreferedCalorieLimit;
+				mCalorieView.setText(t);
 			} else {
+				Toast.makeText(getActivity(), "No Day", Toast.LENGTH_SHORT).show();
 				mCalorieView.setText("0/" + MainActivity.CurrentUser.PreferedCalorieLimit);
 			}
 
