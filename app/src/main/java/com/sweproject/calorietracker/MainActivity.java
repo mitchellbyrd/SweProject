@@ -84,6 +84,9 @@ public class MainActivity extends AppCompatActivity {
 				case R.id.action_reports:
 					nextFragment(null, new FragmentReport(), null, true, false, 0);
 					break;
+				case R.id.action_thanks:
+					nextFragment(null, new FragmentSpecialThanks(), null, true, false, 0);
+					break;
 			}
 		} else {
 			Toast.makeText(this, "You must be signed in to use this feature", Toast.LENGTH_SHORT).show();
