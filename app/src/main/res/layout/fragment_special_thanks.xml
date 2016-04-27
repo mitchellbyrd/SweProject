@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/fragment_special_thanks_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="34dp"
+            android:text="Special Thanks"
+            android:textAppearance="?android:attr/textAppearanceLarge"/>
+
+        <ImageView
+            android:id="@+id/fragment_special_thanks_mp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/fragment_special_thanks_title"
+            android:layout_marginTop="33dp"
+            android:src="@drawable/mp_android_chart"/>
+
+        <TextView
+            android:id="@+id/fragment_special_thanks_ichange"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/fragment_special_thanks_mp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="34dp"
+            android:text="ichange.com"
+            android:textAppearance="?android:attr/textAppearanceMedium"/>
+
+        <ImageView
+            android:id="@+id/fragment_special_thanks_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:src="@mipmap/ic_launcher2"
+            android:layout_below="@+id/fragment_special_thanks_ichange"
+            android:layout_marginTop="10dp"/>
+    </RelativeLayout>
+</ScrollView>
