@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,6 +32,7 @@ public class CreateFood extends Fragment implements View.OnClickListener, OnDial
 	private ListView mCreateList;
 	private FloatingActionButton mFab;
 	private Button mCreateBtn;
+	private ProgressBar mProgBar;
 
 	private ArrayList<ServingSizes> mServingSizes;
 
@@ -44,9 +46,11 @@ public class CreateFood extends Fragment implements View.OnClickListener, OnDial
 		mCreateList = (ListView) getActivity().findViewById(R.id.create_food_listview);
 		mFab = (FloatingActionButton) getActivity().findViewById(R.id.create_food_fab);
 		mCreateBtn = (Button) getActivity().findViewById(R.id.create_food_btn);
+		mProgBar = (ProgressBar) getActivity().findViewById(R.id.create_food_prog_bar);
 
 		mFab.setOnClickListener(this);
 		mCreateBtn.setOnClickListener(this);
+		mProgBar.setVisibility(View.GONE);
 		mCreateList.setAdapter(new AdapterCreateFood(getActivity(), mServingSizes));
 	}
 
@@ -65,8 +69,8 @@ public class CreateFood extends Fragment implements View.OnClickListener, OnDial
 				break;
 			case R.id.create_food_btn:
 				if (validate()) {
+					mProgBar.setVisibility(View.VISIBLE);
 					// After a successful insert, the callback, onGoodInsertReturn, will be called with the id needed
-					Toast.makeText(getActivity(), "CreateFood - Inserting food...", Toast.LENGTH_SHORT).show();
 					MainActivity.insertDBData(Foods.class, this, new Foods(mFoodName.getText().toString(), MainActivity.CurrentUser.Id), true);
 				}
 				break;
@@ -97,16 +101,16 @@ public class CreateFood extends Fragment implements View.OnClickListener, OnDial
 
 	@Override
 	public void onBadDataReturn(Exception exception) {
+		mProgBar.setVisibility(View.GONE);
 		Toast.makeText(getActivity(), "CreateFood - Server Error", Toast.LENGTH_SHORT).show();
 		exception.printStackTrace();
 	}
 
 	@Override
 	public void onGoodInsert() {
-		Toast.makeText(getActivity(), "CreateFood - Serving Inserted", Toast.LENGTH_SHORT).show();
 		mCount++;
 		if (mCount == mServingSizes.size()) {
-			Toast.makeText(getActivity(), "CreateFood - Operation complete", Toast.LENGTH_SHORT).show();
+			mProgBar.setVisibility(View.GONE);
 			MainActivity.nextFragment(this, new FragmentFoodSearch(), getArguments(), true, false, 2);
 		}
 	}

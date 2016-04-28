@@ -55,7 +55,6 @@ public class FragmentCalendar extends Fragment implements CalendarView.OnDateCha
 		mBun.putInt(MONTH, Integer.valueOf(date[1]) - 1);
 		mBun.putInt(DAY, Integer.valueOf(date[2]));
 
-		Toast.makeText(getActivity(), "getting Day", Toast.LENGTH_SHORT).show();
 		ExecutableQuery<?> query = new ExecutableQuery<>();
 		query.field("UserId").eq(MainActivity.CurrentUser.Id).and().field("Date").eq(mFormattedDate);
 		MainActivity.getDBData(Days.class, this, query);
@@ -122,7 +121,6 @@ public class FragmentCalendar extends Fragment implements CalendarView.OnDateCha
 				}
 			}
 		}
-		Toast.makeText(getActivity(), "Calendar - Making new day", Toast.LENGTH_SHORT).show();
 		MainActivity.insertDBData(Days.class, this, new Days(mFormattedDate, MainActivity.CurrentUser.Id), true);
 	}
 
@@ -147,7 +145,6 @@ public class FragmentCalendar extends Fragment implements CalendarView.OnDateCha
 
 	@Override
 	public void onClick(View view) {
-		Toast.makeText(getActivity(), "Calendar - Looking for day", Toast.LENGTH_SHORT).show();
 		mLoadingProgress.setVisibility(View.VISIBLE);
 		MainActivity.getDBData(Days.class, this, "UserId", MainActivity.CurrentUser.Id);
 	}
