@@ -101,9 +101,11 @@ public class PreferencesController extends Fragment implements View.OnClickListe
 			spinner.setVisibility(View.INVISIBLE);
 			e.printStackTrace();
 		}
-		MainActivity.CurrentUser = newUser;
-		getActivity().getSupportFragmentManager().popBackStack();
-		//MainActivity.nextFragment(this, new FragmentCalendar(), null, true, false, 0);
+		MainActivity.CurrentUser.PreferedCalorieLimit = newUser.PreferedCalorieLimit;
+		MainActivity.CurrentUser.PreferedFatLimit = newUser.PreferedFatLimit;
+		MainActivity.CurrentUser.PreferedCarbLimit = newUser.PreferedCarbLimit;
+		MainActivity.CurrentUser.PreferedProteinLimit = newUser.PreferedProteinLimit;
+		MainActivity.nextFragment(new PreferencesController(), new FragmentCalendar(), null, false, false, 0);
 	}
 
 	private Users GetNewUserFromView() {
