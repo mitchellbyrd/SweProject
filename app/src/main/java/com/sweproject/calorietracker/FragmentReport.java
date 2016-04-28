@@ -206,7 +206,7 @@ public class FragmentReport extends Fragment implements FillFormatter, CompoundB
 							getTotals();
 
 						} else {
-							Toast.makeText(getActivity(), "InValid Day Range", Toast.LENGTH_SHORT).show();
+							Toast.makeText(getActivity(), "Invalid Day Range", Toast.LENGTH_SHORT).show();
 						}
 					} else {
 						Toast.makeText(getActivity(), "Invalid Month Range", Toast.LENGTH_SHORT).show();
@@ -306,7 +306,7 @@ public class FragmentReport extends Fragment implements FillFormatter, CompoundB
 		mCalSet.setFillFormatter(this);
 		mCalSet.setAxisDependency(YAxis.AxisDependency.LEFT);
 
-		mCarSet = new LineDataSet(mCarEntries, "Fat intake");
+		mCarSet = new LineDataSet(mCarEntries, "Carb intake");
 		mCarSet.setLineWidth(2f);
 		mCarSet.setDrawFilled(true);
 		mCarSet.setColor(Color.BLUE);
@@ -317,7 +317,7 @@ public class FragmentReport extends Fragment implements FillFormatter, CompoundB
 		mCarSet.setFillFormatter(this);
 		mCarSet.setAxisDependency(YAxis.AxisDependency.LEFT);
 
-		mProSet = new LineDataSet(mProEntries, "Carb intake");
+		mProSet = new LineDataSet(mProEntries, "Protein intake");
 		mProSet.setLineWidth(2f);
 		mProSet.setDrawFilled(true);
 		mProSet.setColor(Color.RED);
@@ -328,7 +328,7 @@ public class FragmentReport extends Fragment implements FillFormatter, CompoundB
 		mProSet.setFillFormatter(this);
 		mProSet.setAxisDependency(YAxis.AxisDependency.LEFT);
 
-		mFatSet = new LineDataSet(mFatEntries, "Protein intake");
+		mFatSet = new LineDataSet(mFatEntries, "Fat intake");
 		mFatSet.setLineWidth(2f);
 		mFatSet.setDrawFilled(true);
 		mFatSet.setColor(Color.GREEN);

@@ -56,6 +56,7 @@ public class FragmentFoodEdit extends Fragment implements View.OnClickListener, 
 		mTypeSpin = (Spinner) getActivity().findViewById(R.id.fragment_food_spinner_serving_type);
 		Button submit = (Button) getActivity().findViewById(R.id.fragment_food_btn_submit);
 
+		submit.setText("Update");
 		mTitle.setText(mFood.getName());
 		mServingSpin.setAdapter(new ArrayAdapter<>(getActivity(), R.layout.support_simple_spinner_dropdown_item, mSizes));
 

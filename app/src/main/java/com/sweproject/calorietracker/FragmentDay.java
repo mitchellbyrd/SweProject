@@ -102,7 +102,6 @@ public class FragmentDay extends Fragment implements View.OnClickListener, Adapt
 		sFoodList.setAdapter(new AdapterDayFood(getActivity(), sAddedFoodList, mServingList, mFoodDayList, listener));
 		sFoodList.setOnItemClickListener(this);
 
-		Toast.makeText(getActivity(), "Getting Food days", Toast.LENGTH_SHORT).show();
 		MainActivity.getDBData(Food_Day.class, this, "DayId", FragmentCalendar.currentDay.getId());
 	}
 
@@ -270,7 +269,6 @@ public class FragmentDay extends Fragment implements View.OnClickListener, Adapt
 				mServingList.add((ServingSizes) data.get(0));
 				getFoods(mFoodDayList.size());
 			} else { // Foods
-				Toast.makeText(getActivity(), "Getting Food", Toast.LENGTH_SHORT).show();
 				// In this case, there should only be one value returned at a time
 				sAddedFoodList.add((Foods) data.get(0));
 				updateListviewData(mServingList.size());
