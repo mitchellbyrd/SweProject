@@ -47,7 +47,7 @@ public class FragmentFood extends Fragment implements View.OnClickListener, DBDa
 
 		mSelectedIndex = 0;
 		String[] mSizes = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10"};
-		mFood = FragmentFoodSearch.sDBFoodList.get(getArguments().getInt("Food"));
+		mFood = (Foods) FragmentFoodSearch.sFilterFoods.get(getArguments().getInt("Food"));
 		FragmentDay.sAddedFoodList.add(mFood);
 		mServingSizes = new ArrayList<>();
 

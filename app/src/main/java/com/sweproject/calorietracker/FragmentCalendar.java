@@ -47,7 +47,6 @@ public class FragmentCalendar extends Fragment implements CalendarView.OnDateCha
 
 		initialDayLoaded = false;
 		mSelectedDate = mCalendarView.getDate();
-		Toast.makeText(getActivity(), "" + mSelectedDate, Toast.LENGTH_SHORT).show();
 		mFormattedDate = new SimpleDateFormat("yyyy-MM-dd").format(mSelectedDate);
 
 		String date[] = mFormattedDate.split("-", 3);
@@ -143,7 +142,6 @@ public class FragmentCalendar extends Fragment implements CalendarView.OnDateCha
 
 	@Override
 	public void onGoodInsertReturn(Object obj) {
-		Toast.makeText(getActivity(), "Calendar - Good", Toast.LENGTH_SHORT).show();
 		currentDay = (Days) obj;
 		mLoadingProgress.setVisibility(View.GONE);
 		MainActivity.nextFragment(this, new FragmentDay(), mBun, true, false, 0);
