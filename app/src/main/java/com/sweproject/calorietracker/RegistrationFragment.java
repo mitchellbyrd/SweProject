@@ -46,7 +46,6 @@ public class RegistrationFragment extends Fragment implements View.OnClickListen
 	public void onClick(View view) {
 		switch (view.getId()) {
 			case R.id.fragment_registration_submitBtn:
-				spinner.setVisibility(View.VISIBLE);
 				try {
 					Register();
 				} catch (InterruptedException e) {
@@ -57,6 +56,8 @@ public class RegistrationFragment extends Fragment implements View.OnClickListen
 					e.printStackTrace();
 				}
 				break;
+			case R.id.fragment_registration_cancelBtn:
+				MainActivity.nextFragment(this, new LoginFragment(), null, false, false, 0);
 		}
 	}
 
@@ -65,6 +66,7 @@ public class RegistrationFragment extends Fragment implements View.OnClickListen
 		boolean isUserValid = Validate(newUser);
 		try {
 			if(isUserValid) {
+				spinner.setVisibility(View.VISIBLE);
 				new AsyncTask<Void, Void, Void>() {
 					@Override
 					protected Void doInBackground(Void... params) {
