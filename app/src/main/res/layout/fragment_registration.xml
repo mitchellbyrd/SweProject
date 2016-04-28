@@ -178,6 +178,51 @@
                 android:layout_centerHorizontal="true"
                 android:visibility="invisible" />
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="Protein"
+                android:id="@+id/textView10"
+                android:layout_below="@+id/fragment_registration_proteinInput"
+                android:layout_centerHorizontal="true" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="Calories"
+                android:id="@+id/textView11"
+                android:layout_below="@+id/fragment_registration_caloriesInput"
+                android:layout_centerHorizontal="true" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="Carbohydrates"
+                android:id="@+id/textView12"
+                android:layout_below="@+id/fragment_registration_carbsInput"
+                android:layout_centerHorizontal="true" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="Fat"
+                android:id="@+id/textView13"
+                android:layout_below="@+id/fragment_registration_fatsInput"
+                android:layout_centerHorizontal="true" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="Weight (lbs.)"
+                android:id="@+id/textView14"
+                android:layout_below="@+id/fragment_registration_weight"
+                android:layout_centerHorizontal="true" />
+
         </RelativeLayout>
     </LinearLayout>
 </ScrollView>
