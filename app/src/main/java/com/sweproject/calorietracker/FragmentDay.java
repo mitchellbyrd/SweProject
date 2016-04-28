@@ -49,6 +49,11 @@ public class FragmentDay extends Fragment implements View.OnClickListener, Adapt
 
 	private DeleteFoodListener listener;
 
+	private Float mTotalCal = 0f;
+	private Float mTotalPro = 0f;
+	private Float mTotalCar = 0f;
+	private Float mTotalFat = 0f;
+
 	@Override
 	public void onActivityCreated(Bundle savedInstance) {
 		super.onActivityCreated(savedInstance);
@@ -167,26 +172,26 @@ public class FragmentDay extends Fragment implements View.OnClickListener, Adapt
 
 	private void updateProgressBars() {
 
-		Float cal = 0f;
-		Float pro = 0f;
-		Float car = 0f;
-		Float fat = 0f;
+		mTotalCal = 0f;
+		mTotalPro = 0f;
+		mTotalCar = 0f;
+		mTotalFat = 0f;
 
 		for (int i = 0; i < mFoodDayList.size(); i++) {
 			if (mFoodDayList.get(i).getServingSizeId().equals(mServingList.get(i).getId())) {
-				cal += (mServingList.get(i).getCalories() * mFoodDayList.get(i).getNumberOfServings());
-				pro += (mServingList.get(i).getProteins() * mFoodDayList.get(i).getNumberOfServings());
-				car += (mServingList.get(i).getCarbs() * mFoodDayList.get(i).getNumberOfServings());
-				fat += (mServingList.get(i).getFats() * mFoodDayList.get(i).getNumberOfServings());
+				mTotalCal += (mServingList.get(i).getCalories() * mFoodDayList.get(i).getNumberOfServings());
+				mTotalPro += (mServingList.get(i).getProteins() * mFoodDayList.get(i).getNumberOfServings());
+				mTotalCar += (mServingList.get(i).getCarbs() * mFoodDayList.get(i).getNumberOfServings());
+				mTotalFat += (mServingList.get(i).getFats() * mFoodDayList.get(i).getNumberOfServings());
 			}
 		}
 
-		mCalBar.setProgress(Math.round(cal));
-		mProBar.setProgress(Math.round(pro));
-		mCarBar.setProgress(Math.round(car));
-		mFatBar.setProgress(Math.round(fat));
+		mCalBar.setProgress(Math.round(mTotalCal));
+		mProBar.setProgress(Math.round(mTotalPro));
+		mCarBar.setProgress(Math.round(mTotalCar));
+		mFatBar.setProgress(Math.round(mTotalFat));
 
-		if (Math.round(cal) > MainActivity.CurrentUser.PreferedCalorieLimit) {
+		if (Math.round(mTotalCal) > MainActivity.CurrentUser.PreferedCalorieLimit) {
 			mCalBar.getProgressDrawable().setColorFilter(
 					Color.BLACK, android.graphics.PorterDuff.Mode.SRC_IN);
 		} else {
@@ -194,7 +199,7 @@ public class FragmentDay extends Fragment implements View.OnClickListener, Adapt
 					Color.RED, android.graphics.PorterDuff.Mode.SRC_IN);
 		}
 
-		if (Math.round(pro) > MainActivity.CurrentUser.PreferedProteinLimit) {
+		if (Math.round(mTotalPro) > MainActivity.CurrentUser.PreferedProteinLimit) {
 			mProBar.getProgressDrawable().setColorFilter(
 					Color.BLACK, android.graphics.PorterDuff.Mode.SRC_IN);
 		} else {
@@ -202,7 +207,7 @@ public class FragmentDay extends Fragment implements View.OnClickListener, Adapt
 					Color.RED, android.graphics.PorterDuff.Mode.SRC_IN);
 		}
 
-		if (Math.round(car) > MainActivity.CurrentUser.PreferedCarbLimit) {
+		if (Math.round(mTotalCar) > MainActivity.CurrentUser.PreferedCarbLimit) {
 			mCarBar.getProgressDrawable().setColorFilter(
 					Color.BLACK, android.graphics.PorterDuff.Mode.SRC_IN);
 		} else {
@@ -210,7 +215,7 @@ public class FragmentDay extends Fragment implements View.OnClickListener, Adapt
 					Color.RED, android.graphics.PorterDuff.Mode.SRC_IN);
 		}
 
-		if (Math.round(fat) > MainActivity.CurrentUser.PreferedFatLimit) {
+		if (Math.round(mTotalFat) > MainActivity.CurrentUser.PreferedFatLimit) {
 			mFatBar.getProgressDrawable().setColorFilter(
 					Color.BLACK, android.graphics.PorterDuff.Mode.SRC_IN);
 		} else {
@@ -222,10 +227,10 @@ public class FragmentDay extends Fragment implements View.OnClickListener, Adapt
 	}
 
 	private void updateDayTotals() {
-		FragmentCalendar.currentDay.setCurrentTotalCalorie(mCalBar.getProgress());
-		FragmentCalendar.currentDay.setCurrentTotalCarb(mCarBar.getProgress());
-		FragmentCalendar.currentDay.setCurrentTotalProtein(mProBar.getProgress());
-		FragmentCalendar.currentDay.setCurrentTotalFat(mFatBar.getProgress());
+		FragmentCalendar.currentDay.setCurrentTotalCalorie(mTotalCal);
+		FragmentCalendar.currentDay.setCurrentTotalCarb(mTotalCar);
+		FragmentCalendar.currentDay.setCurrentTotalProtein(mTotalPro);
+		FragmentCalendar.currentDay.setCurrentTotalFat(mTotalFat);
 
 		MainActivity.updateDBData(Days.class, FragmentCalendar.currentDay);
 		mLoading.setVisibility(View.GONE);
@@ -295,10 +300,15 @@ public class FragmentDay extends Fragment implements View.OnClickListener, Adapt
 
 	@Override
 	public void onFoodDeleted(ServingSizes s, Food_Day d) {
-		mCalBar.setProgress(mCalBar.getProgress() - (int) (s.getCalories() * d.getNumberOfServings()));
-		mProBar.setProgress(mProBar.getProgress() - (int) (s.getProteins() * d.getNumberOfServings()));
-		mCarBar.setProgress(mCarBar.getProgress() - (int) (s.getCarbs() * d.getNumberOfServings()));
-		mFatBar.setProgress(mFatBar.getProgress() - (int) (s.getFats() * d.getNumberOfServings()));
+		mTotalCal -= s.getCalories() * d.getNumberOfServings();
+		mTotalPro -= s.getProteins() * d.getNumberOfServings();
+		mTotalCar -= s.getCarbs() * d.getNumberOfServings();
+		mTotalFat -= s.getFats() * d.getNumberOfServings();
+
+		mCalBar.setProgress(Math.round(mTotalCal));
+		mProBar.setProgress(Math.round(mTotalPro));
+		mCarBar.setProgress(Math.round(mTotalCar));
+		mFatBar.setProgress(Math.round(mTotalFat));
 		updateDayTotals();
 	}
 }
