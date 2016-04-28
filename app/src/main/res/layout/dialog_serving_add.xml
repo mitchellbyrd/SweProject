@@ -26,7 +26,11 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:layout_above="@+id/dialog_serving_add_proteins_view"
-        android:layout_marginRight="20dp"/>
+        android:layout_marginRight="20dp"
+        android:hint="20"
+        android:layout_toRightOf="@+id/dialog_serving_add_serving_type_view"
+        android:layout_toEndOf="@+id/dialog_serving_add_serving_type_view"
+        android:layout_marginLeft="10dp"/>
 
     <TextView
         android:id="@+id/dialog_serving_add_proteins_view"
@@ -49,7 +53,8 @@
         android:layout_alignRight="@+id/dialog_serving_add_calories_edit"
         android:layout_alignStart="@+id/dialog_serving_add_calories_edit"
         android:ems="10"
-        android:inputType="number"/>
+        android:inputType="number"
+        android:hint="15"/>
 
     <TextView
         android:id="@+id/dialog_serving_add_fats_view"
@@ -72,7 +77,8 @@
         android:layout_alignRight="@+id/dialog_serving_add_protein_edit"
         android:layout_alignStart="@+id/dialog_serving_add_protein_edit"
         android:ems="10"
-        android:inputType="number"/>
+        android:inputType="number"
+        android:hint="35"/>
 
     <TextView
         android:id="@+id/dialog_serving_add_serving_type_view"
@@ -106,7 +112,8 @@
         android:layout_alignRight="@+id/dialog_serving_add_fats_edit"
         android:layout_alignStart="@+id/dialog_serving_add_fats_edit"
         android:ems="10"
-        android:inputType="number"/>
+        android:inputType="number"
+        android:hint="40"/>
 
     <EditText
         android:layout_width="wrap_content"
@@ -117,7 +124,7 @@
         android:layout_alignEnd="@+id/dialog_serving_add_carbs_edit"
         android:layout_alignLeft="@+id/dialog_serving_add_carbs_edit"
         android:layout_alignStart="@+id/dialog_serving_add_carbs_edit"
-        />
+        android:hint="Grams"/>
 
     <Button
         android:layout_width="wrap_content"

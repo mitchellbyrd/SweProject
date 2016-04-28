@@ -64,13 +64,28 @@ public class CreateFood extends Fragment implements View.OnClickListener, OnDial
 				dialogServingAdd.show(getActivity().getSupportFragmentManager(), null);
 				break;
 			case R.id.create_food_btn:
-				// After a successful insert, the callback, onGoodInsertReturn, will be called with the id needed
-				Toast.makeText(getActivity(), "CreateFood - Inserting food...", Toast.LENGTH_SHORT).show();
-				MainActivity.insertDBData(Foods.class, this, new Foods(mFoodName.getText().toString(), MainActivity.CurrentUser.Id), true);
+				if (validate()) {
+					// After a successful insert, the callback, onGoodInsertReturn, will be called with the id needed
+					Toast.makeText(getActivity(), "CreateFood - Inserting food...", Toast.LENGTH_SHORT).show();
+					MainActivity.insertDBData(Foods.class, this, new Foods(mFoodName.getText().toString(), MainActivity.CurrentUser.Id), true);
+				}
 				break;
 		}
 	}
 
+	private boolean validate() {
+		if (mFoodName.getText().toString().isEmpty()) {
+			Toast.makeText(getActivity(), "A food must have a name", Toast.LENGTH_SHORT).show();
+			Toast.makeText(getActivity(), "May I suggest Waffles?", Toast.LENGTH_SHORT).show();
+			return false;
+		}
+		if (mServingSizes.isEmpty()) {
+			Toast.makeText(getActivity(), "You need at least one serving", Toast.LENGTH_SHORT).show();
+			Toast.makeText(getActivity(), "Tap the + button to add one", Toast.LENGTH_SHORT).show();
+			return false;
+		}
+		return true;
+	}
 	@Override
 	public void onDismiss(ServingSizes obj) {
 		mServingSizes.add(obj);

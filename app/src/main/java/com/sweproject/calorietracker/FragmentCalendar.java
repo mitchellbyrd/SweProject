@@ -101,12 +101,10 @@ public class FragmentCalendar extends Fragment implements CalendarView.OnDateCha
 
 		if (!initialDayLoaded) {
 			if (!data.isEmpty()) {
-				Toast.makeText(getActivity(), "Got Day", Toast.LENGTH_SHORT).show();
 				mTodayProgress.setProgress((int) ((Days) data.get(0)).getCurrentTotalCalorie());
 				String t = ((Days) data.get(0)).getCurrentTotalCalorie() + "/" + MainActivity.CurrentUser.PreferedCalorieLimit;
 				mCalorieView.setText(t);
 			} else {
-				Toast.makeText(getActivity(), "No Day", Toast.LENGTH_SHORT).show();
 				mCalorieView.setText("0/" + MainActivity.CurrentUser.PreferedCalorieLimit);
 			}
 
