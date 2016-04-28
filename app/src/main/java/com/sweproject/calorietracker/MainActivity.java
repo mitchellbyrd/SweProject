@@ -79,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
 		if (MainActivity.CurrentUser != null) {
 			switch (item.getItemId()) {
 				case R.id.action_settings:
-					nextFragment(new FragmentCalendar(), new PreferencesController(), null, true, false, 0);
+					nextFragment(null, new PreferencesController(), null, true, false, 0);
 					break;
 				case R.id.action_reports:
 					nextFragment(null, new FragmentReport(), null, true, false, 0);
@@ -121,11 +121,15 @@ public class MainActivity extends AppCompatActivity {
 		}
 		if (add) {
 			sFragmentManager.beginTransaction()
+					.setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left,
+							R.anim.slide_in_fade_from_left, R.anim.slide_out_fade_from_right)
 					.replace(R.id.activity_container, toFrag)
 					.addToBackStack(null)
 					.commit();
 		} else {
 			sFragmentManager.beginTransaction()
+					.setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left,
+							R.anim.slide_in_fade_from_left, R.anim.slide_out_fade_from_right)
 					.replace(R.id.activity_container, toFrag)
 					.commit();
 		}

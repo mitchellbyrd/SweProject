@@ -51,11 +51,30 @@ public class DialogServingAdd extends DialogFragment implements View.OnClickList
 	public void onClick(View view) {
 		switch (view.getId()) {
 			case R.id.dialog_serving_add_btn_add:
-				float cal = Float.valueOf(mCalories.getText().toString());
-				float pro = Float.valueOf(mProteins.getText().toString());
-				float car = Float.valueOf(mCarbs.getText().toString());
-				float fat = Float.valueOf(mFats.getText().toString());
-				String type = mType.getText().toString();
+				String calo = mCalories.getText().toString();
+				String prot = mProteins.getText().toString();
+				String carb = mCarbs.getText().toString();
+				String fats = mFats.getText().toString();
+
+				if (calo.isEmpty()) {
+					calo = mCalories.getHint().toString();
+				}
+				if (prot.isEmpty()) {
+					prot = mProteins.getHint().toString();
+				}
+				if (carb.isEmpty()) {
+					carb = mCarbs.getHint().toString();
+				}
+				if (fats.isEmpty()) {
+					fats = mFats.getHint().toString();
+				}
+
+				float cal = Float.valueOf(calo);
+				float pro = Float.valueOf(prot);
+				float car = Float.valueOf(carb);
+				float fat = Float.valueOf(fats);
+
+				String type = (mType.getText().toString().isEmpty()) ? mType.getHint().toString() : mType.getText().toString();
 
 				mListener.onDismiss(new ServingSizes(cal, pro, car, fat, type));
 				break;

@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.SearchView;
 import android.widget.Toast;
 
 import com.sweproject.calorietracker.Callbacks.DBDataListener;
@@ -20,14 +21,16 @@ import java.util.ArrayList;
 /**
  * Created by Marcus on 3/3/2016.
  */
-public class FragmentFoodSearch extends Fragment implements View.OnClickListener, AdapterView.OnItemClickListener, DBDataListener {
+public class FragmentFoodSearch extends Fragment implements View.OnClickListener, AdapterView.OnItemClickListener, DBDataListener, SearchView.OnQueryTextListener {
 
 	private ListView foodList;
 	private ProgressBar mProgressBar;
+	private SearchView mSearchBar;
 	/**
 	 * When a search is performed, food in the db is returned in this list
 	 **/
 	public static ArrayList<Foods> sDBFoodList = new ArrayList<>();
+	public static ArrayList<Object> sFilterFoods = new ArrayList<>();
 
 	@Override
 	public void onActivityCreated(Bundle savedInstance) {
@@ -41,7 +44,9 @@ public class FragmentFoodSearch extends Fragment implements View.OnClickListener
 		fab.setOnClickListener(this);
 
 		mProgressBar = (ProgressBar) getActivity().findViewById(R.id.fragment_food_search_progress);
+		mSearchBar = (SearchView) getActivity().findViewById(R.id.fragment_food_search_searchView);
 
+		mSearchBar.setOnQueryTextListener(this);
 		MainActivity.getDBData(Foods.class, this, null, null);
 	}
 
@@ -75,6 +80,7 @@ public class FragmentFoodSearch extends Fragment implements View.OnClickListener
 			for (Object obj : data) {
 				FragmentFoodSearch.sDBFoodList.add((Foods) obj);
 			}
+			sFilterFoods.addAll(sDBFoodList);
 		}
 	}
 
@@ -92,4 +98,27 @@ public class FragmentFoodSearch extends Fragment implements View.OnClickListener
 
 	@Override
 	public void onGoodInsertReturn(Object obj) { /* ignore */ }
+
+	@Override
+	public boolean onQueryTextSubmit(String query) {
+		return false;
+	}
+
+	@Override
+	public boolean onQueryTextChange(String newText) {
+		sFilterFoods.clear();
+		for (Foods f : sDBFoodList) {
+			if (f.getName().toLowerCase().contains(newText.toLowerCase())) {
+				sFilterFoods.add(f);
+			}
+		}
+		if (!sFilterFoods.isEmpty()) {
+			((AdapterSearchFood) foodList.getAdapter()).setData(sFilterFoods);
+		} else {
+			sFilterFoods.addAll(sDBFoodList);
+			((AdapterSearchFood) foodList.getAdapter()).setData(sFilterFoods);
+		}
+
+		return true;
+	}
 }

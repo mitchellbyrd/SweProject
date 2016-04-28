@@ -65,7 +65,8 @@ public class PreferencesController extends Fragment implements View.OnClickListe
 				}
 				break;
 			case R.id.fragment_preferences_cancelBtn:
-				MainActivity.nextFragment(this, new FragmentCalendar(), null, false, false, 0);
+				getActivity().getSupportFragmentManager().popBackStack();
+				//MainActivity.nextFragment(this, new FragmentCalendar(), null, false, false, 0);
 				break;
 		}
 	}
@@ -105,7 +106,8 @@ public class PreferencesController extends Fragment implements View.OnClickListe
 		MainActivity.CurrentUser.PreferedFatLimit = newUser.PreferedFatLimit;
 		MainActivity.CurrentUser.PreferedCarbLimit = newUser.PreferedCarbLimit;
 		MainActivity.CurrentUser.PreferedProteinLimit = newUser.PreferedProteinLimit;
-		MainActivity.nextFragment(new PreferencesController(), new FragmentCalendar(), null, false, false, 0);
+		getActivity().getSupportFragmentManager().popBackStack();
+		//MainActivity.nextFragment(new PreferencesController(), new FragmentCalendar(), null, false, false, 0);
 	}
 
 	private Users GetNewUserFromView() {
