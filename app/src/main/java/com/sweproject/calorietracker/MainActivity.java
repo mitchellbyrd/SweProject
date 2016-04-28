@@ -79,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
 		if (MainActivity.CurrentUser != null) {
 			switch (item.getItemId()) {
 				case R.id.action_settings:
-					nextFragment(new FragmentCalendar(), new PreferencesController(), null, true, false, 0);
+					nextFragment(null, new PreferencesController(), null, true, false, 0);
 					break;
 				case R.id.action_reports:
 					nextFragment(null, new FragmentReport(), null, true, false, 0);
